@@ -42,6 +42,27 @@ async function GetCalcData(haiids: number[]){
   return data;
 }
 
+function TehaiInputView({ onAddHai }: { onAddHai: (id: number) => void }){
+  const rows = Array.from({length: 4}, (_, r) => 
+    Array.from({length: 9}, (_, c) => r * 9 + c)
+  );
+  return (
+    <div className='tehai_input'>
+      {rows.map((row, r) => (
+        <div key={r} className='tehai_row'>
+        {row
+          .filter(i => !(r === 3 && i % 9 >= 7))
+          .map(i => (
+          <div key={i} className='tehai_cell'>
+          <img src={"images/" + new Hai(i + 1).imageUrl} onClick={() => onAddHai(i + 1)}></img>
+          </div>
+        ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ResultView({ result }: { result: resType | undefined }){
   if(!result) return null;
   if(!result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
@@ -76,14 +97,14 @@ function ResultView({ result }: { result: resType | undefined }){
   );
 }
 
-function HaisView({ hais }: { hais: Hais}){
+function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number) => void }){
   return (
     <div>
       {hais.length !== 0 && <h2>手牌</h2>}
       <div className="hais">
         {hais.getHais().map((h, i) => (
         <div className="hai" key={i}>
-        <img src={"images/" + h.imageUrl}></img>
+        <img src={"images/" + h.imageUrl} onClick={() => onRemoveHai(h.getId())}></img>
         <p className="hai_text">{h.getId()}</p>
         </div>
         ))}
@@ -148,26 +169,11 @@ function App() {
     <div className="App">
       <h1>麻雀点数計算テスト</h1>
       
-      <input id="hai_input" type="number"></input>
-      <button onClick={() => {
-        const haiInput = document.getElementById("hai_input") as HTMLInputElement;
-        const num = Number(haiInput.value);
-        if(num > 0 && num <= 34) addHai(num);
-      }}>
-        追加
-      </button>
-      <button onClick={() => {
-        const haiInput = document.getElementById("hai_input") as HTMLInputElement;
-        const num = Number(haiInput.value);
-        if(num > 0 && num <= 34) removeHai(num);
-      }}>
-        削除
-      </button>
-      
-      <HaisView hais={hais} />
+      <HaisView hais={hais} onRemoveHai={removeHai} />
       <MachiHaisView machiHais={machiHais} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
+      <TehaiInputView onAddHai={addHai}/>
       
     </div>
   );

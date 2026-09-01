@@ -25,6 +25,17 @@
     text-align: center;
 }
 
+.tehai_input{
+    margin: 0 auto;
+}
+.tehai_row{
+    display: flex;
+    justify-content: center;
+}
+.tehai_cell{
+    margin: 0 2px;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
