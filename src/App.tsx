@@ -100,12 +100,10 @@ function ResultView({ result }: { result: resType | undefined }){
 function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number) => void }){
   return (
     <div>
-      {hais.length !== 0 && <h2>手牌</h2>}
       <div className="hais">
         {hais.getHais().map((h, i) => (
         <div className="hai" key={i}>
         <img src={"images/" + h.imageUrl} onClick={() => onRemoveHai(h.getId())}></img>
-        <p className="hai_text">{h.getId()}</p>
         </div>
         ))}
       </div>
@@ -167,14 +165,11 @@ function App() {
 
   return (
     <div className="App">
-      <h1>麻雀点数計算テスト</h1>
-      
       <HaisView hais={hais} onRemoveHai={removeHai} />
       <MachiHaisView machiHais={machiHais} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
       <TehaiInputView onAddHai={addHai}/>
-      
     </div>
   );
 }

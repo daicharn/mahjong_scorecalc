@@ -1,8 +1,12 @@
+body{
+    background-color: rgb(32, 32, 32);
+    color:rgb(255, 255, 255);
+}
+
 .hais, .hais_machi{
     display: flex;
-}
-.hai_text{
-    text-align: center;
+    justify-content: center;
+    margin: 10px 0;
 }
 
 .result_views{
