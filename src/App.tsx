@@ -103,9 +103,15 @@ function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number)
       <div className="hais">
         {hais.getHais().map((h, i) => (
         <div className="hai" key={i}>
-        <img src={"images/" + h.imageUrl} onClick={() => onRemoveHai(h.getId())}></img>
+          <img src={"images/" + h.imageUrl} onClick={() => onRemoveHai(h.getId())}></img>
         </div>
         ))}
+        {Array(14 - hais.length).fill(0).map((_, i) => (
+        <div className="hai" key={i}>
+          <img src={"images/" + new Hai(0).imageUrl}></img>
+        </div>
+        ))
+        }
       </div>
     </div>
   );

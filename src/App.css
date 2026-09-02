@@ -3,10 +3,12 @@ body{
     color:rgb(255, 255, 255);
 }
 
+.hais{
+    margin: 30px;
+}
 .hais, .hais_machi{
     display: flex;
     justify-content: center;
-    margin: 10px 0;
 }
 
 .result_views{
