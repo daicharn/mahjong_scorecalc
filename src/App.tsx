@@ -1,44 +1,16 @@
-import {Hai, TILE} from 'mahjong_engine';
+import {Hai} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
-import {YakuContext} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
 import {useState} from 'react';
 import {useMemo} from 'react';
 
 import './App.css';
+import NakiButtons from './components/NakiButtons';
+import HaisView from './components/HaisView';
+import TehaiInputView from './components/TehaiInputView';
+import ResultView from './components/ResultView';
 
-type NakiKey = "chi" | "pon" | "minkan" | "ankan";
-type NakiMode = Record<NakiKey, boolean>;
-
-type scoreRes = {
-    han: number,
-    fuBasic: number,
-    fuCeiled: number,
-    tensuu: {
-      ronOya: number,
-      ronKo: number,
-      tsumoOya: number,
-      tsumoKo: {
-        oya: number,
-        ko: number
-      }
-    },
-    fuDetail: {
-      name: string,
-      fu: number,
-      mentsuType?: number,
-      minHaiId?: number
-    }[]
-}
-
-type resType = {contextMax: YakuContext, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
-
-const nakiList: { key: NakiKey; label: string }[] = [
-  { key: "chi", label: "チー" },
-  { key: "pon", label: "ポン" },
-  { key: "minkan", label: "明槓" },
-  { key: "ankan", label: "暗槓" },
-];
+import {resType} from './TypeDefs';
 
 async function GetCalcData(haiids: number[]){
   const res = await fetch("https://mahjong-api.daicharn.deno.net/calc", {
@@ -51,117 +23,6 @@ async function GetCalcData(haiids: number[]){
 
   const data: resType = await res.json();
   return data;
-}
-
-function TehaiInputView({ allTiles, machiHais, onAddHai }: { allTiles: Hai[], machiHais: Hai[], onAddHai: (id: number) => void }){
-  const rows = Array.from({length: 4}, (_, r) => 
-    Array.from({length: 9}, (_, c) => r * 9 + c)
-  );
-  return (
-    <div className='tehai_input'>
-      {rows.map((row, r) => (
-        <div key={r} className='tehai_row'>
-        {row
-          .filter(i => !(r === 3 && i % 9 >= 7))
-          .map(i => (
-          <div key={i} className='tehai_cell'>
-          {(machiHais.length === 0 || machiHais.map(h => h.getId()).includes(i + 1))
-            ?(<img src={"images/" + allTiles[i].imageUrl} onClick={() => onAddHai(i + 1)}></img>)
-            :(<img src={"images/" + allTiles[34].imageUrl}></img>)
-          }
-          </div>
-        ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ResultView({ result }: { result: resType | undefined }){
-  if(!result) return null;
-  if(!result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
-  return (
-    <div className='result_views'>
-      <div className='result_view'>
-        <h2>役</h2>
-        <p>{result.scoreResultObj.han}翻</p>
-        <ul>
-          {Object.entries(result.yakuMapObj).map(([name, han], index) => (
-            <li key={index}>{name} ({han}翻)</li>
-          ))}
-        </ul>
-      </div>
-      <div className='result_view'>
-        <h2>符</h2>
-        <p>{result.scoreResultObj.fuCeiled}符({result.scoreResultObj.fuBasic})</p>
-        <ul>
-          {result.scoreResultObj.fuDetail.map((value, index) => (
-            <li key={index}>{value.name} {value.fu}符 {value.minHaiId}</li>
-          ))}
-        </ul>
-      </div>
-      <div className='result_view'>
-        <h2>点数</h2>
-        <p>親ロン: {result.scoreResultObj.tensuu.ronOya}</p>
-        <p>子ロン: {result.scoreResultObj.tensuu.ronKo}</p>
-        <p>親ツモ: {result.scoreResultObj.tensuu.tsumoOya}オール</p>
-        <p>子ツモ: 親{result.scoreResultObj.tensuu.tsumoKo.oya} / 子{result.scoreResultObj.tensuu.tsumoKo.ko}</p>
-      </div>
-    </div>
-  );
-}
-
-function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number) => void }){
-  return (
-    <div>
-      <div className="hais">
-        {hais.getHais().map((h, i) => (
-        <div className="hai" key={i}>
-          <img src={"images/" + h.imageUrl} onClick={() => onRemoveHai(h.getId())}></img>
-        </div>
-        ))}
-        {Array(14 - hais.length).fill(0).map((_, i) => (
-        <div className="hai" key={i}>
-          <img src={"images/" + new Hai(TILE.BACK).imageUrl}></img>
-        </div>
-        ))
-        }
-      </div>
-    </div>
-  );
-}
-
-function NakiButtons({nakiMode, setNakiMode}: {nakiMode: NakiMode, setNakiMode: React.Dispatch<React.SetStateAction<NakiMode>>}){
-  const toggleExclusive = (key: NakiKey) => {
-    setNakiMode(prev => {
-      const isSame = prev[key] === true;
-
-      if(isSame){
-        return{chi: false, pon: false, minkan: false, ankan: false}
-      }
-
-      return{
-        chi: key === "chi",
-        pon: key === "pon",
-        minkan: key === "minkan",
-        ankan: key === "ankan",
-      };
-    });
-  };
-  
-  return (
-    <div className='naki_btn_list'>
-      {nakiList.map(({key, label}) => (
-        <div
-          key={key}
-          className={`naki_btn naki_btn_${key} ${nakiMode[key] ? "active": ""}`}
-          onClick={() => toggleExclusive(key)}
-        >
-          {label}
-        </div>
-      ))}
-    </div>
-  )
 }
 
 function App() {
