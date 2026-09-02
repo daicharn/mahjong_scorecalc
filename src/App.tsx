@@ -7,6 +7,9 @@ import {useMemo} from 'react';
 
 import './App.css';
 
+type NakiKey = "chi" | "pon" | "minkan" | "ankan";
+type NakiMode = Record<NakiKey, boolean>;
+
 type scoreRes = {
     han: number,
     fuBasic: number,
@@ -29,6 +32,13 @@ type scoreRes = {
 }
 
 type resType = {contextMax: YakuContext, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
+
+const nakiList: { key: NakiKey; label: string }[] = [
+  { key: "chi", label: "チー" },
+  { key: "pon", label: "ポン" },
+  { key: "minkan", label: "明槓" },
+  { key: "ankan", label: "暗槓" },
+];
 
 async function GetCalcData(haiids: number[]){
   const res = await fetch("https://mahjong-api.daicharn.deno.net/calc", {
@@ -121,11 +131,50 @@ function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number)
   );
 }
 
+function NakiButtons({nakiMode, setNakiMode}: {nakiMode: NakiMode, setNakiMode: React.Dispatch<React.SetStateAction<NakiMode>>}){
+  const toggleExclusive = (key: NakiKey) => {
+    setNakiMode(prev => {
+      const isSame = prev[key] === true;
+
+      if(isSame){
+        return{chi: false, pon: false, minkan: false, ankan: false}
+      }
+
+      return{
+        chi: key === "chi",
+        pon: key === "pon",
+        minkan: key === "minkan",
+        ankan: key === "ankan",
+      };
+    });
+  };
+  
+  return (
+    <div className='naki_btn_list'>
+      {nakiList.map(({key, label}) => (
+        <div
+          key={key}
+          className={`naki_btn naki_btn_${key} ${nakiMode[key] ? "active": ""}`}
+          onClick={() => toggleExclusive(key)}
+        >
+          {label}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function App() {
   const [hais, setHaiIds] = useState<Hais>(new Hais());
   const [machiHais, setmachiHais] = useState<Hai[]>([]);
   const [result, setResult] = useState<resType>();
   const [loading, setLoading] = useState(false);
+  const [nakiMode, setNakiMode] = useState({
+    chi: false,
+    pon: false,
+    minkan: false,
+    ankan: false
+});
 
   const allTiles = useMemo(() => {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
@@ -168,6 +217,7 @@ function App() {
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
       <TehaiInputView allTiles={allTiles} machiHais={machiHais} onAddHai={addHai}/>
+      <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
     </div>
   );
 }
