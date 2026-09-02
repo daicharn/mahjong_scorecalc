@@ -10,7 +10,7 @@ import HaisView from './components/HaisView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
-import {resType, NakiMode} from './TypeDefs';
+import {resType} from './TypeDefs';
 
 async function GetCalcData(haiids: number[]){
   const res = await fetch("https://mahjong-api.daicharn.deno.net/calc", {
@@ -23,15 +23,6 @@ async function GetCalcData(haiids: number[]){
 
   const data: resType = await res.json();
   return data;
-}
-
-function calcLimitNum(nakiMode: NakiMode){
-  if(nakiMode.pon) return 1;
-  else if(nakiMode.minkan || nakiMode.ankan) return 0;
-  else return 3;
-}
-function getUsedFourHais(hais: Hais, nakiMode: NakiMode): Hai[] {
-  return hais.getHais().filter(h => hais.count(h.getId()) > calcLimitNum(nakiMode));
 }
 
 function App() {
@@ -85,7 +76,7 @@ function App() {
       <HaisView hais={hais} onRemoveHai={removeHai} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
-      <TehaiInputView allTiles={allTiles} machiHais={machiHais} fourHais={getUsedFourHais(hais, nakiMode)} onAddHai={addHai}/>
+      <TehaiInputView hais={hais} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai}/>
       <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
     </div>
   );
