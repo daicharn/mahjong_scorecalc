@@ -1,5 +1,4 @@
-type NakiKey = "chi" | "pon" | "minkan" | "ankan";
-type NakiMode = Record<NakiKey, boolean>;
+import {NakiKey, NakiMode} from '../TypeDefs';
 
 const nakiList: { key: NakiKey; label: string }[] = [
   { key: "chi", label: "チー" },

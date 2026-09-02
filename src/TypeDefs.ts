@@ -22,3 +22,6 @@ type scoreRes = {
 }
 
 export type resType = {contextMax: YakuContext, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
+
+export type NakiKey = "chi" | "pon" | "minkan" | "ankan";
+export type NakiMode = Record<NakiKey, boolean>;
