@@ -1,8 +1,9 @@
-import {Hai} from 'mahjong_engine';
+import {Hai, TILE} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {YakuContext} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
 import {useState} from 'react';
+import {useMemo} from 'react';
 
 import './App.css';
 
@@ -42,7 +43,7 @@ async function GetCalcData(haiids: number[]){
   return data;
 }
 
-function TehaiInputView({ onAddHai }: { onAddHai: (id: number) => void }){
+function TehaiInputView({ allTiles, machiHais, onAddHai }: { allTiles: Hai[], machiHais: Hai[], onAddHai: (id: number) => void }){
   const rows = Array.from({length: 4}, (_, r) => 
     Array.from({length: 9}, (_, c) => r * 9 + c)
   );
@@ -54,7 +55,10 @@ function TehaiInputView({ onAddHai }: { onAddHai: (id: number) => void }){
           .filter(i => !(r === 3 && i % 9 >= 7))
           .map(i => (
           <div key={i} className='tehai_cell'>
-          <img src={"images/" + new Hai(i + 1).imageUrl} onClick={() => onAddHai(i + 1)}></img>
+          {(machiHais.length === 0 || machiHais.map(h => h.getId()).includes(i + 1))
+            ?(<img src={"images/" + allTiles[i].imageUrl} onClick={() => onAddHai(i + 1)}></img>)
+            :(<img src={"images/" + allTiles[34].imageUrl}></img>)
+          }
           </div>
         ))}
         </div>
@@ -108,25 +112,10 @@ function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number)
         ))}
         {Array(14 - hais.length).fill(0).map((_, i) => (
         <div className="hai" key={i}>
-          <img src={"images/" + new Hai(0).imageUrl}></img>
+          <img src={"images/" + new Hai(TILE.BACK).imageUrl}></img>
         </div>
         ))
         }
-      </div>
-    </div>
-  );
-}
-
-function MachiHaisView({ machiHais }: { machiHais: Hai[]}){
-  return (
-    <div>
-      {machiHais.length !== 0 && <h2>待ち牌</h2>}
-      <div className="hais_machi">
-        {machiHais.map((h, i) => (
-        <div className="hai_machi" key={i}>
-        <img src={"images/" + h.imageUrl} key={i}></img>
-        </div>
-        ))}
       </div>
     </div>
   );
@@ -137,6 +126,10 @@ function App() {
   const [machiHais, setmachiHais] = useState<Hai[]>([]);
   const [result, setResult] = useState<resType>();
   const [loading, setLoading] = useState(false);
+
+  const allTiles = useMemo(() => {
+    return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
+  }, []);
 
   const updateHais = async (fn: (h: Hais) => void) => {
     const newHais = new Hais(hais.ids);
@@ -172,10 +165,9 @@ function App() {
   return (
     <div className="App">
       <HaisView hais={hais} onRemoveHai={removeHai} />
-      <MachiHaisView machiHais={machiHais} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
-      <TehaiInputView onAddHai={addHai}/>
+      <TehaiInputView allTiles={allTiles} machiHais={machiHais} onAddHai={addHai}/>
     </div>
   );
 }
