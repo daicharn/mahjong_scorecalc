@@ -2,7 +2,7 @@ import {Hai} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {TILE} from 'mahjong_engine';
 
-export default function HaisView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number) => void }){
+export default function TehaiView({ hais, onRemoveHai }: { hais: Hais, onRemoveHai: (id: number) => void }){
   return (
     <div>
       <div className="hais">

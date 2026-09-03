@@ -6,7 +6,7 @@ import {useMemo} from 'react';
 
 import './App.css';
 import NakiButtons from './components/NakiButtons';
-import HaisView from './components/HaisView';
+import TehaiView from './components/TehaiView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
@@ -73,7 +73,7 @@ function App() {
 
   return (
     <div className="App">
-      <HaisView hais={hais} onRemoveHai={removeHai} />
+      <TehaiView hais={hais} onRemoveHai={removeHai} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
       <TehaiInputView hais={hais} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai}/>
