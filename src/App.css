@@ -74,6 +74,20 @@ body{
     background-color: #730477;
 }
 
+.naki_list{
+    position: absolute;
+    width: 80%;
+    height: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    display: flex;
+    background-color: #929292;
+    border: 3px solid #505050;
+    border-radius: 10px;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

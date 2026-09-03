@@ -11,6 +11,7 @@ import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
 import {resType} from './TypeDefs';
+import NakiView from './components/NakiView';
 
 async function GetCalcData(haiids: number[]){
   const res = await fetch("https://mahjong-api.daicharn.deno.net/calc", {
@@ -78,6 +79,7 @@ function App() {
       <ResultView result={result} />
       <TehaiInputView hais={hais} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai}/>
       <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
+      <NakiView />
     </div>
   );
 }
