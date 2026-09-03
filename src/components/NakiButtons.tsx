@@ -14,10 +14,11 @@ export default function NakiButtons({nakiMode, setNakiMode}: {nakiMode: NakiMode
       const isSame = prev[key] === true;
 
       if(isSame){
-        return{chi: false, pon: false, minkan: false, ankan: false}
+        return{none: true, chi: false, pon: false, minkan: false, ankan: false}
       }
 
       return{
+        none: false,
         chi: key === "chi",
         pon: key === "pon",
         minkan: key === "minkan",

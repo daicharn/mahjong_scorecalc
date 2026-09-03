@@ -1,6 +1,7 @@
-import {Hai} from 'mahjong_engine';
+import {Hai, Meld, Melds} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
+import {MeldType} from 'mahjong_engine';
 import {useState} from 'react';
 import {useMemo} from 'react';
 
@@ -10,7 +11,7 @@ import TehaiView from './components/TehaiView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
-import {resType} from './TypeDefs';
+import {NakiMode, resType} from './TypeDefs';
 import NakiView from './components/NakiView';
 
 async function GetCalcData(haiids: number[]){
@@ -26,17 +27,27 @@ async function GetCalcData(haiids: number[]){
   return data;
 }
 
+function getMeldType(nakiMode: NakiMode): MeldType{
+  if(nakiMode.chi) return MeldType.CHI;
+  if(nakiMode.pon) return MeldType.PON;
+  if(nakiMode.minkan) return MeldType.MINKAN;
+  if(nakiMode.ankan) return MeldType.ANKAN;
+  return MeldType.PON;
+}
+
 function App() {
   const [hais, setHaiIds] = useState<Hais>(new Hais());
+  const [melds, setMelds] = useState<Meld[]>([]);
   const [machiHais, setmachiHais] = useState<Hai[]>([]);
   const [result, setResult] = useState<resType>();
   const [loading, setLoading] = useState(false);
   const [nakiMode, setNakiMode] = useState({
+    none: true,
     chi: false,
     pon: false,
     minkan: false,
     ankan: false
-});
+  });
 
   const allTiles = useMemo(() => {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
@@ -67,7 +78,11 @@ function App() {
     else{
       setmachiHais([]);
     }
-  }
+  };
+
+  const addMelds = (id: number) => {
+    setMelds(prev => [...prev, Meld.from(id, getMeldType(nakiMode))]);
+  };
 
   const addHai = (id: number) => updateHais(h => h.push(id));
   const removeHai = (id: number) => updateHais(h => h.remove(id));
@@ -77,9 +92,9 @@ function App() {
       <TehaiView hais={hais} onRemoveHai={removeHai} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
-      <TehaiInputView hais={hais} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai}/>
+      <TehaiInputView hais={hais} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
       <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
-      <NakiView />
+      <NakiView melds={melds} allTiles={allTiles} />
     </div>
   );
 }
