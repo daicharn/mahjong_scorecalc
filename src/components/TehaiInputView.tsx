@@ -8,7 +8,6 @@ export default function TehaiInputView({ hais, melds, allTiles, machiHais, nakiM
     Array.from({length: 9}, (_, c) => r * 9 + c)
   );
   const handState = new HandState(hais, melds);
-  const fourIds = new Set(handState.getUsedLimitHais(0).map(h => h.getId()));
   const machiIds = new Set(machiHais.map(h => h.getId()));
   const isNakiMode = !nakiMode.none;
 
@@ -20,7 +19,7 @@ export default function TehaiInputView({ hais, melds, allTiles, machiHais, nakiM
           .filter(i => !(r === 3 && i % 9 >= 7))
           .map(i => (
           <div key={i} className='tehai_cell'>
-          {handState.canShowTile(i + 1, fourIds, machiIds, nakiMode)
+          {handState.canShowTile(i + 1, machiIds, nakiMode)
             ?(<img src={"images/" + allTiles[i].imageUrl} onClick={() => isNakiMode ? addMelds(i + 1) : onAddHai(i + 1)}></img>)
             :(<img src={"images/" + allTiles[34].imageUrl}></img>)
           }

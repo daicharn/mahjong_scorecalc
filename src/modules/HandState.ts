@@ -2,20 +2,26 @@ import { Hai, Hais, Meld, MeldType, TILE } from "mahjong_engine";
 import { NakiMode } from "./TypeDefs";
 
 export class HandState{
-    public hais: Hais;
-    public melds: Meld[];
+    private hais: Hais;
+    private melds: Meld[];
+    private fourIds: Set<number>;
     constructor(hais: Hais, melds: Meld[]){
         this.hais = hais;
         this.melds = melds;
+        this.fourIds = this.getFourIds();
     }
 
-    private getNumNaki(haiId: number, melds: Meld[]): number{
+    private getFourIds(): Set<number>{
+        return new Set(this.getUsedLimitHais(0).map(h => h.getId()));
+    }
+
+    private getNumNaki(haiId: number): number{
       let nakiCount = 0;
-      melds.forEach(meld => {
+      this.melds.forEach(meld => {
         const minId = meld.minHai.getId();
         switch(meld.getType()){
           case MeldType.CHI:
-            if([minId, minId + 1, minId + 2].includes(haiId)) nakiCount++;
+            if(haiId >= minId && haiId <= minId + 2) nakiCount++;
             break;
           case MeldType.PON:
             if(haiId === minId) nakiCount += 3;
@@ -58,17 +64,16 @@ export class HandState{
         .filter(h => {
           const haiId = h.getId();
           const countInHand = this.hais.count(haiId);
-          const countInNaki = this.getNumNaki(haiId, this.melds);
+          const countInNaki = this.getNumNaki(haiId);
           return countInNaki + countInHand >= 4 - value
         });
     
-      console.log(usedMelds);
       return [...usedHais, ...usedMelds];
     }
     
-    private isNotChiLimit(haiId: number, fourIds: Set<number>): boolean{
-      const fiveArray = Array.from({length: 3} , (_, i) => haiId + i);
-      const isNotFour = fiveArray.every(n => !fourIds.has(n));
+    private isNotChiLimit(haiId: number): boolean{
+      const chiRange = Array.from({length: 3} , (_, i) => haiId + i);
+      const isNotFour = chiRange.every(n => !this.fourIds.has(n));
       const isShuntsuHai = ((haiId - 1) % 9 < 7) && haiId < TILE.JIHAI[0]
     
       return isNotFour && isShuntsuHai;
@@ -84,17 +89,17 @@ export class HandState{
       return !limitHais.includes(haiId);
     }
     
-    private isNotNakiLimit(haiId: number, fourIds: Set<number>, nakiMode: NakiMode): boolean{
-      if(nakiMode.chi) return this.isNotChiLimit(haiId, fourIds);
+    private isNotNakiLimit(haiId: number, nakiMode: NakiMode): boolean{
+      if(nakiMode.chi) return this.isNotChiLimit(haiId);
       else if(nakiMode.pon) return this.isNotPonLimit(haiId);
       else if(nakiMode.minkan || nakiMode.ankan) return this.isNotKanLimit(haiId);
       return true;
     }
     
-    public canShowTile(haiId: number, fourIds: Set<number>, machiIds: Set<number>, nakiMode: NakiMode): boolean {
+    public canShowTile(haiId: number, machiIds: Set<number>, nakiMode: NakiMode): boolean {
       const isMachi = machiIds.size === 0 || machiIds.has(haiId);
-      const isNotFour = !fourIds.has(haiId);
+      const isNotFour = !this.fourIds.has(haiId);
     
-      return isMachi && isNotFour && this.isNotNakiLimit(haiId, fourIds, nakiMode);
+      return isMachi && isNotFour && this.isNotNakiLimit(haiId, nakiMode);
     }
 }
