@@ -84,6 +84,10 @@ function App() {
     setMelds(prev => [...prev, Meld.from(id, getMeldType(nakiMode))]);
   };
 
+  const removeMelds = (index: number) => {
+    setMelds(prev => prev.toSpliced(index, 1));
+  };
+
   const addHai = (id: number) => updateHais(h => h.push(id));
   const removeHai = (id: number) => updateHais(h => h.remove(id));
 
@@ -94,7 +98,7 @@ function App() {
       <ResultView result={result} />
       <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
       <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
-      <NakiView melds={melds} allTiles={allTiles} />
+      <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
     </div>
   );
 }
