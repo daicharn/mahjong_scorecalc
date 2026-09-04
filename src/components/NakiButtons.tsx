@@ -1,4 +1,4 @@
-import {NakiKey, NakiMode} from '../TypeDefs';
+import {NakiKey, NakiMode} from '../modules/TypeDefs';
 
 const nakiList: { key: NakiKey; label: string }[] = [
   { key: "chi", label: "チー" },

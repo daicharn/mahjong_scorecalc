@@ -1,4 +1,4 @@
-import {resType} from '../TypeDefs';
+import {resType} from '../modules/TypeDefs';
 
 export default function ResultView({ result }: { result: resType | undefined }){
   if(!result) return null;

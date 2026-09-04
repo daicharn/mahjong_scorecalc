@@ -11,7 +11,7 @@ import TehaiView from './components/TehaiView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
-import {NakiMode, resType} from './TypeDefs';
+import {NakiMode, resType} from './modules/TypeDefs';
 import NakiView from './components/NakiView';
 
 async function GetCalcData(haiids: number[]){
@@ -92,7 +92,7 @@ function App() {
       <TehaiView hais={hais} onRemoveHai={removeHai} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
-      <TehaiInputView hais={hais} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
+      <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
       <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} />
     </div>

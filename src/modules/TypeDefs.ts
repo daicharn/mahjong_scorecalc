@@ -1,4 +1,4 @@
-import {YakuContext} from 'mahjong_engine';
+import { YakuContext } from 'mahjong_engine';
 
 type scoreRes = {
     han: number,
