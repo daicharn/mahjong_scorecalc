@@ -13,19 +13,7 @@ import ResultView from './components/ResultView';
 
 import {NakiMode, resType} from './modules/TypeDefs';
 import NakiView from './components/NakiView';
-
-async function GetCalcData(haiids: number[]){
-  const res = await fetch("https://mahjong-api.daicharn.deno.net/calc", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      haiIds: haiids
-    })
-  });
-
-  const data: resType = await res.json();
-  return data;
-}
+import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 
 function getMeldType(nakiMode: NakiMode): MeldType{
   if(nakiMode.chi) return MeldType.CHI;
@@ -62,7 +50,7 @@ function App() {
     if(newHais.length === 14){
       setLoading(true);
 
-      const data = await GetCalcData(newHais.ids);
+      const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids).get();
       setResult(data);
 
       setLoading(false);
