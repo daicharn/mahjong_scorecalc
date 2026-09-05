@@ -14,14 +14,7 @@ import ResultView from './components/ResultView';
 import {NakiMode, resType} from './modules/TypeDefs';
 import NakiView from './components/NakiView';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
-
-function getMeldType(nakiMode: NakiMode): MeldType{
-  if(nakiMode.chi) return MeldType.CHI;
-  if(nakiMode.pon) return MeldType.PON;
-  if(nakiMode.minkan) return MeldType.MINKAN;
-  if(nakiMode.ankan) return MeldType.ANKAN;
-  return MeldType.PON;
-}
+import { MeldUtils } from './modules/MeldUtils';
 
 function App() {
   const [hais, setHaiIds] = useState<Hais>(new Hais());
@@ -69,7 +62,7 @@ function App() {
   };
 
   const addMelds = (id: number) => {
-    setMelds(prev => [...prev, Meld.from(id, getMeldType(nakiMode))]);
+    setMelds(prev => [...prev, Meld.from(id, MeldUtils.getMeldType(nakiMode))]);
   };
 
   const removeMelds = (index: number) => {
