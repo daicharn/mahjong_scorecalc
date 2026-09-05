@@ -41,6 +41,13 @@ body{
 .tehai_cell{
     margin: 0 2px;
 }
+.hai_image{
+    width: 66px;
+    height: 90px;
+}
+.hai_image.rotate90{
+    transform: rotate(90deg) translateY(13%);
+}
 
 .naki_btn_list{
     display: flex;
@@ -77,15 +84,27 @@ body{
 .naki_list{
     position: absolute;
     width: 80%;
-    height: 100px;
+    height: 120px;
     left: 0;
     right: 0;
     bottom: 0;
     margin: 0 auto;
+
     display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
     background-color: #929292;
     border: 3px solid #505050;
     border-radius: 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.naki_block{
+    flex-shrink: 0;
+    padding-left: 25px;
+    margin: 0 10px;
 }
 
 @keyframes spin {

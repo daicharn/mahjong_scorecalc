@@ -20,8 +20,8 @@ export default function TehaiInputView({ hais, melds, allTiles, machiHais, nakiM
           .map(i => (
           <div key={i} className='tehai_cell'>
           {handState.canShowTile(i + 1, machiIds, nakiMode)
-            ?(<img src={"images/" + allTiles[i].imageUrl} onClick={() => isNakiMode ? addMelds(i + 1) : onAddHai(i + 1)}></img>)
-            :(<img src={"images/" + allTiles[34].imageUrl}></img>)
+            ?(<img className='hai_image' src={"images/" + allTiles[i].imageUrl} onClick={() => isNakiMode ? addMelds(i + 1) : onAddHai(i + 1)}></img>)
+            :(<img className='hai_image' src={"images/" + allTiles[34].imageUrl}></img>)
           }
           </div>
         ))}
