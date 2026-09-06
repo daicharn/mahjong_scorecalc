@@ -46,10 +46,10 @@ function App() {
     if(newHais.length === HaiNum){
       setLoading(true);
 
-      const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids, melds).get();
-      setResult(data);
+      //const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids, melds).get();
+      //setResult(data);
 
-      setLoading(false);
+      //setLoading(false);
     }
     else{
       setResult(undefined);
@@ -102,6 +102,7 @@ function App() {
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <div className='reset_btn' onClick={() => resetAll()}>すべてリセット</div>
+      {loading && <div className="overlay"></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
     </div>
   );
