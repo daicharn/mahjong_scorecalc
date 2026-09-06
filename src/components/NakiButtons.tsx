@@ -8,8 +8,10 @@ const nakiList: { key: NakiKey; label: string }[] = [
 ];
 
 
-export default function NakiButtons({nakiMode, setNakiMode}: {nakiMode: NakiMode, setNakiMode: React.Dispatch<React.SetStateAction<NakiMode>>}){
+export default function NakiButtons({canNaki, nakiMode, setNakiMode}: {canNaki: boolean, haiLength: number, nakiMode: NakiMode, setNakiMode: React.Dispatch<React.SetStateAction<NakiMode>>}){
   const toggleExclusive = (key: NakiKey) => {
+    if(!canNaki) return;
+
     setNakiMode(prev => {
       const isSame = prev[key] === true;
 
@@ -32,8 +34,8 @@ export default function NakiButtons({nakiMode, setNakiMode}: {nakiMode: NakiMode
       {nakiList.map(({key, label}) => (
         <div
           key={key}
-          className={`naki_btn naki_btn_${key} ${nakiMode[key] ? "active": ""}`}
-          onClick={() => toggleExclusive(key)}
+          className={`naki_btn naki_btn_${key} ${nakiMode[key] ? "active": ""} ${canNaki ? "" : "disable"}`}
+          onClick={() => canNaki ? toggleExclusive(key) : ""}
         >
           {label}
         </div>

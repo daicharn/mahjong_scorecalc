@@ -31,6 +31,7 @@ function App() {
   });
 
   const HaiNum = 14 - (melds.length * 3);
+  const canNaki = HaiNum - hais.length > 4;
 
   const allTiles = useMemo(() => {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
@@ -74,13 +75,24 @@ function App() {
   const addHai = (id: number) => updateHais(h => h.push(id));
   const removeHai = (id: number) => updateHais(h => h.remove(id));
 
+  
+  if (!canNaki && !nakiMode.none) {
+    setNakiMode({
+      none: true,
+      chi: false,
+      pon: false,
+      minkan: false,
+      ankan: false,
+    });
+  }
+
   return (
     <div className="App">
       <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
       <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
-      <NakiButtons nakiMode={nakiMode} setNakiMode={setNakiMode} />
+      <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
     </div>
   );
