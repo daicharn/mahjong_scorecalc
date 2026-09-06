@@ -4,7 +4,7 @@ export default function ResultView({ result, setShowResult }: { result: resType 
   if(!result) return null;
   if(!result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
   return (
-    <div className='result_views'>
+    <div className='result_views fade_in'>
       <div className='result_view'>
         <h2>役</h2>
         <p>{result.scoreResultObj.han}翻</p>

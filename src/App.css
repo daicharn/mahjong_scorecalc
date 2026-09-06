@@ -21,6 +21,17 @@ body{
 
     background: rgb(32, 32, 32);
     z-index: 2;
+
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .result_view{
     margin-right: 100px;
