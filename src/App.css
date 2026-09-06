@@ -93,7 +93,7 @@ body{
 .naki_btn.disable{
     background-color: #8a8a8a;
 }
-.naki_btn:hover, .reset_btn:hover{
+.naki_btn:hover, .reset_btn:hover, .close_btn:hover{
     opacity: 0.7;
 }
 .naki_btn.disable:hover{
