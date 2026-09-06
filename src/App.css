@@ -13,6 +13,14 @@ body{
 
 .result_views{
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgb(32, 32, 32);
+    z-index: 2;
 }
 .result_view{
     margin-right: 100px;
@@ -66,7 +74,7 @@ body{
     display: flex;
     justify-content: center;
 }
-.naki_btn, .reset_btn{
+.naki_btn, .reset_btn, .close_btn{
     text-align: center;
     padding: 10px 50px;
     margin: 10px;
@@ -127,13 +135,18 @@ body{
     margin: 0 10px;
 }
 
-.reset_btn{
+.reset_btn, .close_btn{
     position: absolute;
     top: 0;
     right: 0;
     padding: 10px;
     width: 120px;
+}
+.reset_btn{
     background-color: #b1331d;
+}
+.close_btn{
+    background-color: #129400;
 }
 
 .overlay {

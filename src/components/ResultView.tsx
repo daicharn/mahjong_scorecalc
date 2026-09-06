@@ -1,6 +1,6 @@
 import {resType} from '../modules/TypeDefs';
 
-export default function ResultView({ result }: { result: resType | undefined }){
+export default function ResultView({ result, setShowResult }: { result: resType | undefined, setShowResult: (isShow: boolean) => void}){
   if(!result) return null;
   if(!result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
   return (
@@ -30,6 +30,7 @@ export default function ResultView({ result }: { result: resType | undefined }){
         <p>親ツモ: {result.scoreResultObj.tensuu.tsumoOya}オール</p>
         <p>子ツモ: 親{result.scoreResultObj.tensuu.tsumoKo.oya} / 子{result.scoreResultObj.tensuu.tsumoKo.ko}</p>
       </div>
+      <div className='close_btn' onClick={() => setShowResult(false)}>閉じる</div>
     </div>
   );
 }

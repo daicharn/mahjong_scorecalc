@@ -22,6 +22,7 @@ function App() {
   const [machiHais, setmachiHais] = useState<Hai[]>([]);
   const [result, setResult] = useState<resType>();
   const [loading, setLoading] = useState(false);
+  const [showResult, setShowResult] = useState<boolean>(false);
   const [nakiMode, setNakiMode] = useState({
     none: true,
     chi: false,
@@ -45,11 +46,14 @@ function App() {
 
     if(newHais.length === HaiNum){
       setLoading(true);
-
-      //const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids, melds).get();
-      //setResult(data);
-
-      //setLoading(false);
+      try{
+        const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids, melds).get();
+        setResult(data);
+        setShowResult(true);
+      }
+      finally{
+        setLoading(false);
+      }
     }
     else{
       setResult(undefined);
@@ -97,11 +101,11 @@ function App() {
   return (
     <div className="App">
       <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
-      <ResultView result={result} />
       <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <div className='reset_btn' onClick={() => resetAll()}>すべてリセット</div>
+      {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {loading && <div className="overlay"></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
     </div>
