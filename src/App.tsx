@@ -75,25 +75,34 @@ function App() {
   const addHai = (id: number) => updateHais(h => h.push(id));
   const removeHai = (id: number) => updateHais(h => h.remove(id));
 
-  
-  if (!canNaki && !nakiMode.none) {
-    setNakiMode({
+  const resetNakiMode = () => setNakiMode({
       none: true,
       chi: false,
       pon: false,
       minkan: false,
       ankan: false,
-    });
+  });
+
+  const resetAll = () => {
+    resetNakiMode();
+    setHaiIds(new Hais());
+    setMelds([]);
+    setmachiHais([]);
+  }
+  
+  if (!canNaki && !nakiMode.none) {
+    resetNakiMode();
   }
 
   return (
     <div className="App">
       <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
-      {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
       <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
+      <div className='reset_btn' onClick={() => resetAll()}>すべてリセット</div>
+      {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
     </div>
   );
 }
