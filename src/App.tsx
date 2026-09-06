@@ -30,6 +30,8 @@ function App() {
     ankan: false
   });
 
+  const HaiNum = 14 - (melds.length * 3);
+
   const allTiles = useMemo(() => {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
   }, []);
@@ -40,10 +42,10 @@ function App() {
     newHais.sort();
     setHaiIds(newHais);
 
-    if(newHais.length === 14){
+    if(newHais.length === HaiNum){
       setLoading(true);
 
-      const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids).get();
+      const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", newHais.ids, melds).get();
       setResult(data);
 
       setLoading(false);
@@ -52,7 +54,7 @@ function App() {
       setResult(undefined);
     }
 
-    if(newHais.length === 13){
+    if(newHais.length === HaiNum - 1){
       const machiHais = new MachiCalculator(newHais.getHais()).calculate().map(m => new Hai(m));
       setmachiHais(machiHais);
     }
@@ -74,7 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      <TehaiView hais={hais} onRemoveHai={removeHai} />
+      <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
       {loading && <div><div className="loader"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <ResultView result={result} />
       <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} onAddHai={addHai} addMelds={addMelds} />
