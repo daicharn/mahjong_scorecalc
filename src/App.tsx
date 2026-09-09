@@ -80,6 +80,8 @@ function App() {
   };
 
   const removeMelds = (index: number) => {
+    setMode(Mode.Normal);
+    setmachiHais([]);
     setMelds(prev => prev.toSpliced(index, 1));
   };
 
