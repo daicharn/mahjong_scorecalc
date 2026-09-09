@@ -1,5 +1,5 @@
 import { Hai, Hais, Meld, MeldType, TILE } from "mahjong_engine";
-import { NakiMode } from "./TypeDefs";
+import { Mode, NakiMode } from "./TypeDefs";
 
 export class HandState{
     private hais: Hais;
@@ -96,10 +96,11 @@ export class HandState{
       return true;
     }
     
-    public canShowTile(haiId: number, machiIds: Set<number>, nakiMode: NakiMode): boolean {
+    public canShowTile(haiId: number, machiIds: Set<number>, hais: Hais, mode: Mode, nakiMode: NakiMode): boolean {
       const isMachi = machiIds.size === 0 || machiIds.has(haiId);
       const isNotFour = !this.fourIds.has(haiId);
+      const isAgari = !(mode === Mode.Agari) || hais.ids.includes(haiId);
     
-      return isMachi && isNotFour && this.isNotNakiLimit(haiId, nakiMode);
+      return isMachi && isNotFour && isAgari && this.isNotNakiLimit(haiId, nakiMode) 
     }
 }
