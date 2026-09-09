@@ -21,7 +21,12 @@ type scoreRes = {
     }[]
 }
 
-export type resType = {contextMax: YakuContext, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
+export enum Mode {
+  Normal = "normal",
+  Naki = "naki",
+  Agari = "agari"
+};
 
+export type resType = {contextMax: YakuContext, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
 export type NakiKey = "none" | "chi" | "pon" | "minkan" | "ankan";
 export type NakiMode = Record<NakiKey, boolean>;

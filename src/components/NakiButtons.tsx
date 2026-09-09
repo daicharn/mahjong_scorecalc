@@ -1,4 +1,4 @@
-import {NakiKey, NakiMode} from '../modules/TypeDefs';
+import { Mode, NakiKey, NakiMode } from '../modules/TypeDefs';
 
 const nakiList: { key: NakiKey; label: string }[] = [
   { key: "chi", label: "チー" },
@@ -7,18 +7,19 @@ const nakiList: { key: NakiKey; label: string }[] = [
   { key: "ankan", label: "暗槓" },
 ];
 
+type NakiProps = {canNaki: boolean, haiLength: number, nakiMode: NakiMode, setMode: (mode: Mode) => void, setNakiMode: React.Dispatch<React.SetStateAction<NakiMode>>};
 
-export default function NakiButtons({canNaki, nakiMode, setNakiMode}: {canNaki: boolean, haiLength: number, nakiMode: NakiMode, setNakiMode: React.Dispatch<React.SetStateAction<NakiMode>>}){
+export default function NakiButtons({canNaki, nakiMode, setMode, setNakiMode}: NakiProps){
   const toggleExclusive = (key: NakiKey) => {
-    if(!canNaki) return;
-
     setNakiMode(prev => {
       const isSame = prev[key] === true;
 
       if(isSame){
+        setMode(Mode.Normal);
         return{none: true, chi: false, pon: false, minkan: false, ankan: false}
       }
 
+      setMode(Mode.Naki);
       return{
         none: false,
         chi: key === "chi",

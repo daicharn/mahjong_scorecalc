@@ -1,15 +1,29 @@
 import { Hai, Hais, Meld } from "mahjong_engine";
-import { NakiMode } from '../modules/TypeDefs';
+import { Mode, NakiMode } from '../modules/TypeDefs';
 import { HandState } from "../modules/HandState";
 
-export default function TehaiInputView({ hais, melds, allTiles, machiHais, nakiMode, onAddHai, addMelds }: 
-  { hais: Hais, melds: Meld[], allTiles: Hai[], machiHais: Hai[], nakiMode: NakiMode, onAddHai: (id: number) => void, addMelds: (id:number) => void}){
+type TehaiInputProps = { hais: Hais, melds: Meld[], allTiles: Hai[], machiHais: Hai[], nakiMode: NakiMode, mode: Mode, onAddHai: (id: number) => void, addMelds: (id:number) => void};
+
+function onTileClick(id: number, props: TehaiInputProps){
+  switch(props.mode){
+    case Mode.Normal:
+      props.onAddHai(id + 1);
+      break;
+    case Mode.Naki:
+      props.addMelds(id + 1);
+      break;
+    case Mode.Agari:
+    default:
+      break;
+  }
+}
+
+export default function TehaiInputView(props: TehaiInputProps){
   const rows = Array.from({length: 4}, (_, r) => 
     Array.from({length: 9}, (_, c) => r * 9 + c)
   );
-  const handState = new HandState(hais, melds);
-  const machiIds = new Set(machiHais.map(h => h.getId()));
-  const isNakiMode = !nakiMode.none;
+  const handState = new HandState(props.hais, props.melds);
+  const machiIds = new Set(props.machiHais.map(h => h.getId()));
 
   return (
     <div className='tehai_input'>
@@ -19,9 +33,9 @@ export default function TehaiInputView({ hais, melds, allTiles, machiHais, nakiM
           .filter(i => !(r === 3 && i % 9 >= 7))
           .map(i => (
           <div key={i} className='tehai_cell'>
-          {handState.canShowTile(i + 1, machiIds, nakiMode)
-            ?(<img className='hai_image' src={"images/" + allTiles[i].imageUrl} onClick={() => isNakiMode ? addMelds(i + 1) : onAddHai(i + 1)}></img>)
-            :(<img className='hai_image' src={"images/" + allTiles[34].imageUrl}></img>)
+          {handState.canShowTile(i + 1, machiIds, props.nakiMode)
+            ?(<img className='hai_image' src={"images/" + props.allTiles[i].imageUrl} onClick={() => onTileClick(i, props)}></img>)
+            :(<img className='hai_image' src={"images/" + props.allTiles[34].imageUrl}></img>)
           }
           </div>
         ))}
