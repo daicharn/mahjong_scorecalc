@@ -1,14 +1,16 @@
-import { Meld } from "mahjong_engine";
+import { Meld, PlayerContext } from "mahjong_engine";
 import { resType } from "./TypeDefs";
 
 export class MahjongAPIGetter{
     private url: string;
     private haiIds: number[];
     private melds: Meld[];
-    constructor(url: string, haiIds: number[], melds: Meld[]){
+    private ctx: PlayerContext;
+    constructor(url: string, haiIds: number[], melds: Meld[], ctx: PlayerContext){
         this.url = url;
         this.haiIds = haiIds;
         this.melds = melds;
+        this.ctx = ctx;
     }
 
     async get(){
@@ -20,7 +22,11 @@ export class MahjongAPIGetter{
           melds: this.melds.map(m => ({
             type: m.getType(),
             hais: m.getHais().map(h => h.getId())
-          }))
+          })),
+          agariHaiId: this.ctx.agariHai.getId(),
+          isTsumo: this.ctx.isTsumo,
+          playerWind: this.ctx.playerWind,
+          roundWind: this.ctx.roundWind
         })
       });
     

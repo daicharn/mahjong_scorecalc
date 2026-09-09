@@ -1,4 +1,4 @@
-import {Hai, Meld, Melds} from 'mahjong_engine';
+import {Hai, Meld, Melds, PlayerContext, TILE} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
 import {MeldType} from 'mahjong_engine';
@@ -47,7 +47,6 @@ function App() {
 
     if(newHais.length === HaiNum){
       setMode(Mode.Agari);
-      //ShowResultView();
     }
     else{
       setMode(Mode.Normal);
@@ -63,10 +62,11 @@ function App() {
     }
   };
 
-  const ShowResultView = async () => {
+  const showResultView = async (agariHaiId: number) => {
       setLoading(true);
       try{
-        const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", haiIds.ids, melds).get();
+        const ctx = new PlayerContext({agariHai: new Hai(agariHaiId), isTsumo: true, playerWind: TILE.WIND.EAST, roundWind: TILE.WIND.EAST});
+        const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", haiIds.ids, melds, ctx).get();
         setResult(data);
         setShowResult(true);
       }
@@ -110,7 +110,7 @@ function App() {
   return (
     <div className="App">
       <TehaiView hais={haiIds} haiNum={HaiNum} onRemoveHai={removeHai} />
-      <TehaiInputView hais={haiIds} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} />
+      <TehaiInputView hais={haiIds} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} showResultView={showResultView}/>
       <NakiButtons canNaki={canNaki} haiLength={haiIds.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <div className='reset_btn' onClick={() => resetAll()}>すべてリセット</div>

@@ -1,4 +1,4 @@
-import { YakuContext } from 'mahjong_engine';
+import { BlockHaisList } from 'mahjong_engine/dist/BlockHaisList';
 
 type scoreRes = {
     han: number,
@@ -27,6 +27,6 @@ export enum Mode {
   Agari = "agari"
 };
 
-export type resType = {contextMax: YakuContext, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
+export type resType = {blockObj: BlockHaisList, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
 export type NakiKey = "none" | "chi" | "pon" | "minkan" | "ankan";
 export type NakiMode = Record<NakiKey, boolean>;

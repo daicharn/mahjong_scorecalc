@@ -2,7 +2,17 @@ import { Hai, Hais, Meld } from "mahjong_engine";
 import { Mode, NakiMode } from '../modules/TypeDefs';
 import { HandState } from "../modules/HandState";
 
-type TehaiInputProps = { hais: Hais, melds: Meld[], allTiles: Hai[], machiHais: Hai[], nakiMode: NakiMode, mode: Mode, onAddHai: (id: number) => void, addMelds: (id:number) => void};
+type TehaiInputProps = { 
+  hais: Hais,
+  melds: Meld[],
+  allTiles: Hai[],
+  machiHais: Hai[],
+  nakiMode: NakiMode,
+  mode: Mode,
+  onAddHai: (id: number) => void,
+  addMelds: (id: number) => void,
+  showResultView: (agariHaiId: number) => void
+};
 
 function onTileClick(id: number, props: TehaiInputProps){
   switch(props.mode){
@@ -13,6 +23,8 @@ function onTileClick(id: number, props: TehaiInputProps){
       props.addMelds(id + 1);
       break;
     case Mode.Agari:
+      props.showResultView(id + 1);
+      break;
     default:
       break;
   }
