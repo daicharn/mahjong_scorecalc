@@ -15,6 +15,7 @@ import { Mode, resType } from './modules/TypeDefs';
 import NakiView from './components/NakiView';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
+import SettingsVIew from './components/SettingsView';
 
 function App() {
   const [hais, setHais] = useState<Hais>(new Hais());
@@ -24,6 +25,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [mode, setMode] = useState<Mode>(Mode.Normal);
+  const [showSettings, setShowSettings] = useState(false);
   const [nakiMode, setNakiMode] = useState({
     none: true,
     chi: false,
@@ -126,6 +128,7 @@ function App() {
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {loading && <div className="overlay"></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
+      <SettingsVIew showSettings={showSettings} setShowSettings={setShowSettings}/>
     </div>
   );
 }
