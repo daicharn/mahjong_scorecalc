@@ -36,7 +36,9 @@ export default function NakiButtons({canNaki, nakiMode, setMode, setNakiMode}: N
         <div
           key={key}
           className={`naki_btn naki_btn_${key} ${nakiMode[key] ? "active": ""} ${canNaki ? "" : "disable"}`}
-          onClick={() => canNaki ? toggleExclusive(key) : ""}
+          onClick={() => {
+            if(canNaki) toggleExclusive(key);
+          }}
         >
           {label}
         </div>

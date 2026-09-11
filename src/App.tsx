@@ -17,7 +17,7 @@ import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
 
 function App() {
-  const [haiIds, setHaiIds] = useState<Hais>(new Hais());
+  const [hais, setHais] = useState<Hais>(new Hais());
   const [melds, setMelds] = useState<Meld[]>([]);
   const [machiHais, setmachiHais] = useState<Hai[]>([]);
   const [result, setResult] = useState<resType>();
@@ -33,17 +33,16 @@ function App() {
   });
 
   const HaiNum = 14 - (melds.length * 3);
-  const canNaki = HaiNum - haiIds.length > 4;
+  const canNaki = HaiNum - hais.length > 4;
 
   const allTiles = useMemo(() => {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
   }, []);
 
   const updateHais = async (fn: (h: Hais) => void) => {
-    const newHais = new Hais(haiIds.ids);
+    const newHais = new Hais(hais.ids);
     fn(newHais);
     newHais.sort();
-    setHaiIds(newHais);
 
     if(newHais.length === HaiNum){
       setMode(Mode.Agari);
@@ -56,17 +55,24 @@ function App() {
     if(newHais.length === HaiNum - 1){
       const machiHais = new MachiCalculator(newHais.getHais()).calculate().map(m => new Hai(m));
       setmachiHais(machiHais);
+
+      if(machiHais.length === 0){
+        alert("その牌では聴牌になりません。");
+        return;
+      }
     }
     else{
       setmachiHais([]);
     }
+
+    setHais(newHais);
   };
 
   const showResultView = async (agariHaiId: number) => {
       setLoading(true);
       try{
         const ctx = new PlayerContext({agariHai: new Hai(agariHaiId), isTsumo: true, playerWind: TILE.WIND.EAST, roundWind: TILE.WIND.EAST});
-        const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", haiIds.ids, melds, ctx).get();
+        const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", hais.ids, melds, ctx).get();
         setResult(data);
         setShowResult(true);
       }
@@ -77,6 +83,12 @@ function App() {
 
   const addMelds = (id: number) => {
     setMelds(prev => [...prev, Meld.from(id, MeldUtils.getMeldType(nakiMode))]);
+    const nextHaiNum = HaiNum - 3;
+    const nextCanNaki = nextHaiNum - hais.length > 4;
+    if (!nextCanNaki) {
+      setMode(Mode.Normal);
+      resetNakiMode();
+    }
   };
 
   const removeMelds = (index: number) => {
@@ -99,21 +111,16 @@ function App() {
   const resetAll = () => {
     setMode(Mode.Normal);
     resetNakiMode();
-    setHaiIds(new Hais());
+    setHais(new Hais());
     setMelds([]);
     setmachiHais([]);
-  }
-  
-  if (!canNaki && !nakiMode.none) {
-    setMode(Mode.Normal);
-    resetNakiMode();
   }
 
   return (
     <div className="App">
-      <TehaiView hais={haiIds} haiNum={HaiNum} onRemoveHai={removeHai} />
-      <TehaiInputView hais={haiIds} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} showResultView={showResultView}/>
-      <NakiButtons canNaki={canNaki} haiLength={haiIds.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
+      <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
+      <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} showResultView={showResultView}/>
+      <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <div className='reset_btn' onClick={() => resetAll()}>すべてリセット</div>
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
