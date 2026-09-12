@@ -176,7 +176,7 @@ body{
     position: absolute;
     top: 0;
     left: -500px;
-    transition: transform .5s ease;
+    transition: left .5s ease;
 }
 .settings_tab{
     position: relative;
@@ -231,7 +231,7 @@ body{
     transition: transform .5s ease;
 }
 .settings_view.open{
-    transform: translateX(500px);
+    left: 0;
 }
 
 @keyframes spin {
