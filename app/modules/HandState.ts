@@ -99,8 +99,11 @@ export class HandState{
     public canShowTile(haiId: number, machiIds: Set<number>, hais: Hais, mode: Mode, nakiMode: NakiMode): boolean {
       const isMachi = machiIds.size === 0 || machiIds.has(haiId);
       const isNotFour = !this.fourIds.has(haiId);
-      const isAgari = !(mode === Mode.Agari) || hais.ids.includes(haiId);
     
-      return isMachi && isNotFour && isAgari && this.isNotNakiLimit(haiId, nakiMode) 
+      if(mode === Mode.Normal) return isMachi && isNotFour;
+      if(mode === Mode.Naki) return this.isNotNakiLimit(haiId, nakiMode);
+      if(mode === Mode.Agari) return hais.ids.includes(haiId);
+
+      return false;
     }
 }
