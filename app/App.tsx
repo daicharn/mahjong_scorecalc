@@ -1,3 +1,5 @@
+"use client";
+
 import {Hai, Meld, Melds, PlayerContext, TILE} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
