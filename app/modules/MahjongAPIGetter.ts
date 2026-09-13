@@ -26,7 +26,11 @@ export class MahjongAPIGetter{
           agariHaiId: this.ctx.agariHai.getId(),
           isTsumo: this.ctx.isTsumo,
           playerWind: this.ctx.playerWind,
-          roundWind: this.ctx.roundWind
+          roundWind: this.ctx.roundWind,
+          riichi: this.ctx.riichi,
+          daburii: this.ctx.daburii,
+          ippatsu: this.ctx.ippatsu,
+          kuitan: this.ctx.kuitan
         })
       });
     
