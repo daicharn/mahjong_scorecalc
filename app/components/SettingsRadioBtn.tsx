@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Radio } from "../modules/TypeDefs";
 
-type TypeRadio = {name: string, radio: Radio[], onChange: (name: string, value: string) => void}
+type TypeRadio = {name: string, radio: Radio[], disable: boolean, onChange: (name: string, value: string) => void}
 
 export default function SettingRadioBtn(props : TypeRadio){
   const [selected, setSelected] = useState<String>(props.radio[0].value);
@@ -10,15 +10,24 @@ export default function SettingRadioBtn(props : TypeRadio){
     setSelected(value);
     props.onChange(props.name, value);
   }
+
+  if(props.disable && selected !== props.radio[0].value){
+    setSelected(props.radio[0].value);
+  }
+
   return (
     <div className={`setting_radio ${props.name}`}>
-      {props.radio.map((r, i) => (
-        <label key={i} className={`radio_box ${r.value === selected ? "active" : ""}`}>
-          <input type="radio" name={props.name} value={r.value} 
-            checked={r.value === selected} onChange={changeValue}/>
-          {r.label}
-        </label>
-      ))}
+      {props.radio.map((r, i) => {
+        const isActive = props.disable ? i === 0 : r.value === selected;
+        const isDisable = props.disable;
+        return (
+          <label key={i} className={`radio_box ${isActive ? "active" : ""} ${isDisable ? "disable": ""}`}>
+            <input type="radio" name={props.name} value={r.value} 
+              checked={isActive} onChange={isDisable ? undefined : changeValue}/>
+            {r.label}
+          </label>
+        );
+      })}
     </div>
   );
 }

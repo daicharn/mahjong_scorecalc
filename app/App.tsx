@@ -1,6 +1,6 @@
 "use client";
 
-import {Hai, Meld, Melds, PlayerContext, TILE} from 'mahjong_engine';
+import {Hai, Meld, Melds, PlayerContext, PlayerHand, TILE} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
 import {MeldType} from 'mahjong_engine';
@@ -141,7 +141,7 @@ function App() {
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {loading && <div className="overlay"></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <SettingsVIew showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      <SettingsVIew isMenzen={new PlayerHand(hais.getHais(), melds).isMenzen()} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
     </div>
   );
 }

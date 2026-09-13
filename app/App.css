@@ -269,6 +269,10 @@ body{
 .radio_box:hover{
     background-color: #292929;
 }
+.radio_box.disable{
+    background-color: #464646;
+    cursor: default;
+}
 .radio_box.active{
     background-color: #0282cc;
 }

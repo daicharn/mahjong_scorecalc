@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AgariVal, Radio, RiichiVal, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 
-type SettingsProps = {showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
+type SettingsProps = {isMenzen: boolean, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
 
 const agariButtons: Radio[] = [
     {
@@ -54,13 +54,13 @@ export default function SettingsVIew(props: SettingsProps){
     <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
       <div className="settings_panel">
         <p>アガリ</p>
-        <SettingRadioBtn name={"agari"} radio={agariButtons} onChange={props.setSettings} />
+        <SettingRadioBtn name={"agari"} radio={agariButtons} disable={false} onChange={props.setSettings} />
         <p>立直</p>
-        <SettingRadioBtn name={"riichi"} radio={riichiButtons} onChange={props.setSettings} />
+        <SettingRadioBtn name={"riichi"} radio={riichiButtons} disable={!props.isMenzen} onChange={props.setSettings} />
         <p>自風</p>
-        <SettingRadioBtn name={"playerwind"} radio={radioButtons} onChange={props.setSettings} />
+        <SettingRadioBtn name={"playerwind"} radio={radioButtons} disable={false} onChange={props.setSettings} />
         <p>場風</p>
-        <SettingRadioBtn name={"roundwind"} radio={radioButtons} onChange={props.setSettings}/>
+        <SettingRadioBtn name={"roundwind"} radio={radioButtons} disable={false} onChange={props.setSettings}/>
       </div>
       <div className="settings_tab" onClick={() => props.setShowSettings(!props.showSettings)}>
       </div>
