@@ -32,3 +32,28 @@ export type NakiKey = "none" | "chi" | "pon" | "minkan" | "ankan";
 export type NakiMode = Record<NakiKey, boolean>;
 
 export type Radio = {label: string, value: string};
+
+export type Settings = {
+  agari: string,
+  riichi: string,
+  playerwind: string,
+  roundwind: string
+}
+
+export enum AgariVal {
+  Tsumo = "tsumo",
+  Ron = "ron"
+}
+
+export enum RiichiVal {
+  None = "none",
+  Riichi = "riichi",
+  Daburii = "daburii"
+}
+
+export enum WindVal {
+  EAST = "east",
+  SOUTH = "south",
+  WEST = "west",
+  NORTH = "north"
+}

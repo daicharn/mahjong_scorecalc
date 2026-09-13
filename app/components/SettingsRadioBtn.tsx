@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { Radio } from "../modules/TypeDefs";
 
-export default function SettingRadioBtn(props : {name: string, radio: Radio[]}){
+type TypeRadio = {name: string, radio: Radio[], onChange: (name: string, value: string) => void}
+
+export default function SettingRadioBtn(props : TypeRadio){
   const [selected, setSelected] = useState<String>(props.radio[0].value);
-  const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => setSelected(event.target.value);
+  const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSelected(value);
+    props.onChange(props.name, value);
+  }
   return (
     <div className={`setting_radio ${props.name}`}>
       {props.radio.map((r, i) => (

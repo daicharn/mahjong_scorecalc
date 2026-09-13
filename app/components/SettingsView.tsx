@@ -1,50 +1,51 @@
-import { Radio } from "../modules/TypeDefs";
+import { useState } from "react";
+import { AgariVal, Radio, RiichiVal, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 
-type SettingsProps = {showSettings: boolean, setShowSettings: (isShow: boolean) => void};
+type SettingsProps = {showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
 
 const agariButtons: Radio[] = [
     {
       label: "ツモ",
-      value: "tsumo"
+      value: AgariVal.Tsumo
     },
     {
       label: "ロン",
-      value: "ron"
+      value: AgariVal.Ron
     }
 ]
 
 const riichiButtons: Radio[] = [
     {
       label: "なし",
-      value: "none"
+      value: RiichiVal.None
     },
     {
       label: "立直",
-      value: "riichi"
+      value: RiichiVal.Riichi
     },
     {
       label: "ダブル立直",
-      value: "daburii"
+      value: RiichiVal.Daburii
     },
 ]
 
 const radioButtons: Radio[] = [
     {
       label: "東",
-      value: "east"
+      value: WindVal.EAST
     },
     {
       label: "南",
-      value: "south"
+      value: WindVal.SOUTH
     },
     {
       label: "西",
-      value: "west"
+      value: WindVal.WEST
     },
     {
       label: "北",
-      value: "north"
+      value: WindVal.NORTH
     }
 ]
 
@@ -53,13 +54,13 @@ export default function SettingsVIew(props: SettingsProps){
     <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
       <div className="settings_panel">
         <p>アガリ</p>
-        <SettingRadioBtn name={"agari"} radio={agariButtons}/>
+        <SettingRadioBtn name={"agari"} radio={agariButtons} onChange={props.setSettings} />
         <p>立直</p>
-        <SettingRadioBtn name={"riichi"} radio={riichiButtons}/>
+        <SettingRadioBtn name={"riichi"} radio={riichiButtons} onChange={props.setSettings} />
         <p>自風</p>
-        <SettingRadioBtn name={"playerwind"} radio={radioButtons}/>
+        <SettingRadioBtn name={"playerwind"} radio={radioButtons} onChange={props.setSettings} />
         <p>場風</p>
-        <SettingRadioBtn name={"roundwind"} radio={radioButtons}/>
+        <SettingRadioBtn name={"roundwind"} radio={radioButtons} onChange={props.setSettings}/>
       </div>
       <div className="settings_tab" onClick={() => props.setShowSettings(!props.showSettings)}>
       </div>

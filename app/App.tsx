@@ -13,11 +13,12 @@ import TehaiView from './components/TehaiView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
-import { Mode, resType } from './modules/TypeDefs';
+import { Mode, resType, Settings } from './modules/TypeDefs';
 import NakiView from './components/NakiView';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
 import SettingsVIew from './components/SettingsView';
+import { MapSettingsToContext } from './modules/MapSettingsToContext';
 
 function App() {
   const [hais, setHais] = useState<Hais>(new Hais());
@@ -34,6 +35,12 @@ function App() {
     pon: false,
     minkan: false,
     ankan: false
+  });
+  const [settings, setSettings] = useState<Settings>({
+    agari: "tsumo",
+    riichi: "none",
+    playerwind: "east",
+    roundwind: "east"
   });
 
   const HaiNum = 14 - (melds.length * 3);
@@ -75,7 +82,7 @@ function App() {
   const showResultView = async (agariHaiId: number) => {
       setLoading(true);
       try{
-        const ctx = new PlayerContext({agariHai: new Hai(agariHaiId), isTsumo: true, playerWind: TILE.WIND.EAST, roundWind: TILE.WIND.EAST});
+        const ctx = new MapSettingsToContext(new Hai(agariHaiId), settings).toContext();
         const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", hais.ids, melds, ctx).get();
         setResult(data);
         setShowResult(true);
@@ -120,6 +127,10 @@ function App() {
     setmachiHais([]);
   }
 
+  const updateSetting = (name: string, value: string) => {
+    setSettings(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="App">
       <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
@@ -130,7 +141,7 @@ function App() {
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {loading && <div className="overlay"></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <SettingsVIew showSettings={showSettings} setShowSettings={setShowSettings}/>
+      <SettingsVIew showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
     </div>
   );
 }
