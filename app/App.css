@@ -183,7 +183,7 @@ body{
     left: 500px;
     width: 30px;
     height: 100vh;
-    background: rgba(221, 221, 221, 0.8);
+    background: rgba(221, 221, 221, 0.761);
 
     border: 1px solid #aaa;
     border-left: none;
@@ -225,7 +225,7 @@ body{
     position: fixed;
     width: 500px;
     height: 100vh;
-    background: #f0f0f0;
+    background: #bbbbbbd7;
     color: #131313;
     z-index: 3;
     transition: transform .5s ease;
@@ -267,7 +267,7 @@ body{
     background-color: #131313;
 }
 .radio_box:hover{
-    background-color: #2e2e2e;
+    background-color: #292929;
 }
 .radio_box.active{
     background-color: #0282cc;
