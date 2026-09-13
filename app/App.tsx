@@ -104,6 +104,7 @@ function App() {
 
   const removeMelds = (index: number) => {
     setMode(Mode.Normal);
+    resetNakiMode();
     setmachiHais([]);
     setMelds(prev => prev.toSpliced(index, 1));
   };
