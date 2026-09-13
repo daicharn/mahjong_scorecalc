@@ -230,8 +230,50 @@ body{
     z-index: 3;
     transition: transform .5s ease;
 }
+.settings_panel p{
+    margin-left: 30px;
+}
 .settings_view.open{
     left: 0;
+}
+
+.setting_radio{
+    display: flex;
+    width: fit-content;
+    margin-left: 25px;
+    border-radius: 5px;
+}
+.radio_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100px;
+    height: 30px;
+    margin: 5px;
+
+    background-color: #131313;
+    color: #f0f0f0;
+
+    cursor: pointer;
+    user-select: none;
+
+    border: 1px solid #505050;
+    border-radius: 5px;
+
+    transition: all .2s ease;
+}
+.setting_radio, .radio_box{
+    background-color: #131313;
+}
+.radio_box:hover{
+    background-color: #2e2e2e;
+}
+.radio_box.active{
+    background-color: #0282cc;
+}
+.radio_box input{
+    display: none;
 }
 
 @keyframes spin {

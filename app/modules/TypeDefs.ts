@@ -30,3 +30,5 @@ export enum Mode {
 export type resType = {blockObj: BlockHaisList, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
 export type NakiKey = "none" | "chi" | "pon" | "minkan" | "ankan";
 export type NakiMode = Record<NakiKey, boolean>;
+
+export type Radio = {label: string, value: string};
