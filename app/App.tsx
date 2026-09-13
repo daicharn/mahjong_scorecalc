@@ -13,7 +13,7 @@ import TehaiView from './components/TehaiView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
 
-import { Mode, resType, Settings } from './modules/TypeDefs';
+import { AgariVal, Mode, resType, RiichiVal, Settings, WindVal } from './modules/TypeDefs';
 import NakiView from './components/NakiView';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
@@ -37,10 +37,10 @@ function App() {
     ankan: false
   });
   const [settings, setSettings] = useState<Settings>({
-    agari: "tsumo",
-    riichi: "none",
-    playerwind: "east",
-    roundwind: "east"
+    agari: AgariVal.Tsumo,
+    riichi: RiichiVal.None,
+    playerwind: WindVal.EAST,
+    roundwind: WindVal.EAST
   });
 
   const HaiNum = 14 - (melds.length * 3);

@@ -10,18 +10,15 @@ export class MapSettingsToContext{
     }
 
     private isTsumo(): boolean{
-        if(this.settings.agari === AgariVal.Tsumo) return true;
-        return false;
+        return this.settings.agari === AgariVal.Tsumo;
     }
 
     private isRiichi(): boolean{
-        if(this.settings.riichi === RiichiVal.Riichi) return true;
-        return false;
+        return this.settings.riichi === RiichiVal.Riichi;
     }
 
     private isDaburii(): boolean{
-        if(this.settings.riichi === RiichiVal.Daburii) return true;
-        return false;
+        return this.settings.riichi === RiichiVal.Daburii;
     }
 
     private getWind(windStr: string): Wind{
