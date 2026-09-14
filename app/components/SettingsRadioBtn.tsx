@@ -11,7 +11,7 @@ export default function SettingRadioBtn(props : TypeRadio){
     props.onChange(props.name, value);
   }
 
-  if(props.disable && selected !== props.radio[0].value){
+  if((props.disable || props.noDisplay) && selected !== props.radio[0].value){
     const valueInit = props.radio[0].value
     setSelected(valueInit);
   }
