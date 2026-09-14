@@ -15,7 +15,7 @@ import ResultView from './components/ResultView';
 import NakiView from './components/NakiView';
 import SettingsVIew from './components/SettingsView';
 
-import { AgariVal, Mode, resType, RiichiVal, Settings, WindVal } from './modules/TypeDefs';
+import { AgariVal, BoolVal, Mode, resType, RiichiVal, Settings, WindVal } from './modules/TypeDefs';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
 import { MapSettingsToContext } from './modules/MapSettingsToContext';
@@ -40,6 +40,7 @@ function App() {
   const [settings, setSettings] = useState<Settings>({
     agari: AgariVal.Tsumo,
     riichi: RiichiVal.None,
+    ippatsu: BoolVal.False,
     playerwind: WindVal.EAST,
     roundwind: WindVal.EAST
   });
@@ -158,7 +159,7 @@ function App() {
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <SettingsVIew isMenzen={isMenzen} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      <SettingsVIew isMenzen={isMenzen} nonRiichi={settings.riichi === RiichiVal.None} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
     </div>
   );
 }

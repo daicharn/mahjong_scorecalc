@@ -36,6 +36,7 @@ export type Radio = {label: string, value: string};
 export type Settings = {
   agari: string,
   riichi: string,
+  ippatsu: string,
   playerwind: string,
   roundwind: string
 }
@@ -56,4 +57,9 @@ export enum WindVal {
   SOUTH = "south",
   WEST = "west",
   NORTH = "north"
+}
+
+export enum BoolVal {
+  True = "true",
+  False = "false"
 }
