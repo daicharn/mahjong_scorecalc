@@ -12,12 +12,12 @@ import NakiButtons from './components/NakiButtons';
 import TehaiView from './components/TehaiView';
 import TehaiInputView from './components/TehaiInputView';
 import ResultView from './components/ResultView';
+import NakiView from './components/NakiView';
+import SettingsVIew from './components/SettingsView';
 
 import { AgariVal, Mode, resType, RiichiVal, Settings, WindVal } from './modules/TypeDefs';
-import NakiView from './components/NakiView';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
-import SettingsVIew from './components/SettingsView';
 import { MapSettingsToContext } from './modules/MapSettingsToContext';
 
 function App() {
