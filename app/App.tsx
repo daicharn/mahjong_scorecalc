@@ -138,7 +138,15 @@ function App() {
   };
 
   const updateSetting = (name: string, value: string) => {
-    setSettings(prev => ({ ...prev, [name]: value }));
+    setSettings(prev => {
+      const next = { ...prev, [name]: value };
+
+      if(name === "riichi" && value === RiichiVal.None){
+        next.ippatsu = BoolVal.False;
+      }
+
+      return next;
+    });
   };
 
   const changeMenzen = (value: boolean) => {
