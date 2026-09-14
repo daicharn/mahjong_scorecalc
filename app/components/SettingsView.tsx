@@ -59,7 +59,7 @@ const windButtons: Radio[] = [
     }
 ]
 
-export default function SettingsVIew(props: SettingsProps){
+export default function SettingsView(props: SettingsProps){
   return (
     <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
       <div className="settings_panel">
