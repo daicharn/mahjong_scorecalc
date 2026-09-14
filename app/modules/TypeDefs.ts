@@ -1,4 +1,4 @@
-import { BlockHaisList } from 'mahjong_engine/dist/BlockHaisList';
+import { BlockHaisList } from 'mahjong_engine';
 
 type scoreRes = {
     han: number,
