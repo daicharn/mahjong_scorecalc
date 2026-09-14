@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AgariVal, Radio, RiichiVal, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 
