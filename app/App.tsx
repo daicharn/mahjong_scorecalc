@@ -29,6 +29,7 @@ function App() {
   const [showResult, setShowResult] = useState<boolean>(false);
   const [mode, setMode] = useState<Mode>(Mode.Normal);
   const [showSettings, setShowSettings] = useState(false);
+  const [isMenzen, setIsMenzen] = useState<boolean>(true);
   const [nakiMode, setNakiMode] = useState({
     none: true,
     chi: false,
@@ -93,7 +94,11 @@ function App() {
   };
 
   const addMelds = (id: number) => {
-    setMelds(prev => [...prev, Meld.from(id, MeldUtils.getMeldType(nakiMode))]);
+    const newMeld: Meld = Meld.from(id, MeldUtils.getMeldType(nakiMode));
+    const nextMelds: Meld[] = [...melds, newMeld];
+    setMelds(nextMelds);
+    changeMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
+
     const nextHaiNum = HaiNum - 3;
     const nextCanNaki = nextHaiNum - hais.length > 4;
     if (!nextCanNaki) {
@@ -103,10 +108,12 @@ function App() {
   };
 
   const removeMelds = (index: number) => {
+    const nextMelds: Meld[] = melds.toSpliced(index, 1);
     setMode(Mode.Normal);
     resetNakiMode();
     setmachiHais([]);
-    setMelds(prev => prev.toSpliced(index, 1));
+    setMelds(nextMelds);
+    changeMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
   };
 
   const addHai = (id: number) => updateHais(h => h.push(id));
@@ -126,10 +133,19 @@ function App() {
     setHais(new Hais());
     setMelds([]);
     setmachiHais([]);
-  }
+    changeMenzen(true);
+  };
 
   const updateSetting = (name: string, value: string) => {
     setSettings(prev => ({ ...prev, [name]: value }));
+  };
+
+  const changeMenzen = (value: boolean) => {
+    setIsMenzen(value);
+
+    if(!value){
+      updateSetting("riichi", RiichiVal.None);
+    }
   };
 
   return (
@@ -142,7 +158,7 @@ function App() {
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {loading && <div className="overlay"></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <SettingsVIew isMenzen={new PlayerHand(hais.getHais(), melds).isMenzen()} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      <SettingsVIew isMenzen={isMenzen} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
     </div>
   );
 }
