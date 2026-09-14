@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
 
 module.exports = {
   output: 'export',
+  basePath: '/product/mahjongScoreCalc',
+  assetPrefix: '/product/mahjongScoreCalc',
 };
 
 export default nextConfig;
