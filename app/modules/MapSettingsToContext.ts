@@ -1,5 +1,5 @@
 import { Hai, PlayerContext, TILE, Wind } from "mahjong_engine";
-import { AgariVal, RiichiVal, Settings, WindVal } from "./TypeDefs";
+import { AgariVal, BoolVal, RiichiVal, Settings, WindVal } from "./TypeDefs";
 
 export class MapSettingsToContext{
     private agariHai: Hai;
@@ -19,6 +19,10 @@ export class MapSettingsToContext{
 
     private isDaburii(): boolean{
         return this.settings.riichi === RiichiVal.Daburii;
+    }
+
+    private isIppatsu(): boolean{
+        return this.settings.ippatsu === BoolVal.True;
     }
 
     private getWind(windStr: string): Wind{
@@ -43,7 +47,8 @@ export class MapSettingsToContext{
             playerWind: this.getWind(this.settings.playerwind),
             roundWind: this.getWind(this.settings.roundwind),
             riichi: this.isRiichi(),
-            daburii: this.isDaburii()
+            daburii: this.isDaburii(),
+            ippatsu: this.isIppatsu()
         });
     }
 }
