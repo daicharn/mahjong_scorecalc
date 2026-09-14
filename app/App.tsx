@@ -156,7 +156,7 @@ function App() {
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <div className='reset_btn' onClick={() => resetAll()}>すべてリセット</div>
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
-      {loading && <div className="overlay"></div>}
+      {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <SettingsVIew isMenzen={isMenzen} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
     </div>
