@@ -231,10 +231,11 @@ body{
     background: #bbbbbbd7;
     color: #131313;
     z-index: 3;
-    transition: transform .5s ease;
+    transition: all .5s ease;
 }
 .settings_panel p{
     margin-left: 30px;
+    transition: transform .5s ease;
 }
 .settings_view.open{
     left: 0;
@@ -245,6 +246,29 @@ body{
     width: fit-content;
     margin-left: 25px;
     border-radius: 5px;
+    transition: all .5s ease;
+    overflow: hidden;
+
+    
+}
+.setting_item{
+    max-height: 100px;
+    opacity: 1;
+    transform: translateX(0);
+    overflow: hidden;
+
+    transition:
+        max-height .5s ease,
+        margin .5s ease,
+        opacity .5s ease,
+        transform .5s ease;
+}
+.setting_item.hidden{
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateX(-200%);
 }
 .radio_box{
     display: flex;
