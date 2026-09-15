@@ -63,16 +63,11 @@ export default function SettingsView(props: SettingsProps){
   return (
     <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
       <div className="settings_panel">
-        <p>アガリ</p>
-        <SettingRadioBtn name={"agari"} radio={agariButtons} onChange={props.setSettings} />
-        <p>立直</p>
-        <SettingRadioBtn name={"riichi"} radio={riichiButtons} disable={!props.isMenzen} onChange={props.setSettings} />
-        <p style={{display: props.nonRiichi ? "none": "block"}}>一発</p>
-        <SettingRadioBtn name={"ippatsu"} radio={ippatsuButtons} noDisplay={props.nonRiichi} onChange={props.setSettings} />
-        <p>自風</p>
-        <SettingRadioBtn name={"playerwind"} radio={windButtons} onChange={props.setSettings} />
-        <p>場風</p>
-        <SettingRadioBtn name={"roundwind"} radio={windButtons} onChange={props.setSettings}/>
+        <SettingRadioBtn label={"アガリ"} name={"agari"} radio={agariButtons} onChange={props.setSettings} />
+        <SettingRadioBtn label={"立直"} name={"riichi"} radio={riichiButtons} disable={!props.isMenzen} onChange={props.setSettings} />
+        <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.nonRiichi} onChange={props.setSettings} />
+        <SettingRadioBtn label={"自風"} name={"playerwind"} radio={windButtons} onChange={props.setSettings} />
+        <SettingRadioBtn label={"場風"} name={"roundwind"} radio={windButtons} onChange={props.setSettings}/>
       </div>
       <div className="settings_tab" onClick={() => props.setShowSettings(!props.showSettings)}>
       </div>

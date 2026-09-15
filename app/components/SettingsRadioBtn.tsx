@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Radio } from "../modules/TypeDefs";
 
-type TypeRadio = {name: string, radio: Radio[], disable?: boolean, noDisplay?: boolean, onChange: (name: string, value: string) => void}
+type TypeRadio = {label: string, name: string, radio: Radio[], disable?: boolean, hidden?: boolean, onChange: (name: string, value: string) => void}
 
 export default function SettingRadioBtn(props : TypeRadio){
   const [selected, setSelected] = useState<string>(props.radio[0].value);
@@ -11,26 +11,27 @@ export default function SettingRadioBtn(props : TypeRadio){
     props.onChange(props.name, value);
   }
 
-  if((props.disable || props.noDisplay) && selected !== props.radio[0].value){
+  if((props.disable || props.hidden) && selected !== props.radio[0].value){
     const valueInit = props.radio[0].value
     setSelected(valueInit);
   }
 
-  if(props.noDisplay) return;
-
   return (
-    <div className={`setting_radio ${props.name}`}>
-      {props.radio.map((r, i) => {
-        const isActive = props.disable ? i === 0 : r.value === selected;
-        const isDisable = props.disable;
-        return (
-          <label key={i} className={`radio_box ${isActive ? "active" : ""} ${isDisable ? "disable": ""}`}>
-            <input type="radio" name={props.name} value={r.value} 
-              checked={isActive} onChange={isDisable ? undefined : changeValue}/>
-            {r.label}
-          </label>
-        );
-      })}
+    <div className={`setting_item ${props.hidden ? "hidden" : ""}`}>
+      <p>{props.label}</p>
+      <div className={`setting_radio ${props.name}`}>
+        {props.radio.map((r, i) => {
+          const isActive = props.disable ? i === 0 : r.value === selected;
+          const isDisable = props.disable;
+          return (
+            <label key={i} className={`radio_box ${isActive ? "active" : ""} ${isDisable ? "disable": ""}`}>
+              <input type="radio" name={props.name} value={r.value} 
+                checked={isActive} onChange={isDisable ? undefined : changeValue}/>
+              {r.label}
+            </label>
+          );
+        })}
+      </div>
     </div>
   );
 }
