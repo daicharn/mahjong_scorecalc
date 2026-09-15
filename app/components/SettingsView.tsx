@@ -30,7 +30,7 @@ const riichiButtons: Radio[] = [
 ]
 
 const ippatsuButtons: Radio[] = [
-  {
+    {
       label: "なし",
       value: BoolVal.False
     },
