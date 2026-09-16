@@ -1,4 +1,4 @@
-import { BlockHaisList } from 'mahjong_engine';
+import { BlockHaisList, WinEvent } from 'mahjong_engine';
 
 type scoreRes = {
     han: number,
@@ -62,4 +62,14 @@ export enum WindVal {
 export enum BoolVal {
   True = "true",
   False = "false"
+}
+
+export enum OtherVal {
+  None = "none_other",
+  Tenho = "tenho",
+  Chiho = "chiho",
+  Rinshan = "rinshan",
+  chankan = "chankan",
+  haitei = "haitei",
+  houtei = "houtei"
 }

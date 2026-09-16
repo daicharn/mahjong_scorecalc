@@ -243,20 +243,19 @@ body{
 
 .setting_radio{
     display: flex;
+    flex-wrap: wrap;
+    max-width: 90%;
     width: fit-content;
     margin-left: 25px;
     border-radius: 5px;
     transition: all .5s ease;
     overflow: hidden;
-
-    
 }
 .setting_item{
     max-height: 100px;
     opacity: 1;
     transform: translateX(0);
-    overflow: hidden;
-
+    
     transition:
         max-height .5s ease,
         margin .5s ease,
@@ -269,12 +268,13 @@ body{
     margin-bottom: 0;
     opacity: 0;
     transform: translateX(-200%);
+    overflow: hidden;
 }
 .radio_box{
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     width: 100px;
     height: 30px;
     margin: 5px;

@@ -1,4 +1,4 @@
-import { AgariVal, BoolVal, Radio, RiichiVal, WindVal } from "../modules/TypeDefs";
+import { AgariVal, BoolVal, OtherVal, Radio, RiichiVal, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 
 type SettingsProps = {isMenzen: boolean, nonRiichi: boolean, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
@@ -59,6 +59,37 @@ const windButtons: Radio[] = [
     }
 ]
 
+const OtherButtons: Radio[] = [
+    {
+      label: "なし",
+      value: OtherVal.None
+    },
+    {
+      label: "天和",
+      value: OtherVal.Tenho
+    },
+    {
+      label: "地和",
+      value: OtherVal.Chiho
+    },
+    {
+      label: "嶺上開花",
+      value: OtherVal.Rinshan
+    },
+    {
+      label: "槍槓",
+      value: OtherVal.chankan
+    },
+    {
+      label: "海底",
+      value: OtherVal.haitei
+    },
+    {
+      label: "河底",
+      value: OtherVal.houtei
+    }
+]
+
 export default function SettingsView(props: SettingsProps){
   return (
     <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
@@ -68,6 +99,7 @@ export default function SettingsView(props: SettingsProps){
         <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.nonRiichi} onChange={props.setSettings} />
         <SettingRadioBtn label={"自風"} name={"playerwind"} radio={windButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"場風"} name={"roundwind"} radio={windButtons} onChange={props.setSettings}/>
+        <SettingRadioBtn label={"特殊役"} name={"other"} radio={OtherButtons} onChange={props.setSettings}/>
       </div>
       <div className="settings_tab" onClick={() => props.setShowSettings(!props.showSettings)}>
       </div>
