@@ -30,6 +30,7 @@ function App() {
   const [mode, setMode] = useState<Mode>(Mode.Normal);
   const [showSettings, setShowSettings] = useState(false);
   const [isMenzen, setIsMenzen] = useState<boolean>(true);
+  const [hasKantsu, setHasKantsu] = useState<boolean>(false);
   const [nakiMode, setNakiMode] = useState({
     none: true,
     chi: false,
@@ -100,6 +101,7 @@ function App() {
     const nextMelds: Meld[] = [...melds, newMeld];
     setMelds(nextMelds);
     setIsMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
+    setHasKantsu(nextMelds.some(m => m.isKantsu()));
 
     const nextHaiNum = HaiNum - 3;
     const nextCanNaki = nextHaiNum - hais.length > 4;
@@ -116,6 +118,7 @@ function App() {
     setmachiHais([]);
     setMelds(nextMelds);
     setIsMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
+    setHasKantsu(nextMelds.some(m => m.isKantsu()));
   };
 
   const addHai = (id: number) => updateHais(h => h.push(id));
@@ -136,6 +139,7 @@ function App() {
     setMelds([]);
     setmachiHais([]);
     setIsMenzen(true);
+    setHasKantsu(false);
   };
 
   const updateSetting = (name: string, value: string) => {
@@ -152,7 +156,7 @@ function App() {
       {showResult && <ResultView result={result} setShowResult={setShowResult}/>}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <SettingsView isMenzen={isMenzen} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
     </div>
   );
 }

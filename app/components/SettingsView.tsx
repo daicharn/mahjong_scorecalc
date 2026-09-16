@@ -1,9 +1,12 @@
 import { AgariVal, BoolVal, OtherVal, Radio, RiichiVal, Settings, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 
-type SettingsProps = {isMenzen: boolean, settings: Settings, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
+type SettingsProps = {isMenzen: boolean, hasKantsu: boolean, settings: Settings, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
 
 export default function SettingsView(props: SettingsProps){
+  const isTsumo = props.settings.agari === AgariVal.Tsumo;
+  const isRon = props.settings.agari === AgariVal.Ron;
+  
   const agariButtons: Radio[] = [
     {
       label: "ツモ",
@@ -80,32 +83,32 @@ export default function SettingsView(props: SettingsProps){
       {
         label: "天和",
         value: OtherVal.Tenho,
-        disable: false
+        disable: isRon
       },
       {
         label: "地和",
         value: OtherVal.Chiho,
-        disable: false
+        disable: isRon
       },
       {
         label: "嶺上開花",
         value: OtherVal.Rinshan,
-        disable: false
+        disable: isRon || !props.hasKantsu
       },
       {
         label: "槍槓",
         value: OtherVal.chankan,
-        disable: false
+        disable: isTsumo
       },
       {
         label: "海底",
         value: OtherVal.haitei,
-        disable: false
+        disable: isRon
       },
       {
         label: "河底",
         value: OtherVal.houtei,
-        disable: false
+        disable: isTsumo
       }
   ]
 
