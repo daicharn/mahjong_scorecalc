@@ -1,7 +1,7 @@
-import { AgariVal, BoolVal, OtherVal, Radio, RiichiVal, WindVal } from "../modules/TypeDefs";
+import { AgariVal, BoolVal, OtherVal, Radio, RiichiVal, Settings, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 
-type SettingsProps = {isMenzen: boolean, nonRiichi: boolean, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
+type SettingsProps = {isMenzen: boolean, settings: Settings, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
 
 export default function SettingsView(props: SettingsProps){
   const agariButtons: Radio[] = [
@@ -114,7 +114,7 @@ export default function SettingsView(props: SettingsProps){
       <div className="settings_panel">
         <SettingRadioBtn label={"アガリ"} name={"agari"} radio={agariButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"立直"} name={"riichi"} radio={riichiButtons} onChange={props.setSettings} />
-        <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.nonRiichi} onChange={props.setSettings} />
+        <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.settings.riichi === RiichiVal.None} onChange={props.setSettings} />
         <SettingRadioBtn label={"自風"} name={"playerwind"} radio={windButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"場風"} name={"roundwind"} radio={windButtons} onChange={props.setSettings}/>
         <SettingRadioBtn label={"特殊役"} name={"other"} radio={OtherButtons} onChange={props.setSettings}/>

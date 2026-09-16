@@ -38,7 +38,8 @@ export type Settings = {
   riichi: string,
   ippatsu: string,
   playerwind: string,
-  roundwind: string
+  roundwind: string,
+  other: string
 }
 
 export enum AgariVal {
