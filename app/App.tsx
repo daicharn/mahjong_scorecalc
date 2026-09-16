@@ -98,7 +98,7 @@ function App() {
     const newMeld: Meld = Meld.from(id, MeldUtils.getMeldType(nakiMode));
     const nextMelds: Meld[] = [...melds, newMeld];
     setMelds(nextMelds);
-    changeMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
+    setIsMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
 
     const nextHaiNum = HaiNum - 3;
     const nextCanNaki = nextHaiNum - hais.length > 4;
@@ -114,7 +114,7 @@ function App() {
     resetNakiMode();
     setmachiHais([]);
     setMelds(nextMelds);
-    changeMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
+    setIsMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
   };
 
   const addHai = (id: number) => updateHais(h => h.push(id));
@@ -134,27 +134,11 @@ function App() {
     setHais(new Hais());
     setMelds([]);
     setmachiHais([]);
-    changeMenzen(true);
+    setIsMenzen(true);
   };
 
   const updateSetting = (name: string, value: string) => {
-    setSettings(prev => {
-      const next = { ...prev, [name]: value };
-
-      if(name === "riichi" && value === RiichiVal.None){
-        next.ippatsu = BoolVal.False;
-      }
-
-      return next;
-    });
-  };
-
-  const changeMenzen = (value: boolean) => {
-    setIsMenzen(value);
-
-    if(!value){
-      updateSetting("riichi", RiichiVal.None);
-    }
+    setSettings(prev => ({ ...prev, [name]: value }));
   };
 
   return (
