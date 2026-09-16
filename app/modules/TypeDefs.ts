@@ -31,7 +31,7 @@ export type resType = {blockObj: BlockHaisList, yakuMapObj: Record<string, numbe
 export type NakiKey = "none" | "chi" | "pon" | "minkan" | "ankan";
 export type NakiMode = Record<NakiKey, boolean>;
 
-export type Radio = {label: string, value: string};
+export type Radio = {label: string, value: string, disable: boolean};
 
 export type Settings = {
   agari: string,

@@ -3,68 +3,79 @@ import SettingRadioBtn from "./SettingsRadioBtn";
 
 type SettingsProps = {isMenzen: boolean, nonRiichi: boolean, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
 
-const agariButtons: Radio[] = [
+export default function SettingsView(props: SettingsProps){
+  const agariButtons: Radio[] = [
     {
       label: "ツモ",
-      value: AgariVal.Tsumo
+      value: AgariVal.Tsumo,
+      disable: false
     },
     {
       label: "ロン",
-      value: AgariVal.Ron
+      value: AgariVal.Ron,
+      disable: false
     }
-]
+  ]
 
-const riichiButtons: Radio[] = [
-    {
-      label: "なし",
-      value: RiichiVal.None
-    },
-    {
-      label: "立直",
-      value: RiichiVal.Riichi
-    },
-    {
-      label: "ダブル立直",
-      value: RiichiVal.Daburii
-    }
-]
+  const riichiButtons: Radio[] = [
+      {
+        label: "なし",
+        value: RiichiVal.None,
+        disable: false
+      },
+      {
+        label: "立直",
+        value: RiichiVal.Riichi,
+        disable: !props.isMenzen
+      },
+      {
+        label: "ダブル立直",
+        value: RiichiVal.Daburii,
+        disable: !props.isMenzen
+      }
+  ]
 
-const ippatsuButtons: Radio[] = [
-    {
-      label: "なし",
-      value: BoolVal.False
-    },
-    {
-      label: "あり",
-      value: BoolVal.True
-    }
-]
+  const ippatsuButtons: Radio[] = [
+      {
+        label: "なし",
+        value: BoolVal.False,
+        disable: false
+      },
+      {
+        label: "あり",
+        value: BoolVal.True,
+        disable: false
+      }
+  ]
 
-const windButtons: Radio[] = [
-    {
-      label: "東",
-      value: WindVal.EAST
-    },
-    {
-      label: "南",
-      value: WindVal.SOUTH
-    },
-    {
-      label: "西",
-      value: WindVal.WEST
-    },
-    {
-      label: "北",
-      value: WindVal.NORTH
-    }
-]
+  const windButtons: Radio[] = [
+      {
+        label: "東",
+        value: WindVal.EAST,
+        disable: false
+      },
+      {
+        label: "南",
+        value: WindVal.SOUTH,
+        disable: false
+      },
+      {
+        label: "西",
+        value: WindVal.WEST,
+        disable: false
+      },
+      {
+        label: "北",
+        value: WindVal.NORTH,
+        disable: false
+      }
+  ]
 
-export default function SettingsView(props: SettingsProps){
   return (
     <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
       <div className="settings_panel">
         <SettingRadioBtn label={"アガリ"} name={"agari"} radio={agariButtons} onChange={props.setSettings} />
-        <SettingRadioBtn label={"立直"} name={"riichi"} radio={riichiButtons} disable={!props.isMenzen} onChange={props.setSettings} />
+        <SettingRadioBtn label={"立直"} name={"riichi"} radio={riichiButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.nonRiichi} onChange={props.setSettings} />
         <SettingRadioBtn label={"自風"} name={"playerwind"} radio={windButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"場風"} name={"roundwind"} radio={windButtons} onChange={props.setSettings}/>
