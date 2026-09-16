@@ -12,15 +12,22 @@ export default function SettingRadioBtn(props : TypeRadio){
   }
 
   useEffect(() => {
-    const target = props.radio.find(r => r.value === selected);
     const init = props.radio[0].value;
-    const hidden = props.hidden && selected !== props.radio[0].value;
-    if(target?.disable || hidden){
+    if (props.hidden && selected !== init) {
       setSelected(init);
       props.onChange(props.name, init);
-      return;
     }
-  });
+  }, [props.hidden]);
+
+  useEffect(() => {
+    const target = props.radio.find(r => r.value === selected);
+    const init = props.radio[0].value;
+
+    if (target?.disable) {
+      setSelected(init);
+      props.onChange(props.name, init);
+    }
+  }, [props.radio]);
 
   return (
     <div className={`setting_item ${props.hidden ? "hidden" : ""}`}>
@@ -32,7 +39,7 @@ export default function SettingRadioBtn(props : TypeRadio){
           return (
             <label key={i} className={`radio_box ${isActive ? "active" : ""} ${isDisable ? "disable": ""}`}>
               <input type="radio" name={props.name} value={r.value} 
-                checked={isActive} onChange={isDisable ? undefined : changeValue}/>
+                checked={isActive} onChange={isDisable ? undefined : changeValue} readOnly={isDisable}/>
               {r.label}
             </label>
           );
