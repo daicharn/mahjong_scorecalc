@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Radio } from "../modules/TypeDefs";
 
-type TypeRadio = {label: string, name: string, radio: Radio[], disable?: boolean, hidden?: boolean, onChange: (name: string, value: string) => void}
+type TypeRadio = {label: string, name: string, radio: Radio[], hidden?: boolean, onChange: (name: string, value: string) => void}
 
 export default function SettingRadioBtn(props : TypeRadio){
   const [selected, setSelected] = useState<string>(props.radio[0].value);
@@ -11,18 +11,24 @@ export default function SettingRadioBtn(props : TypeRadio){
     props.onChange(props.name, value);
   }
 
-  if((props.disable || props.hidden) && selected !== props.radio[0].value){
-    const valueInit = props.radio[0].value
-    setSelected(valueInit);
-  }
+  useEffect(() => {
+    const target = props.radio.find(r => r.value === selected);
+    const init = props.radio[0].value;
+    const hidden = props.hidden && selected !== props.radio[0].value;
+    if(target?.disable || hidden){
+      setSelected(init);
+      props.onChange(props.name, init);
+      return;
+    }
+  });
 
   return (
     <div className={`setting_item ${props.hidden ? "hidden" : ""}`}>
       <p>{props.label}</p>
       <div className={`setting_radio ${props.name}`}>
         {props.radio.map((r, i) => {
-          const isActive = props.disable ? i === 0 : r.value === selected;
-          const isDisable = props.disable;
+          const isActive = r.disable ? i === 0 : r.value === selected;
+          const isDisable = r.disable;
           return (
             <label key={i} className={`radio_box ${isActive ? "active" : ""} ${isDisable ? "disable": ""}`}>
               <input type="radio" name={props.name} value={r.value} 
