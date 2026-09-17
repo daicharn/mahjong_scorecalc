@@ -299,6 +299,7 @@ body{
 .radio_box.disable{
     background-color: #464646;
     cursor: default;
+    pointer-events: none;
 }
 .radio_box.active{
     background-color: #0282cc;

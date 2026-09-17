@@ -30,7 +30,8 @@ export class MahjongAPIGetter{
           riichi: this.ctx.riichi,
           daburii: this.ctx.daburii,
           ippatsu: this.ctx.ippatsu,
-          kuitan: this.ctx.kuitan
+          kuitan: this.ctx.kuitan,
+          event: this.ctx.event
         })
       });
     
