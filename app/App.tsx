@@ -44,7 +44,8 @@ function App() {
     ippatsu: BoolVal.False,
     playerwind: WindVal.EAST,
     roundwind: WindVal.EAST,
-    other: OtherVal.None
+    other: OtherVal.None,
+    dora: 0
   });
 
   const HaiNum = 14 - (melds.length * 3);
@@ -142,7 +143,7 @@ function App() {
     setHasKantsu(false);
   };
 
-  const updateSetting = (name: string, value: string) => {
+  const updateSetting = (name: string, value: string | number) => {
     setSettings(prev => ({ ...prev, [name]: value }));
   };
 

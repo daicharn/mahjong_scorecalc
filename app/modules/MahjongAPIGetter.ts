@@ -31,7 +31,8 @@ export class MahjongAPIGetter{
           daburii: this.ctx.daburii,
           ippatsu: this.ctx.ippatsu,
           kuitan: this.ctx.kuitan,
-          event: this.ctx.event
+          event: this.ctx.event,
+          dora: this.ctx.dora
         })
       });
     
