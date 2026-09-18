@@ -39,7 +39,8 @@ export type Settings = {
   ippatsu: string,
   playerwind: string,
   roundwind: string,
-  other: string
+  other: string,
+  dora: number
 }
 
 export enum AgariVal {

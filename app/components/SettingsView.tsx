@@ -1,7 +1,8 @@
 import { AgariVal, BoolVal, OtherVal, Radio, RiichiVal, Settings, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
+import SettingsStepper from "./SettingsStepper";
 
-type SettingsProps = {isMenzen: boolean, hasKantsu: boolean, settings: Settings, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string) => void};
+type SettingsProps = {isMenzen: boolean, hasKantsu: boolean, settings: Settings, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string | number) => void};
 
 export default function SettingsView(props: SettingsProps){
   const isTsumo = props.settings.agari === AgariVal.Tsumo;
@@ -119,8 +120,9 @@ export default function SettingsView(props: SettingsProps){
         <SettingRadioBtn label={"立直"} name={"riichi"} radio={riichiButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.settings.riichi === RiichiVal.None} onChange={props.setSettings} />
         <SettingRadioBtn label={"自風"} name={"playerwind"} radio={windButtons} onChange={props.setSettings} />
-        <SettingRadioBtn label={"場風"} name={"roundwind"} radio={windButtons} onChange={props.setSettings}/>
-        <SettingRadioBtn label={"特殊役"} name={"other"} radio={OtherButtons} onChange={props.setSettings}/>
+        <SettingRadioBtn label={"場風"} name={"roundwind"} radio={windButtons} onChange={props.setSettings} />
+        <SettingRadioBtn label={"特殊役"} name={"other"} radio={OtherButtons} onChange={props.setSettings} />
+        <SettingsStepper label={"ドラ"} name={"dora"} start={0} min={0} max={52} onChange={props.setSettings} />
       </div>
       <div className="settings_tab" onClick={() => props.setShowSettings(!props.showSettings)}>
       </div>

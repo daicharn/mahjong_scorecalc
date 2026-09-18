@@ -63,7 +63,8 @@ export class MapSettingsToContext{
             riichi: this.isRiichi(),
             daburii: this.isDaburii(),
             ippatsu: this.isIppatsu(),
-            event: this.getWinEvent()
+            event: this.getWinEvent(),
+            dora: this.settings.dora
         });
     }
 }
