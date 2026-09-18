@@ -41,23 +41,17 @@ export class MapSettingsToContext{
     }
 
     private getWinEvent(){
-        switch(this.settings.other){
-            case OtherVal.Tenho:
-                return WinEvent.TENHO;
-            case OtherVal.Chiho:
-                return WinEvent.CHIHO;
-            case OtherVal.Rinshan:
-                return WinEvent.RINSHAN;
-            case OtherVal.chankan:
-                return WinEvent.CHANKAN;
-            case OtherVal.haitei:
-                return WinEvent.HAITEI;
-            case OtherVal.houtei:
-                return WinEvent.HOUTEI;
-            case OtherVal.None:
-            default:
-                return WinEvent.NONE;
-        }
+        const map: Record<string, WinEvent> = {
+            [OtherVal.Tenho]: WinEvent.TENHO,
+            [OtherVal.Chiho]: WinEvent.CHIHO,
+            [OtherVal.Rinshan]: WinEvent.RINSHAN,
+            [OtherVal.chankan]: WinEvent.CHANKAN,
+            [OtherVal.haitei]: WinEvent.HAITEI,
+            [OtherVal.houtei]: WinEvent.HOUTEI,
+            [OtherVal.None]: WinEvent.NONE,
+        };
+
+        return map[this.settings.other] ?? WinEvent.NONE;
     }
 
     public toContext(){
