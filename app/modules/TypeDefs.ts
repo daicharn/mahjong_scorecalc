@@ -1,24 +1,33 @@
 import { BlockHaisList, WinEvent } from 'mahjong_engine';
 
 type scoreRes = {
-    han: number,
-    fuBasic: number,
-    fuCeiled: number,
-    tensuu: {
-      ronOya: number,
-      ronKo: number,
-      tsumoOya: number,
-      tsumoKo: {
-        oya: number,
-        ko: number
-      }
-    },
-    fuDetail: {
-      name: string,
-      fu: number,
-      mentsuType?: number,
-      minHaiId?: number
+  han: number,
+  fuBasic: number,
+  fuCeiled: number,
+  tensuu: {
+    ronOya: number,
+    ronKo: number,
+    tsumoOya: number,
+    tsumoKo: {
+      oya: number,
+      ko: number
+    }
+  },
+  fuDetail: {
+    name: string,
+    fu: number,
+    mentsuType?: number,
+    minHaiId?: number
+  }[]
+}
+
+type blockRes = {
+  blocks: {
+    type: string,
+    hais: {
+      id: number
     }[]
+  }[]
 }
 
 export enum Mode {
@@ -27,7 +36,7 @@ export enum Mode {
   Agari = "agari"
 };
 
-export type resType = {blockObj: BlockHaisList, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
+export type resType = {blockObj: blockRes, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
 export type NakiKey = "none" | "chi" | "pon" | "minkan" | "ankan";
 export type NakiMode = Record<NakiKey, boolean>;
 
