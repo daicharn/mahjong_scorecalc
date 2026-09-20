@@ -38,10 +38,14 @@ body{
     opacity: 1;
   }
 }
+
 .result_tehai{
     margin: 30px;
+    max-width: 90%;
+    overflow-x: auto;
+    display: flex;
 }
-.result_tehai, .result_details{
+.result_details, .result_hai, .result_tehai_outer{
     display: flex;
     justify-content: center;
 }
@@ -49,11 +53,14 @@ body{
     margin: 0 30px;
 }
 .result_hai{
-    margin: 5px;
+    margin: 0 5px;
 }
-.result_hai_image{
+.result_hai_image, .naki_list_result .naki_block .hai_image{
     width: 60px;
     height: 80px;
+}
+.naki_list_result{
+    display: flex;
 }
 
 .loader{

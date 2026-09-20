@@ -154,7 +154,7 @@ function App() {
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <div className='reset_btn' onClick={() => resetAll()}>リセット</div>
-      {showResult && <ResultView result={result} allTiles={allTiles} setShowResult={setShowResult}/>}
+      {showResult && <ResultView result={result} melds={melds} allTiles={allTiles} setShowResult={setShowResult}/>}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>

@@ -1,19 +1,23 @@
-import { Hai } from 'mahjong_engine';
+import { Hai, Meld } from 'mahjong_engine';
 import {resType} from '../modules/TypeDefs';
+import { NakiViewResult } from './NakiView';
 
-export default function ResultView({ result, allTiles, setShowResult }: { result: resType | undefined, allTiles: Hai[] ,setShowResult: (isShow: boolean) => void}){
+export default function ResultView({ result, melds, allTiles, setShowResult }: { result: resType | undefined, melds: Meld[], allTiles: Hai[] ,setShowResult: (isShow: boolean) => void}){
   if(!result) return null;
   if(!result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
   return (
     <div className='result_view fade_in'>
-      <div className='result_tehai'>
-        {result.blockObj.blocks.map((block, i) => (
-          <div className="result_hai">
-            {block.hais.map((h, i) => (
-              <img key={i} className='result_hai_image' src={"images/" + allTiles[h.id - 1].imageUrl}></img>
-            ))}
-          </div>
-        ))}
+      <div className='result_tehai_outer'>
+        <div className='result_tehai'>
+          {result.blockObj.blocks.map((block, i) => (
+            <div key={i} className="result_hai">
+              {block.hais.map((h, i) => (
+                <img key={i} className='result_hai_image' src={"images/" + allTiles[h.id - 1].imageUrl}></img>
+              ))}
+            </div>
+          ))}
+          <NakiViewResult melds={melds} allTiles={allTiles} />
+        </div>
       </div>
       <div className='result_details'>
         <div className='result_detail'>

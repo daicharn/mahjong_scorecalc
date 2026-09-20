@@ -26,6 +26,17 @@ function makeAnkanBlock(meld: Meld, allTiles: Hai[]){
   )
 }
 
+export function NakiViewResult({ melds, allTiles } : { melds: Meld[], allTiles: Hai[]}){
+  return (
+    <div className="naki_list_result">
+      {melds.map((m, i) => (
+          <div key={i} className="naki_block">
+            {m.getType() === MeldType.ANKAN ? makeAnkanBlock(m, allTiles) : makeNakiBlock(m, allTiles)}
+          </div>
+      ))}
+    </div>
+  )
+}
 
 export default function NakiView({ melds, allTiles, removeMelds }: { melds: Meld[], allTiles: Hai[], removeMelds: (index: number) => void }){
     return (
