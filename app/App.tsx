@@ -63,7 +63,7 @@ function App() {
     if(newHais.length === HaiNum){
       setMode(Mode.Agari);
     }
-    else{
+    else if(mode === Mode.Agari){
       setMode(Mode.Normal);
       setResult(undefined);
     }
