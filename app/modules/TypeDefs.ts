@@ -1,4 +1,11 @@
-import { BlockHaisList, WinEvent } from 'mahjong_engine';
+import { BlockType, MeldType } from 'mahjong_engine';
+
+export type fuDetailObj = {
+  name: string,
+  fu: number,
+  mentsuType?: BlockType | MeldType,
+  minHaiId?: number
+}
 
 type scoreRes = {
   han: number,
@@ -13,12 +20,7 @@ type scoreRes = {
       ko: number
     }
   },
-  fuDetail: {
-    name: string,
-    fu: number,
-    mentsuType?: number,
-    minHaiId?: number
-  }[]
+  fuDetail: fuDetailObj[]
 }
 
 type blockRes = {

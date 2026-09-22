@@ -1,6 +1,7 @@
 import { Hai, Meld } from 'mahjong_engine';
 import { AgariVal, resType, Settings } from '../modules/TypeDefs';
 import { NakiViewResult } from './NakiView';
+import { ResultTableFusuu, ResultTableHonsuu } from './ResultTable';
 
 type TypeResult = { result: resType | undefined, melds: Meld[], allTiles: Hai[], settings: Settings, setShowResult: (isShow: boolean) => void}
 
@@ -38,22 +39,19 @@ export default function ResultView(props : TypeResult){
       </div>
       <div className='result_details'>
         <div className='result_detail'>
-          <h2>役</h2>
-          <p>{props.result.scoreResultObj.han}翻</p>
-          <ul>
-            {Object.entries(props.result.yakuMapObj).map(([name, han], index) => (
-              <li key={index}>{name} ({han}翻)</li>
-            ))}
-          </ul>
+          <ResultTableHonsuu 
+            han={props.result.scoreResultObj.han}
+            yakuArray={Object.entries(props.result.yakuMapObj)}
+            allTiles={props.allTiles}
+          />
         </div>
         <div className='result_detail'>
-          <h2>符</h2>
-          <p>{props.result.scoreResultObj.fuCeiled}符({props.result.scoreResultObj.fuBasic})</p>
-          <ul>
-            {props.result.scoreResultObj.fuDetail.map((value, index) => (
-              <li key={index}>{value.name} {value.fu}符 {value.minHaiId}</li>
-            ))}
-          </ul>
+          <ResultTableFusuu 
+            fuCeiled={props.result.scoreResultObj.fuCeiled}
+            fuBasic={props.result.scoreResultObj.fuBasic}
+            fuDetail={props.result.scoreResultObj.fuDetail}
+            allTiles={props.allTiles}
+          />
         </div>
       </div>
       <div className='close_btn' onClick={() => props.setShowResult(false)}>閉じる</div>

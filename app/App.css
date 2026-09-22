@@ -49,9 +49,6 @@ body{
     display: flex;
     justify-content: center;
 }
-.result_detail{
-    margin: 0 30px;
-}
 .result_hai{
     margin: 0 5px;
 }
@@ -70,6 +67,24 @@ body{
 .result_tensuu p{
     margin: 0 20px;
 }
+.result_table{
+    width: 350px;
+    margin: 10px 0;
+    font-size: 20px;
+    border-collapse: collapse;
+}
+.result_table th, .result_table td{
+    text-align: center;
+    border: 1px solid #f0f0f0;
+}
+.result_table p{
+    margin: 0;
+}
+.result_table img{
+    width: 30px;
+    height: 40px;
+}
+
 
 .loader{
     position: absolute;
