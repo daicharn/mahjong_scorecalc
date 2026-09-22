@@ -1,52 +1,62 @@
 import { Hai, Meld } from 'mahjong_engine';
-import {resType} from '../modules/TypeDefs';
+import { AgariVal, resType, Settings } from '../modules/TypeDefs';
 import { NakiViewResult } from './NakiView';
 
-export default function ResultView({ result, melds, allTiles, setShowResult }: { result: resType | undefined, melds: Meld[], allTiles: Hai[] ,setShowResult: (isShow: boolean) => void}){
-  if(!result) return null;
-  if(!result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
+type TypeResult = { result: resType | undefined, melds: Meld[], allTiles: Hai[], settings: Settings, setShowResult: (isShow: boolean) => void}
+
+export default function ResultView(props : TypeResult){
+  if(!props.result) return null;
+  if(!props.result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
   return (
     <div className='result_view fade_in'>
       <div className='result_tehai_outer'>
         <div className='result_tehai'>
-          {result.blockObj.blocks.map((block, i) => (
+          {props.result.blockObj.blocks.map((block, i) => (
             <div key={i} className="result_hai">
               {block.hais.map((h, i) => (
-                <img key={i} className='result_hai_image' src={"images/" + allTiles[h.id - 1].imageUrl}></img>
+                <img key={i} className='result_hai_image' src={"images/" + props.allTiles[h.id - 1].imageUrl}></img>
               ))}
             </div>
           ))}
-          <NakiViewResult melds={melds} allTiles={allTiles} />
+          <NakiViewResult melds={props.melds} allTiles={props.allTiles} />
         </div>
+      </div>
+      <div className='result_tensuu'>
+        {props.settings.agari === AgariVal.Tsumo ?
+          <>
+            <p>ツモ</p>
+            <p>親: {props.result.scoreResultObj.tensuu.tsumoOya}ALL</p>
+            <p>子: {props.result.scoreResultObj.tensuu.tsumoKo.oya} / {props.result.scoreResultObj.tensuu.tsumoKo.ko}</p>
+          </>
+          :
+          <>
+            <p>ロン</p>
+            <p>親: {props.result.scoreResultObj.tensuu.ronOya}</p>
+            <p>子: {props.result.scoreResultObj.tensuu.ronKo}</p>
+          </>
+        }
       </div>
       <div className='result_details'>
         <div className='result_detail'>
           <h2>役</h2>
-          <p>{result.scoreResultObj.han}翻</p>
+          <p>{props.result.scoreResultObj.han}翻</p>
           <ul>
-            {Object.entries(result.yakuMapObj).map(([name, han], index) => (
+            {Object.entries(props.result.yakuMapObj).map(([name, han], index) => (
               <li key={index}>{name} ({han}翻)</li>
             ))}
           </ul>
         </div>
         <div className='result_detail'>
           <h2>符</h2>
-          <p>{result.scoreResultObj.fuCeiled}符({result.scoreResultObj.fuBasic})</p>
+          <p>{props.result.scoreResultObj.fuCeiled}符({props.result.scoreResultObj.fuBasic})</p>
           <ul>
-            {result.scoreResultObj.fuDetail.map((value, index) => (
+            {props.result.scoreResultObj.fuDetail.map((value, index) => (
               <li key={index}>{value.name} {value.fu}符 {value.minHaiId}</li>
             ))}
           </ul>
         </div>
-        <div className='result_detail'>
-          <h2>点数</h2>
-          <p>親ロン: {result.scoreResultObj.tensuu.ronOya}</p>
-          <p>子ロン: {result.scoreResultObj.tensuu.ronKo}</p>
-          <p>親ツモ: {result.scoreResultObj.tensuu.tsumoOya}オール</p>
-          <p>子ツモ: 親{result.scoreResultObj.tensuu.tsumoKo.oya} / 子{result.scoreResultObj.tensuu.tsumoKo.ko}</p>
-        </div>
       </div>
-      <div className='close_btn' onClick={() => setShowResult(false)}>閉じる</div>
+      <div className='close_btn' onClick={() => props.setShowResult(false)}>閉じる</div>
     </div>
   );
 }
