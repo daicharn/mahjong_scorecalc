@@ -48,18 +48,23 @@ export function ResultTableFusuu(props: TypeFusuu){
         {props.fuDetail.map((detail, index) => {
           const isAnkan = detail.mentsuType === MeldType.ANKAN;
           const hasHai = detail.minHaiId === undefined ? false : true;
+
+          const block = hasHai
+          ? isAnkan
+            ? <AnkanBlock
+                hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!)}
+                allTiles={props.allTiles} 
+              />
+            : <NakiBlock
+                hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!)}
+                allTiles={props.allTiles} isRotate={false} 
+              />
+            : null;
           return(
             <tr key={index}>
               <td>{`${detail.fu}符`}</td>
               <td><p>{detail.name}</p>
-                {
-                isAnkan && hasHai 
-                ? <AnkanBlock 
-                    hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!)}
-                    allTiles={props.allTiles} 
-                  /> 
-                : <NakiBlock hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!)} allTiles={props.allTiles} isRotate={false} />
-                }
+                {block}
               </td>
             </tr>
           )
