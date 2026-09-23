@@ -1,14 +1,34 @@
-import { BlockHais, BlockType, Hai, Meld, MeldType } from "mahjong_engine";
+import { BlockHais, BlockType, Hai, MachiType, Meld, MeldType } from "mahjong_engine";
 import { fuDetailObj } from "../modules/TypeDefs";
 import { AnkanBlock, NakiBlock } from "./NakiView";
 
 type TypeHonsuu = {han: number, yakuArray: [string, number][], allTiles: Hai[] };
 type TypeFusuu = {fuCeiled: number, fuBasic: number, fuDetail: fuDetailObj[], allTiles: Hai[] };
 
-function makeHaisFromMentsuType(minHaiId: number, mentsuType: BlockType | MeldType): Hai[]{
+function hideHaisFromMachiType(hais: Hai[], machiType: MachiType | undefined, minHaiId: number): Hai[]{
+  let index: number = -1;
+  switch(machiType){
+    case MachiType.KANCHAN:
+      index = 1;
+      break;
+    case MachiType.PENCHAN:
+      const minHaiNum = new Hai(minHaiId).num;
+      index = minHaiNum === 1 ? hais.length - 1 : 0;
+      break;
+    case MachiType.TANKI:
+      index = 0;
+      break;
+  }
+
+  return index === -1 ? hais : hais.toSpliced(index, 1, new Hai(35));
+}
+
+function makeHaisFromMentsuType(minHaiId: number, mentsuType: BlockType | MeldType, machiType: MachiType | undefined): Hai[]{
   switch(mentsuType){
     case BlockType.JANTO:
-      return BlockHais.from(minHaiId, BlockType.JANTO).getHais();
+      return hideHaisFromMachiType(BlockHais.from(minHaiId, BlockType.JANTO).getHais(), machiType, minHaiId);
+    case BlockType.SHUNTSU:
+      return hideHaisFromMachiType(BlockHais.from(minHaiId, BlockType.SHUNTSU).getHais(), machiType, minHaiId);
     case BlockType.KOTSU:
     case MeldType.PON:
       return BlockHais.from(minHaiId, BlockType.KOTSU).getHais();
@@ -48,15 +68,14 @@ export function ResultTableFusuu(props: TypeFusuu){
         {props.fuDetail.map((detail, index) => {
           const isAnkan = detail.mentsuType === MeldType.ANKAN;
           const hasHai = detail.minHaiId === undefined ? false : true;
-
           const block = hasHai
           ? isAnkan
             ? <AnkanBlock
-                hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!)}
+                hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!, detail.machiType)}
                 allTiles={props.allTiles} 
               />
             : <NakiBlock
-                hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!)}
+                hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!, detail.machiType)}
                 allTiles={props.allTiles} isRotate={false} 
               />
             : null;

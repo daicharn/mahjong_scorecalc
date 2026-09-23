@@ -1,10 +1,11 @@
-import { BlockType, MeldType } from 'mahjong_engine';
+import { BlockType, MachiType, MeldType } from 'mahjong_engine';
 
 export type fuDetailObj = {
   name: string,
   fu: number,
   mentsuType?: BlockType | MeldType,
-  minHaiId?: number
+  minHaiId?: number,
+  machiType?: MachiType
 }
 
 type scoreRes = {
