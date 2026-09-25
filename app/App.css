@@ -101,6 +101,11 @@ body{
     animation: spin 1s linear infinite;
     margin: 10px auto;
 }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .loader_text{
     padding: 5px;
     margin: 0;
@@ -393,7 +398,15 @@ body{
     user-select: none;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.noten_modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    background-color: #0cb2e4de;
+    z-index: 3;
+}
+.noten_modal *{
+   text-align: center;
 }
