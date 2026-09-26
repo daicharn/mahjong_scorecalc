@@ -103,6 +103,7 @@ export class HandState{
       if(mode === Mode.Normal) return isMachi && isNotFour;
       if(mode === Mode.Naki) return this.isNotNakiLimit(haiId, nakiMode);
       if(mode === Mode.Agari) return hais.ids.includes(haiId);
+      if(mode === Mode.Noten) return false;
 
       return false;
     }

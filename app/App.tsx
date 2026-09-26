@@ -1,9 +1,8 @@
 "use client";
 
-import {Hai, Meld, Melds, PlayerContext, PlayerHand, TILE} from 'mahjong_engine';
+import {Hai, Meld, PlayerHand, ShantenCalculator, TILE} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
-import {MeldType} from 'mahjong_engine';
 import {useState} from 'react';
 import {useMemo} from 'react';
 
@@ -19,6 +18,7 @@ import { AgariVal, BoolVal, Mode, OtherVal, resType, RiichiVal, Settings, WindVa
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
 import { MapSettingsToContext } from './modules/MapSettingsToContext';
+import NotenModal from './components/NotenModal';
 
 function App() {
   const [hais, setHais] = useState<Hais>(new Hais());
@@ -55,32 +55,43 @@ function App() {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
   }, []);
 
-  const updateHais = async (fn: (h: Hais) => void) => {
-    const newHais = new Hais(hais.ids);
-    fn(newHais);
-    newHais.sort();
-
+  const updateMode = (newHais: Hais) => {
     if(newHais.length === HaiNum){
       setMode(Mode.Agari);
+      return;
     }
-    else if(mode === Mode.Agari){
+
+    if(mode === Mode.Agari || mode === Mode.Noten){
       setMode(Mode.Normal);
       setResult(undefined);
     }
+  };
 
+  const updateMachiAndShanten = (newHais: Hais) => {
     if(newHais.length === HaiNum - 1){
-      const machiHais = new MachiCalculator(newHais.getHais()).calculate().map(m => new Hai(m));
+      const machiHais = new MachiCalculator(newHais.getHais())
+        .calculate()
+        .map(m => new Hai(m));
+
       setmachiHais(machiHais);
 
       if(machiHais.length === 0){
-        alert("その牌では聴牌になりません。");
-        return;
+        const shanten = new ShantenCalculator(newHais.getHais()).calculate();
+        if(shanten >= 1) setMode(Mode.Noten);
       }
     }
     else{
       setmachiHais([]);
     }
+  }
 
+  const updateHais = async (fn: (h: Hais) => void) => {
+    const newHais = new Hais(hais.ids);
+    fn(newHais);
+    newHais.sort();
+
+    updateMode(newHais);
+    updateMachiAndShanten(newHais);
     setHais(newHais);
   };
 
@@ -153,11 +164,12 @@ function App() {
       <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} showResultView={showResultView}/>
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
+      <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
       <div className='reset_btn' onClick={() => resetAll()}>リセット</div>
       {showResult && <ResultView result={result} melds={melds} allTiles={allTiles} settings={settings} setShowResult={setShowResult}/>}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      {mode === Mode.Noten && <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} />}
     </div>
   );
 }

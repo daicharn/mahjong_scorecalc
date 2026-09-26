@@ -36,7 +36,8 @@ type blockRes = {
 export enum Mode {
   Normal = "normal",
   Naki = "naki",
-  Agari = "agari"
+  Agari = "agari",
+  Noten = "noten"
 };
 
 export type resType = {blockObj: blockRes, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
