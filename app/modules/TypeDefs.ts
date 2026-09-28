@@ -24,14 +24,14 @@ type scoreRes = {
   fuDetail: fuDetailObj[]
 }
 
-type blockRes = {
+export type blockRes = {
   blocks: {
-    type: string,
+    type: BlockType,
     hais: {
       id: number
     }[]
   }[]
-}
+};
 
 export enum Mode {
   Normal = "normal",

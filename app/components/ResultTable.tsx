@@ -1,25 +1,13 @@
 import { BlockHais, BlockType, Hai, MachiType, Meld, MeldType } from "mahjong_engine";
 import { fuDetailObj } from "../modules/TypeDefs";
 import { AnkanBlock, NakiBlock } from "./NakiView";
+import { MachiUtils } from "../modules/MachiUtils";
 
 type TypeHonsuu = {han: number, yakuArray: [string, number][], allTiles: Hai[] };
 type TypeFusuu = {fuCeiled: number, fuBasic: number, fuDetail: fuDetailObj[], allTiles: Hai[] };
 
 function hideHaisFromMachiType(hais: Hai[], machiType: MachiType | undefined, minHaiId: number): Hai[]{
-  let index: number = -1;
-  switch(machiType){
-    case MachiType.KANCHAN:
-      index = 1;
-      break;
-    case MachiType.PENCHAN:
-      const minHaiNum = new Hai(minHaiId).num;
-      index = minHaiNum === 1 ? hais.length - 1 : 0;
-      break;
-    case MachiType.TANKI:
-      index = 0;
-      break;
-  }
-
+  const index = MachiUtils.calcMachiIndex(hais, machiType, minHaiId);
   return index === -1 ? hais : hais.toSpliced(index, 1, new Hai(35));
 }
 
