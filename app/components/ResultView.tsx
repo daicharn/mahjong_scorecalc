@@ -1,59 +1,18 @@
-import { BlockHais, BlockHaisList, BlockType, Hai, MachiType, Meld } from 'mahjong_engine';
-import { AgariVal, blockRes, fuDetailObj, resType, Settings } from '../modules/TypeDefs';
+import { Hai, Meld } from 'mahjong_engine';
+import { AgariVal, resType, Settings } from '../modules/TypeDefs';
 import { NakiViewResult } from './NakiView';
 import { ResultTableFusuu, ResultTableHonsuu } from './ResultTable';
-import { MachiUtils } from '../modules/MachiUtils';
+import { AgariUtils } from '../modules/AgariUtils';
+import { CommonUtils } from '../modules/CommonUtils';
 
 type TypeResult = { result: resType | undefined, melds: Meld[], agariHai: Hai, allTiles: Hai[], settings: Settings, setShowResult: (isShow: boolean) => void}
-
-function blockEquals(a: BlockHais, b: BlockHais){
-  const aHaiNums = a.getHais().map(h => h.getId());
-  const bHaiNums = b.getHais().map(h => h.getId());
-  const isSameType = a.getType() === b.getType();
-  const isSameNums = JSON.stringify(aHaiNums) === JSON.stringify(bHaiNums)
-
-  return isSameType && isSameNums;
-}
-
-function toBlockHaisList(blockObj: blockRes){
-  const list = new BlockHaisList();
-  blockObj.blocks.forEach(block => {
-    const hais = block.hais.map(h => new Hai(h.id));
-    const type = block.type;
-    list.push(new BlockHais(hais, type));
-  });
-
-  return list;
-}
-
-function calcAgariIndexes(blocks: BlockHaisList, machiTypesBase: Map<MachiType, BlockHais>, fuDetail: fuDetailObj[], agariHaiId: number){
-  const fuTypes: MachiType[] = [MachiType.KANCHAN, MachiType.PENCHAN, MachiType.TANKI];
-  
-  const detail = fuDetail.find(detail => detail.machiType !== undefined);
-  const detailType = detail?.machiType;
- 
-  const fuMachi = [...machiTypesBase.entries()]
-    .find(([machiType]) => fuTypes.includes(machiType));
-  const nonFuMachi = [...machiTypesBase.entries()]
-    .find(([machiType]) => !fuTypes.includes(machiType));
-
-  const machi = detailType !== undefined ? fuMachi : nonFuMachi;
-  if(!machi) throw new Error("machi not found");
-
-  const [machiType, blockHais] = machi;
-
-  const blockIndex = blocks.getBlockHais().findIndex(block => blockEquals(block, blockHais));
-  const machiIndex = MachiUtils.calcMachiIndex(blockHais.getHais(), machiType, agariHaiId);
-
-  return [blockIndex, machiIndex];
-}
 
 export default function ResultView(props : TypeResult){
   if(!props.result) return null;
   if(!props.result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
-  const blocks = toBlockHaisList(props.result.blockObj);
+  const blocks = CommonUtils.toBlockHaisList(props.result.blockObj);
   const machiTypesBase = blocks.calcMachiType(props.agariHai.getId());
-  const agariIndex = calcAgariIndexes(blocks, machiTypesBase, props.result.scoreResultObj.fuDetail, props.agariHai.getId());
+  const agariIndex = AgariUtils.calcAgariIndex(blocks, machiTypesBase, props.result.scoreResultObj.fuDetail, props.agariHai.getId());
   return (
     <div className='result_view fade_in'>
       <div className='result_tehai_outer'>
