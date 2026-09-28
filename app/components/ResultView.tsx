@@ -55,7 +55,7 @@ export default function ResultView(props : TypeResult){
       <div className='result_details'>
         <div className='result_detail'>
           <ResultTableHonsuu 
-            han={props.result.scoreResultObj.han}
+            scoreResult={props.result.scoreResultObj}
             yakuArray={Object.entries(props.result.yakuMapObj)}
             allTiles={props.allTiles}
           />

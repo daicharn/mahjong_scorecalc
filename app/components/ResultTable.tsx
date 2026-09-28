@@ -1,9 +1,9 @@
 import { BlockHais, BlockType, Hai, MachiType, Meld, MeldType } from "mahjong_engine";
-import { fuDetailObj } from "../modules/TypeDefs";
+import { fuDetailObj, scoreRes } from "../modules/TypeDefs";
 import { AnkanBlock, NakiBlock } from "./NakiView";
 import { MachiUtils } from "../modules/MachiUtils";
 
-type TypeHonsuu = {han: number, yakuArray: [string, number][], allTiles: Hai[] };
+type TypeHonsuu = {scoreResult: scoreRes, yakuArray: [string, number][], allTiles: Hai[] };
 type TypeFusuu = {fuCeiled: number, fuBasic: number, fuDetail: fuDetailObj[], allTiles: Hai[] };
 
 function hideHaisFromMachiType(hais: Hai[], machiType: MachiType | undefined, minHaiId: number): Hai[]{
@@ -29,10 +29,11 @@ function makeHaisFromMentsuType(minHaiId: number, mentsuType: BlockType | MeldTy
 }
 
 export function ResultTableHonsuu(props : TypeHonsuu){
+  const hanNameText = props.scoreResult.hanName !== "" ? `(${props.scoreResult.hanName})` : "";
   return (
     <table className="result_table result_table_honsuu">
       <thead>
-        <tr><th colSpan={2}>{`${props.han}翻`}</th></tr>
+        <tr><th colSpan={2}>{`${props.scoreResult.han}翻${hanNameText}`}</th></tr>
       </thead>
       <tbody>
         {props.yakuArray.map(([name, han], index) => (
