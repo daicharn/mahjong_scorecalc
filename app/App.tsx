@@ -31,6 +31,7 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [isMenzen, setIsMenzen] = useState<boolean>(true);
   const [hasKantsu, setHasKantsu] = useState<boolean>(false);
+  const [agariHai, setAgariHai] = useState<Hai>(new Hai(TILE.BACK));
   const [nakiMode, setNakiMode] = useState({
     none: true,
     chi: false,
@@ -98,10 +99,12 @@ function App() {
   const showResultView = async (agariHaiId: number) => {
       setLoading(true);
       try{
-        const ctx = new MapSettingsToContext(new Hai(agariHaiId), settings).toContext();
+        const agariHai = new Hai(agariHaiId);
+        const ctx = new MapSettingsToContext(agariHai, settings).toContext();
         const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", hais.ids, melds, ctx).get();
         setResult(data);
         setShowResult(true);
+        setAgariHai(agariHai);
       }
       finally{
         setLoading(false);
@@ -166,7 +169,7 @@ function App() {
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
       <div className='reset_btn' onClick={() => resetAll()}>リセット</div>
-      {showResult && <ResultView result={result} melds={melds} allTiles={allTiles} settings={settings} setShowResult={setShowResult}/>}
+      {showResult && <ResultView result={result} melds={melds} agariHai={agariHai} allTiles={allTiles} settings={settings} setShowResult={setShowResult}/>}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
       {mode === Mode.Noten && <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} />}
