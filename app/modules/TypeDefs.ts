@@ -8,10 +8,11 @@ export type fuDetailObj = {
   machiType?: MachiType
 }
 
-type scoreRes = {
+export type scoreRes = {
   han: number,
   fuBasic: number,
   fuCeiled: number,
+  hanName: string,
   tensuu: {
     ronOya: number,
     ronKo: number,
