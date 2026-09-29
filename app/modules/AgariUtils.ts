@@ -14,8 +14,9 @@ export class AgariUtils{
         const detail = fuDetail.find(detail => detail.machiType !== undefined);
         const detailType = detail?.machiType;
         
-        const fuMachi = [...machiTypesBase.entries()]
-            .find(([machiType]) => fuTypes.includes(machiType));
+        const fuMachi = detailType !== undefined 
+            ? [...machiTypesBase.entries()].find(([MachiType]) => MachiType === detailType) 
+            : undefined;
         const nonFuMachi = [...machiTypesBase.entries()]
             .find(([machiType]) => !fuTypes.includes(machiType));
 
