@@ -1,10 +1,9 @@
-type TypeNoten = {shanten: number};
+import { Mode } from "../modules/TypeDefs";
+import Modal from "./Modal";
+
+type TypeNoten = {shanten: number, mode: Mode}
 
 export default function NotenModal(props: TypeNoten){
-    return (
-      <div className="noten_modal">
-        <h2>{`${props.shanten}`}向聴</h2>
-        <p>手牌をクリックして一枚削除してください</p>
-      </div>
-    )
+    if(props.mode === Mode.Noten) return <Modal className={"modal_noten"} h2={`${props.shanten}向聴`} p={"手牌をクリックして一枚削除してください"} />
+    else null;
 }

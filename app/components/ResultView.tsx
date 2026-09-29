@@ -1,15 +1,14 @@
 import { Hai, Meld } from 'mahjong_engine';
-import { AgariVal, resType, Settings } from '../modules/TypeDefs';
+import { AgariVal, Mode, resType, Settings } from '../modules/TypeDefs';
 import { NakiViewResult } from './NakiView';
 import { ResultTableFusuu, ResultTableHonsuu } from './ResultTable';
 import { AgariUtils } from '../modules/AgariUtils';
 import { CommonUtils } from '../modules/CommonUtils';
 
-type TypeResult = { result: resType | undefined, melds: Meld[], agariHai: Hai, allTiles: Hai[], settings: Settings, setShowResult: (isShow: boolean) => void}
+type TypeResult = {result: resType | undefined, melds: Meld[], agariHai: Hai, allTiles: Hai[], settings: Settings, setShowResult: (isShow: boolean) => void, setMode: (mode: Mode) => void}
 
 export default function ResultView(props : TypeResult){
-  if(!props.result) return null;
-  if(!props.result.yakuMapObj) return (<div><p>役が成立していません</p></div>);
+  if(!props.result || !props.result.yakuMapObj) return null;
   const blocks = CommonUtils.toBlockHaisList(props.result.blockObj);
   const machiTypesBase = blocks.calcMachiType(props.agariHai.getId());
   const agariIndex = AgariUtils.calcAgariIndex(blocks, machiTypesBase, props.result.scoreResultObj.fuDetail, props.agariHai.getId());

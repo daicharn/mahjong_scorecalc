@@ -3,7 +3,7 @@
 import {Hai, Meld, PlayerHand, ShantenCalculator, TILE} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {MachiCalculator} from 'mahjong_engine';
-import {useState} from 'react';
+import {JSX, useState} from 'react';
 import {useMemo} from 'react';
 
 import './App.css';
@@ -18,6 +18,8 @@ import { AgariVal, BoolVal, Mode, OtherVal, resType, RiichiVal, Settings, WindVa
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
 import { MapSettingsToContext } from './modules/MapSettingsToContext';
+import Modal from './components/Modal';
+import NoYakuModal from './components/NoYakuModal';
 import NotenModal from './components/NotenModal';
 
 function App() {
@@ -130,6 +132,7 @@ function App() {
     const nextMelds: Meld[] = melds.toSpliced(index, 1);
     setMode(Mode.Normal);
     resetNakiMode();
+    setResult(undefined);
     setmachiHais([]);
     setMelds(nextMelds);
     setIsMenzen(new PlayerHand(hais.getHais(), nextMelds).isMenzen());
@@ -150,6 +153,7 @@ function App() {
   const resetAll = () => {
     setMode(Mode.Normal);
     resetNakiMode();
+    setResult(undefined);
     setHais(new Hais());
     setMelds([]);
     setmachiHais([]);
@@ -168,11 +172,12 @@ function App() {
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} mode={mode} />
+      <NoYakuModal result={result} />
       <div className='reset_btn' onClick={() => resetAll()}>リセット</div>
-      {showResult && <ResultView result={result} melds={melds} agariHai={agariHai} allTiles={allTiles} settings={settings} setShowResult={setShowResult}/>}
+      {showResult && <ResultView result={result} melds={melds} agariHai={agariHai} allTiles={allTiles} settings={settings} setShowResult={setShowResult} setMode={setMode} />}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      {mode === Mode.Noten && <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} />}
     </div>
   );
 }
