@@ -20,6 +20,7 @@ import { MeldUtils } from './modules/MeldUtils';
 import { MapSettingsToContext } from './modules/MapSettingsToContext';
 import Modal from './components/Modal';
 import NoYakuModal from './components/NoYakuModal';
+import NotenModal from './components/NotenModal';
 
 function App() {
   const [hais, setHais] = useState<Hais>(new Hais());
@@ -171,12 +172,12 @@ function App() {
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
       <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
+      <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} mode={mode} />
       <NoYakuModal result={result} />
       <div className='reset_btn' onClick={() => resetAll()}>リセット</div>
       {showResult && <ResultView result={result} melds={melds} agariHai={agariHai} allTiles={allTiles} settings={settings} setShowResult={setShowResult} setMode={setMode} />}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      {mode === Mode.Noten && <Modal className={"modal_noten"} h2={`${new ShantenCalculator(hais.getHais()).calculate()}向聴`} p={"手牌をクリックして一枚削除してください"} />}
     </div>
   );
 }
