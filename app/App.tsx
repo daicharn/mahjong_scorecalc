@@ -174,10 +174,13 @@ function App() {
       <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
       <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} mode={mode} />
       <NoYakuModal result={result} />
-      <div className='reset_btn' onClick={() => resetAll()}>リセット</div>
+      <div className='reset_btn' onClick={() => resetAll()}><p>リセット</p></div>
       {showResult && <ResultView result={result} melds={melds} agariHai={agariHai} allTiles={allTiles} settings={settings} setShowResult={setShowResult} setMode={setMode} />}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
+      <div className={`hamburger ${showSettings && "open" }`} onClick={() => setShowSettings(!showSettings)}>
+        <span></span><span></span><span></span>
+      </div>
     </div>
   );
 }

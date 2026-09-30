@@ -12,7 +12,7 @@ export default function TehaiView({ hais, haiNum, onRemoveHai }: { hais: Hais, h
       ))}
       {Array(haiNum - hais.length).fill(0).map((_, i) => (
       <div className="hai" key={i}>
-        <img className='hai_image' src={"images/" + new Hai(TILE.BACK).imageUrl}></img>
+        <img className='hai_image disable' src={"images/" + new Hai(TILE.BACK).imageUrl}></img>
       </div>
       ))
       }
