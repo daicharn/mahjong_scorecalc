@@ -352,9 +352,6 @@ body{
     cursor: default;
     pointer-events: none;
 }
-.radio_box.active{
-    background-color: #0282cc;
-}
 .radio_box input{
     display: none;
 }
@@ -445,6 +442,7 @@ body{
     }
     .naki_btn.disable:hover{
         opacity: 0.9;
+        cursor: default;
     }
     .settings_tab:hover {
         width: 45px;
@@ -455,6 +453,9 @@ body{
     }
     .setting_stepper button:hover{
         background-color: #0a9aec;
+    }
+    .radio_box.active{
+        background-color: #0282cc;
     }
 }
 
