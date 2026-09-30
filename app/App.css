@@ -88,6 +88,7 @@ body{
 .result_table img{
     width: 30px;
     height: 40px;
+    cursor: default;
 }
 
 
@@ -136,6 +137,10 @@ body{
 .hai_image{
     width: 66px;
     height: 90px;
+    cursor: pointer;
+}
+.hai_image.disable{
+    cursor: default;
 }
 .hai_image.rotate90{
     transform: rotate(90deg) translateY(13%);
