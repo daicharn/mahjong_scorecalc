@@ -360,6 +360,9 @@ body{
 .radio_box input{
     display: none;
 }
+.radio_box.active{
+    background-color: #0282cc;
+}
 
 .setting_stepper{
     display: flex;
@@ -440,6 +443,8 @@ body{
 .hamburger.open span:nth-child(3){
     transform: translateY(-9px) rotate(-45deg);
 }
+
+
 
 @media (hover: hover) {
     .naki_btn:hover, .reset_btn:hover, .close_btn:hover{
