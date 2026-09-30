@@ -68,7 +68,7 @@ export default function ResultView(props : TypeResult){
           />
         </div>
       </div>
-      <div className='close_btn' onClick={() => props.setShowResult(false)}>閉じる</div>
+      <div className='close_btn' onClick={() => props.setShowResult(false)}><p>閉じる</p></div>
     </div>
   );
 }

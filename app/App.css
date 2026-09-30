@@ -119,6 +119,7 @@ body{
     text-align: center;
     color:#f3f3f3;
     background-color:#2c2c2ce7;
+    border: 1px solid #f3f3f3;
     user-select: none;
 }
 
@@ -143,9 +144,12 @@ body{
 .naki_btn_list{
     display: flex;
     justify-content: center;
+    height: 70px;
 }
 .naki_btn, .reset_btn, .close_btn{
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px 50px;
     margin: 10px;
     opacity: 0.9;
@@ -156,18 +160,16 @@ body{
       transform .2s ease,
       opacity .5s ease;
 }
+.naki_btn p, .reset_btn p, .close_btn p{
+    margin: 0;
+    padding: 0;
+}
 .naki_btn.active{
     border-color: #e6e6e6;
     transform: scale(1.05);
 }
 .naki_btn.disable{
     background-color: #8a8a8a;
-}
-.naki_btn:hover, .reset_btn:hover, .close_btn:hover{
-    opacity: 0.7;
-}
-.naki_btn.disable:hover{
-    opacity: 0.9;
 }
 .naki_btn_chi{
     background-color: #01ac79;
@@ -275,10 +277,6 @@ body{
 
     background: #f0f0f0;
 }
-.settings_tab:hover {
-    width: 45px;
-    transition: width .2s ease;
-}
 .settings_panel{
     position: fixed;
     width: 500px;
@@ -349,9 +347,6 @@ body{
 .setting_radio, .radio_box{
     background-color: #131313;
 }
-.radio_box:hover{
-    background-color: #292929;
-}
 .radio_box.disable, .setting_stepper button.disable{
     background-color: #464646;
     cursor: default;
@@ -382,9 +377,6 @@ body{
     font-size: 24px;
     background-color: #0282cc;
 }
-.setting_stepper button:hover{
-    background-color: #0a9aec;
-}
 .stepper_label{
     margin-top: 50px;
 }
@@ -414,5 +406,160 @@ body{
     user-select: none;
 }
 .modal *{
-   text-align: center;
+    text-align: center;
+}
+
+.hamburger {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 4;
+}
+.hamburger span {
+    width: 28px;
+    height: 3px;
+    background: rgb(205, 210, 216);;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.hamburger.open span:nth-child(1){
+    transform: translateY(9px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2){
+    opacity: 0;
+    transform: scale(0.2);
+}
+.hamburger.open span:nth-child(3){
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+@media (hover: hover) {
+    .naki_btn:hover, .reset_btn:hover, .close_btn:hover{
+        opacity: 0.7;
+    }
+    .naki_btn.disable:hover{
+        opacity: 0.9;
+    }
+    .settings_tab:hover {
+        width: 45px;
+        transition: width .2s ease;
+    }
+    .radio_box:hover{
+        background-color: #292929;
+    }
+    .setting_stepper button:hover{
+        background-color: #0a9aec;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body{
+        font-family: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+    }
+    .hais, .result_tehai{
+        margin-top: 75px;
+    }
+    .result_hai_image, .naki_list_result .naki_block .hai_image{
+        width: 20px;
+        height: 28px;
+    }
+    .hai .hai_image, .result_table img{
+        width: 25px;
+        height: 35px;
+    }
+    .tehai_cell .hai_image, .naki_list .naki_block .hai_image{
+        width: 32px;
+        height: 43px;
+    }
+    .naki_btn_list{
+        height: 60px;
+    }
+    .naki_btn{
+        padding: 0 20px;
+    }
+    .reset_btn, .close_btn{
+        width: 75px;
+        height: 20px;
+    }
+    .naki_list{
+        width: 95%;
+        height: 75px;
+    }
+    .naki_block{
+        margin: 0;
+    }
+
+    .settings_tab{
+        display: none;
+    }
+    .settings_panel{
+        width: 100%;
+    }
+    .settings_panel p{
+        margin: 5px 0;
+        margin-left: 30px;
+    }
+    .setting_item:first-child{
+        margin-top: 50px;
+    }
+    .stepper_label{
+        margin: 0;
+        padding: 5px 0;
+    }
+    .setting_radio{
+        max-width: 85%;
+    }
+    .radio_box{
+        width: 70px;
+        height: 25px;
+        margin: 5px;
+        font-size: 12px;
+    }
+    .setting_stepper p{
+        margin: 0 5px;
+    }
+
+    .result_view *, .result_table td p{
+        font-size: 12px;
+    }
+    .result_view p{
+        font-size: 16px;
+        margin: 10px;
+    }
+    .result_table td *{
+        margin: 0;
+    }
+    .result_table{
+        width: 180px;
+    }
+    .result_hai_block{
+        margin: 0 2px;
+    }
+
+    .loader_text{
+        width: 230px;
+        font-size: 12px;
+    }
+
+    .result_hai_image.agari{
+        border: 1px solid rgba(8, 127, 224, 0.842);
+    }
+
+    .modal *{
+        margin: 5px 0;
+    }
+
+    .hamburger{
+        display: flex;
+    }
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1280px){
+    
 }

@@ -40,7 +40,7 @@ export default function NakiButtons({canNaki, nakiMode, setMode, setNakiMode}: N
             if(canNaki) toggleExclusive(key);
           }}
         >
-          {label}
+          <p>{label}</p>
         </div>
       ))}
     </div>
