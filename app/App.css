@@ -539,7 +539,7 @@ body{
     .result_view *, .result_table td p{
         font-size: 12px;
     }
-    .result_view p{
+    .result_tensuu p{
         font-size: 16px;
         margin: 10px;
     }
@@ -571,6 +571,55 @@ body{
     }
 }
 
-@media only screen and (min-width: 767px) and (max-width: 1280px){
-    
+@media screen and (min-width: 600px) and (max-width: 768px){
+    .settings_view{
+        left: -750px;
+    }
+    .result_hai_image, .naki_list_result .naki_block .hai_image{
+        width: 32px;
+        height: 43px;
+    }
+    .hai .hai_image, .result_table img{
+        width: 45px;
+        height: 60px;
+    }
+    .tehai_cell .hai_image, .naki_list .naki_block .hai_image{
+        width: 60px;
+        height: 85px;
+    }
+    .naki_btn{
+        padding: 0 40px;
+    }
+    .reset_btn, .close_btn{
+        width: 120px;
+        height: 20px;
+    }
+
+    .naki_list{
+        width: 95%;
+        height: 120px;
+    }
+    .naki_block{
+        margin: 5px;
+    }
+
+    .result_view *, .result_table td p{
+        font-size: 20px;
+    }
+    .result_tensuu p{
+        font-size: 30px;
+        margin: 10px;
+    }
+    .result_table{
+        width: 300px;
+    }
+
+    .result_hai_image.agari{
+        border: 2px solid rgba(8, 127, 224, 0.842);
+    }
+
+    .loader_text{
+        width: 350px;
+        font-size: 20px;
+    }
 }
