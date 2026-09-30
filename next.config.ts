@@ -14,6 +14,7 @@ module.exports = {
   turbopack: {
     root: __dirname,
   },
+  allowedDevOrigins: ['192.168.3.9'],
 };
 
 export default nextConfig;
