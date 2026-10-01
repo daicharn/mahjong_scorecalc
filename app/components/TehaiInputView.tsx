@@ -46,7 +46,7 @@ export default function TehaiInputView(props: TehaiInputProps){
           .map(i => (
           <div key={i} className='tehai_cell'>
           {handState.canShowTile(i + 1, machiIds, props.hais, props.mode, props.nakiMode)
-            ?(<img className='hai_image' src={"images/" + props.allTiles[i].imageUrl} onClick={() => onTileClick(i, props)}></img>)
+            ?(<img className='hai_image' src={"images/" + props.allTiles[i].imageUrl} onPointerDown={() => onTileClick(i, props)}></img>)
             :(<img className='hai_image disable' src={"images/" + props.allTiles[34].imageUrl}></img>)
           }
           </div>
