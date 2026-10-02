@@ -223,6 +223,26 @@ Jestを使用してユニットテストを実装しています。
 特に麻雀の役判定・待ち判定・シャンテン数計算について、
 様々な牌姿を用いたテストを作成しています。
 
+### テストカバレッジ
+
+麻雀エンジン側
+- Stmts:97.14%
+- Branch:93.33%
+- Funcs:92.46%
+- Lines:97.93%
+
+### 静的解析（Qlty）
+
+麻雀エンジン側
+- Maintainability: A
+- Coverage: A
+- Security: A
+
+フロント側
+- Maintainability: A
+- Security: A
+
+
 ## 工夫した点
 
 ### 麻雀ロジックとUIの分離
