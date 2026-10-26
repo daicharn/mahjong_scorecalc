@@ -527,10 +527,10 @@ body{
         max-width: 85%;
     }
     .radio_box{
-        width: 70px;
+        width: 17vw;
         height: 25px;
         margin: 5px;
-        font-size: 12px;
+        font-size: 1.3vh;
     }
     .setting_stepper p{
         margin: 0 5px;
@@ -601,6 +601,11 @@ body{
     }
     .naki_block{
         margin: 5px;
+    }
+
+    .radio_box{
+        width: 15vw;
+        font-size: 1.5vh;
     }
 
     .result_view *, .result_table td p{
