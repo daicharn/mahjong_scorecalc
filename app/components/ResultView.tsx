@@ -4,6 +4,7 @@ import { NakiViewResult } from './NakiView';
 import { ResultTableFusuu, ResultTableHonsuu } from './ResultTable';
 import { AgariUtils } from '../modules/AgariUtils';
 import { CommonUtils } from '../modules/CommonUtils';
+import styles from './ResultView.module.css';
 
 type TypeResult = {result: resType | undefined, melds: Meld[], agariHai: Hai, allTiles: Hai[], settings: Settings, setShowResult: (isShow: boolean) => void, setMode: (mode: Mode) => void}
 
@@ -13,18 +14,18 @@ export default function ResultView(props : TypeResult){
   const machiTypesBase = blocks.calcMachiType(props.agariHai.getId());
   const agariIndex = AgariUtils.calcAgariIndex(blocks, machiTypesBase, props.result.scoreResultObj.fuDetail, props.agariHai.getId());
   return (
-    <div className='result_view fade_in'>
-      <div className='result_tehai_outer'>
-        <div className='result_tehai'>
+    <div className={styles.result_view}>
+      <div className={styles.result_tehai_outer}>
+        <div className={styles.result_tehai}>
           {blocks.getBlockHais().map((block, indexBlock) => {
             return (
-              <div key={indexBlock} className="result_hai_block">
+              <div key={indexBlock} className={styles.result_hai_block}>
                 {block.getHais().map((h, indexHai) => {
                   const isAgariHai = indexBlock === agariIndex[0] && indexHai === agariIndex[1];
                   return (
-                    <div key={indexHai} className={`result_hai ${isAgariHai ? "agari" : ""}`}>
+                    <div key={indexHai}>
                       <img 
-                        className={`result_hai_image ${isAgariHai ? "agari" : ""}`}
+                        className={`${styles.hai_image_result} ${isAgariHai ? styles.agari : ""}`}
                         src={"images/" + props.allTiles[h.getId() - 1].imageUrl}>
                       </img>
                     </div>
@@ -36,7 +37,7 @@ export default function ResultView(props : TypeResult){
           <NakiViewResult melds={props.melds} allTiles={props.allTiles} />
         </div>
       </div>
-      <div className='result_tensuu'>
+      <div className={styles.result_tensuu}>
         {props.settings.agari === AgariVal.Tsumo ?
           <>
             <p>ツモ</p>
@@ -51,7 +52,7 @@ export default function ResultView(props : TypeResult){
           </>
         }
       </div>
-      <div className='result_details'>
+      <div className={styles.result_details}>
         <div className='result_detail'>
           <ResultTableHonsuu 
             scoreResult={props.result.scoreResultObj}
@@ -68,7 +69,7 @@ export default function ResultView(props : TypeResult){
           />
         </div>
       </div>
-      <div className='close_btn' onClick={() => props.setShowResult(false)}><p>閉じる</p></div>
+      <div className='close_btn btn_item' onClick={() => props.setShowResult(false)}><p>閉じる</p></div>
     </div>
   );
 }

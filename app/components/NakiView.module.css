@@ -1,0 +1,72 @@
+.naki_list{
+    position: absolute;
+    width: 80%;
+    height: 120px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    background-color: #929292;
+    border: 3px solid #505050;
+    border-radius: 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.naki_block{
+    flex-shrink: 0;
+    padding-left: 25px;
+    margin: 0 10px;
+}
+
+.hai_image.rotate90, .hai_image_result.rotate90{
+    transform: rotate(90deg) translateY(13%);
+}
+
+.naki_list_result{
+    display: flex;
+    align-items: center;
+}
+.hai_image_result{
+    width: 60px;
+    height: 80px;
+}
+
+@media screen and (max-width: 768px) {
+    .hai_image, .hai_image_result{
+        width: 20px;
+        height: 28px;
+    }
+
+    .naki_list{
+        width: 95%;
+        height: 75px;
+    }
+    .naki_block{
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px){
+    .hai_image{
+        width: 45px;
+        height: 60px;
+    }
+    .hai_image_result{
+        width: 32px;
+        height: 43px;
+    }
+
+    .naki_list{
+        width: 95%;
+        height: 120px;
+    }
+    .naki_block{
+        margin: 5px;
+    }
+}

@@ -2,6 +2,7 @@ import { BlockHais, BlockType, Hai, MachiType, Meld, MeldType } from "mahjong_en
 import { fuDetailObj, scoreRes } from "../modules/TypeDefs";
 import { AnkanBlock, NakiBlock } from "./NakiView";
 import { MachiUtils } from "../modules/MachiUtils";
+import styles from "./ResultTable.module.css";
 
 type TypeHonsuu = {scoreResult: scoreRes, yakuArray: [string, number][], allTiles: Hai[] };
 type TypeFusuu = {fuCeiled: number, fuBasic: number, fuDetail: fuDetailObj[], allTiles: Hai[] };
@@ -31,7 +32,7 @@ function makeHaisFromMentsuType(minHaiId: number, mentsuType: BlockType | MeldTy
 export function ResultTableHonsuu(props : TypeHonsuu){
   const hanNameText = props.scoreResult.hanName !== "" ? `(${props.scoreResult.hanName})` : "";
   return (
-    <table className="result_table result_table_honsuu">
+    <table className={`${styles.result_table}`}>
       <thead>
         <tr><th colSpan={2}>{`${props.scoreResult.han}翻${hanNameText}`}</th></tr>
       </thead>
@@ -49,7 +50,7 @@ export function ResultTableHonsuu(props : TypeHonsuu){
 
 export function ResultTableFusuu(props: TypeFusuu){
   return (
-    <table className="result_table result_table_fusuu">
+    <table className={`${styles.result_table}`}>
       <thead>
         <tr><th colSpan={2}>{`${props.fuCeiled}符(${props.fuBasic})`}</th></tr>
       </thead>
@@ -61,11 +62,11 @@ export function ResultTableFusuu(props: TypeFusuu){
           ? isAnkan
             ? <AnkanBlock
                 hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!, detail.machiType)}
-                allTiles={props.allTiles} 
+                allTiles={props.allTiles} isResult={false}
               />
             : <NakiBlock
                 hais={makeHaisFromMentsuType(detail.minHaiId!, detail.mentsuType!, detail.machiType)}
-                allTiles={props.allTiles} isRotate={false} 
+                allTiles={props.allTiles} isResult={false} isRotate={false} 
               />
             : null;
           return(

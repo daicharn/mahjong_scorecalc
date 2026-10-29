@@ -1,4 +1,5 @@
 import { Mode, NakiKey, NakiMode } from '../modules/TypeDefs';
+import style from './NakiButtons.module.css';
 
 const nakiList: { key: NakiKey; label: string }[] = [
   { key: "chi", label: "チー" },
@@ -31,11 +32,17 @@ export default function NakiButtons({canNaki, nakiMode, setMode, setNakiMode}: N
   };
   
   return (
-    <div className='naki_btn_list'>
+    <div className={style.naki_btn_list}>
       {nakiList.map(({key, label}) => (
         <div
           key={key}
-          className={`naki_btn naki_btn_${key} ${nakiMode[key] ? "active": ""} ${canNaki ? "" : "disable"}`}
+          className={
+            `btn_item
+            ${style.naki_btn}
+            ${style[`naki_btn_${key}`]}
+            ${nakiMode[key] ? style.active : ""}
+            ${canNaki ? "" : style.disable}`
+          }
           onClick={() => {
             if(canNaki) toggleExclusive(key);
           }}

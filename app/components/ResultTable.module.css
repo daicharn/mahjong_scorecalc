@@ -1,0 +1,28 @@
+.result_table{
+    width: 350px;
+    margin: 10px 0;
+    font-size: 20px;
+    border-collapse: collapse;
+}
+.result_table th, .result_table td{
+    text-align: center;
+    border: 1px solid #f0f0f0;
+}
+.result_table p{
+    margin: 0;
+}
+.result_table img{
+    width: 30px;
+    height: 40px;
+    cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+    .result_table img{
+        width: 25px;
+        height: 35px;
+    }
+    .result_table{
+        width: 40vw;
+    }
+}
