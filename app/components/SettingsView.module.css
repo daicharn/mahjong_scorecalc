@@ -1,0 +1,82 @@
+.settings_view{
+    position: absolute;
+    top: 0;
+    left: -500px;
+    transition: left .5s ease;
+}
+.settings_view.open{
+    left: 0;
+}
+.settings_panel{
+    position: fixed;
+    width: 500px;
+    height: 100vh;
+    background: #bbbbbbd7;
+    color: #131313;
+    z-index: 3;
+    transition: all .5s ease;
+}
+
+.settings_tab{
+    position: relative;
+    left: 500px;
+    width: 30px;
+    height: 100vh;
+    background: rgba(221, 221, 221, 0.761);
+
+    border: 1px solid #aaa;
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.45);
+    z-index: 3;
+    
+    transition: transform .5s ease;
+}
+.settings_tab::after {
+    content: "";
+    position: absolute;
+
+    width: 6px;
+    height: 70px;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 3px;
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.5),
+        0 1px 2px rgba(0,0,0,.4);
+
+    background: #f0f0f0;
+}
+
+@media (hover: hover) {
+    .settings_tab:hover {
+        width: 45px;
+        transition: width .2s ease;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .settings_view{
+        left: -100vw;
+    }
+    .settings_panel{
+        width: 100%;
+    }
+    .settings_tab{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px){
+    .settings_view{
+        left: -100vw;
+    }
+}

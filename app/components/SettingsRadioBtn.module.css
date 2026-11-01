@@ -17,6 +17,10 @@
     transform: translateX(-200%);
     overflow: hidden;
 }
+.setting_item p{
+    margin-left: 30px;
+    transition: transform .5s ease;
+}
 .setting_radio{
     display: flex;
     flex-wrap: wrap;
@@ -63,6 +67,10 @@
         height: 25px;
         margin: 5px;
         font-size: 1.3vh;
+    }
+    .setting_item p{
+        margin: 5px 0;
+        margin-left: 30px;
     }
 }
 
