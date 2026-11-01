@@ -1,0 +1,21 @@
+.setting_parts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #131313;
+    color: #f0f0f0;
+
+    cursor: pointer;
+    user-select: none;
+
+    border: 1px solid #505050;
+    border-radius: 5px;
+
+    transition: all .2s ease;
+}
+.setting_parts.disable{
+    background-color: #464646;
+    cursor: default;
+    pointer-events: none;
+}

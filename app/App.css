@@ -7,14 +7,6 @@ body{
     color:rgb(255, 255, 255);
 }
 
-.hais{
-    margin: 30px;
-}
-.hais, .hais_machi{
-    display: flex;
-    justify-content: center;
-}
-
 .loader{
     position: absolute;
     top: 50%;
@@ -47,16 +39,6 @@ body{
     user-select: none;
 }
 
-.tehai_input{
-    margin: 0 auto;
-}
-.tehai_row{
-    display: flex;
-    justify-content: center;
-}
-.tehai_cell{
-    margin: 2px;
-}
 .hai_image{
     width: 66px;
     height: 90px;
@@ -172,107 +154,6 @@ body{
     left: 0;
 }
 
-.setting_radio{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 90%;
-    width: fit-content;
-    margin-left: 25px;
-    border-radius: 5px;
-    transition: all .5s ease;
-    overflow: hidden;
-}
-.setting_item{
-    max-height: 100px;
-    opacity: 1;
-    transform: translateX(0);
-    
-    transition:
-        max-height .5s ease,
-        margin .5s ease,
-        opacity .5s ease,
-        transform .5s ease;
-}
-.setting_item.hidden{
-    max-height: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    opacity: 0;
-    transform: translateX(-200%);
-    overflow: hidden;
-}
-.radio_box{
-    width: 100px;
-    height: 30px;
-    margin: 5px;
-}
-.radio_box, .setting_stepper button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #131313;
-    color: #f0f0f0;
-
-    cursor: pointer;
-    user-select: none;
-
-    border: 1px solid #505050;
-    border-radius: 5px;
-
-    transition: all .2s ease;
-}
-.setting_radio, .radio_box{
-    background-color: #131313;
-}
-.radio_box.disable, .setting_stepper button.disable{
-    background-color: #464646;
-    cursor: default;
-    pointer-events: none;
-}
-.radio_box input{
-    display: none;
-}
-.radio_box.active{
-    background-color: #0282cc;
-}
-
-.setting_stepper{
-    display: flex;
-    align-items: center;
-
-    margin-left: 25px;
-    padding: 5px;
-    width: fit-content;
-    border-radius: 5px;
-    
-    background-color: #131313;
-}
-.setting_stepper button{
-    width: 50px;
-    height: 30px;
-    margin: 0 5px;
-    font-size: 24px;
-    background-color: #0282cc;
-}
-.stepper_label{
-    margin-top: 50px;
-}
-.setting_stepper p{
-    margin: 0 5px;
-}
-.doranum_box{
-    width: 80px;
-    font-size: 20px;
-
-    text-align: center;
-
-    background-color: #e7e7e7;
-    border: 1px solid #505050;
-    
-    user-select: none;
-}
-
 .hamburger {
     display: none;
     position: absolute;
@@ -313,32 +194,16 @@ body{
         width: 45px;
         transition: width .2s ease;
     }
-    .radio_box:hover{
-        background-color: #292929;
-    }
-    .setting_stepper button:hover{
-        background-color: #0a9aec;
-    }
-    .radio_box.active{
-        background-color: #0282cc;
-    }
 }
 
 @media screen and (max-width: 768px) {
     body{
         font-family: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
     }
-    .hais, .result_tehai{
-        margin-top: 75px;
-    }
     
     .hai .hai_image{
         width: 25px;
         height: 35px;
-    }
-    .tehai_cell .hai_image{
-        width: 32px;
-        height: 43px;
     }
     
     .reset_btn, .close_btn{
@@ -356,33 +221,14 @@ body{
         margin: 5px 0;
         margin-left: 30px;
     }
-    .setting_item:first-child{
-        margin-top: 50px;
-    }
     .stepper_label{
         margin: 0;
         padding: 5px 0;
-    }
-    .setting_radio{
-        max-width: 85%;
-    }
-    .radio_box{
-        width: 17vw;
-        height: 25px;
-        margin: 5px;
-        font-size: 1.3vh;
     }
     .setting_stepper p{
         margin: 0 5px;
     }
 
-    .result_tensuu p{
-        font-size: 16px;
-        margin: 10px;
-    }
-    .result_hai_block{
-        margin: 0 2px;
-    }
 
     .loader_text{
         width: 230px;
@@ -403,23 +249,9 @@ body{
         width: 45px;
         height: 60px;
     }
-    .tehai_cell .hai_image{
-        width: 60px;
-        height: 85px;
-    }
     .reset_btn, .close_btn{
         width: 120px;
         height: 20px;
-    }
-
-    .radio_box{
-        width: 15vw;
-        font-size: 1.5vh;
-    }
-
-    .result_tensuu p{
-        font-size: 30px;
-        margin: 10px;
     }
 
     .loader_text{

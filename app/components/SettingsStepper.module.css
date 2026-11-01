@@ -1,0 +1,41 @@
+.setting_stepper{
+    display: flex;
+    align-items: center;
+
+    margin-left: 25px;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    
+    background-color: #131313;
+}
+.setting_stepper button{
+    width: 50px;
+    height: 30px;
+    margin: 0 5px;
+    font-size: 24px;
+    background-color: #0282cc;
+}
+.stepper_label{
+    margin-top: 50px;
+}
+.setting_stepper p{
+    margin: 0 5px;
+}
+.doranum_box{
+    width: 80px;
+    font-size: 20px;
+
+    text-align: center;
+
+    background-color: #e7e7e7;
+    border: 1px solid #505050;
+    
+    user-select: none;
+}
+
+@media (hover: hover) {
+    .setting_stepper button:hover{
+        background-color: #0a9aec;
+    }
+}
