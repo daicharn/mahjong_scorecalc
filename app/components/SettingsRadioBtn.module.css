@@ -1,0 +1,82 @@
+.setting_item{
+    max-height: 100px;
+    opacity: 1;
+    transform: translateX(0);
+    
+    transition:
+        max-height .5s ease,
+        margin .5s ease,
+        opacity .5s ease,
+        transform .5s ease;
+}
+.setting_item.hidden{
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateX(-200%);
+    overflow: hidden;
+}
+.setting_item p{
+    margin-left: 30px;
+    transition: transform .5s ease;
+}
+.setting_radio{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90%;
+    width: fit-content;
+    margin-left: 25px;
+    border-radius: 5px;
+    transition: all .5s ease;
+    overflow: hidden;
+}
+.setting_radio{
+    background-color: #131313;
+}
+.radio_box{
+    width: 100px;
+    height: 30px;
+    margin: 5px;
+}
+.radio_box input{
+    display: none;
+}
+.radio_box.active{
+    background-color: #0282cc;
+}
+
+@media (hover: hover) {
+    .radio_box:hover{
+        background-color: #292929;
+    }
+    .radio_box.active{
+        background-color: #0282cc;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .setting_item:first-child{
+        margin-top: 50px;
+    }
+    .setting_radio{
+        max-width: 85%;
+    }
+    .radio_box{
+        width: 17vw;
+        height: 25px;
+        margin: 5px;
+        font-size: 1.3vh;
+    }
+    .setting_item p{
+        margin: 5px 0;
+        margin-left: 30px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px){
+    .radio_box{
+        width: 15vw;
+        font-size: 1.5vh;
+    }
+}

@@ -7,91 +7,6 @@ body{
     color:rgb(255, 255, 255);
 }
 
-.hais{
-    margin: 30px;
-}
-.hais, .hais_machi{
-    display: flex;
-    justify-content: center;
-}
-
-.result_view{
-    display: block;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-
-    background: rgb(32, 32, 32);
-    z-index: 5;
-
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.result_tehai{
-    margin: 30px;
-    max-width: 90%;
-    overflow-x: auto;
-    display: flex;
-}
-.result_details, .result_hai_block, .result_tehai_outer{
-    display: flex;
-    justify-content: center;
-}
-.result_hai_block{
-    margin: 0 5px;
-}
-.result_hai_image, .naki_list_result .naki_block .hai_image{
-    width: 60px;
-    height: 80px;
-}
-.result_hai_image.agari{
-    border: 3px solid rgba(8, 127, 224, 0.842);
-    box-sizing: border-box;
-}
-.naki_list_result{
-    display: flex;
-    padding: 0;
-}
-.result_tensuu{
-    display: flex;
-    justify-content: center;
-    font-size: 24px;
-}
-.result_tensuu p{
-    margin: 0 20px;
-}
-.result_table{
-    width: 350px;
-    margin: 10px 0;
-    font-size: 20px;
-    border-collapse: collapse;
-}
-.result_table th, .result_table td{
-    text-align: center;
-    border: 1px solid #f0f0f0;
-}
-.result_table p{
-    margin: 0;
-}
-.result_table img{
-    width: 30px;
-    height: 40px;
-    cursor: default;
-}
-
-
 .loader{
     position: absolute;
     top: 50%;
@@ -124,16 +39,6 @@ body{
     user-select: none;
 }
 
-.tehai_input{
-    margin: 0 auto;
-}
-.tehai_row{
-    display: flex;
-    justify-content: center;
-}
-.tehai_cell{
-    margin: 2px;
-}
 .hai_image{
     width: 66px;
     height: 90px;
@@ -142,16 +47,8 @@ body{
 .hai_image.disable{
     cursor: default;
 }
-.hai_image.rotate90{
-    transform: rotate(90deg) translateY(13%);
-}
 
-.naki_btn_list{
-    display: flex;
-    justify-content: center;
-    height: 70px;
-}
-.naki_btn, .reset_btn, .close_btn{
+.btn_item{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -165,51 +62,9 @@ body{
       transform .2s ease,
       opacity .5s ease;
 }
-.naki_btn p, .reset_btn p, .close_btn p{
+.btn_item p{
     margin: 0;
     padding: 0;
-}
-.naki_btn.active{
-    border-color: #e6e6e6;
-    transform: scale(1.05);
-}
-.naki_btn.disable{
-    background-color: #8a8a8a;
-}
-.naki_btn_chi{
-    background-color: #01ac79;
-}
-.naki_btn_pon{
-    background-color: #0282cc;
-}
-.naki_btn_minkan, .naki_btn_ankan{
-    background-color: #730477;
-}
-
-.naki_list{
-    position: absolute;
-    width: 80%;
-    height: 120px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0 auto;
-
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-
-    background-color: #929292;
-    border: 3px solid #505050;
-    border-radius: 10px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-.naki_block{
-    flex-shrink: 0;
-    padding-left: 25px;
-    margin: 0 10px;
 }
 
 .reset_btn, .close_btn{
@@ -236,182 +91,6 @@ body{
     background: rgba(0, 0, 0, 0.0);
     pointer-events: all;
     z-index: 1;
-}
-
-.settings_view{
-    position: absolute;
-    top: 0;
-    left: -500px;
-    transition: left .5s ease;
-}
-.settings_tab{
-    position: relative;
-    left: 500px;
-    width: 30px;
-    height: 100vh;
-    background: rgba(221, 221, 221, 0.761);
-
-    border: 1px solid #aaa;
-    border-top: none;
-    border-bottom: none;
-    border-radius: 0 10px 10px 0;
-    cursor: pointer;
-
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.45);
-    z-index: 3;
-    
-    transition: transform .5s ease;
-}
-.settings_tab::after {
-    content: "";
-    position: absolute;
-
-    width: 6px;
-    height: 70px;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 3px;
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.5),
-        0 1px 2px rgba(0,0,0,.4);
-
-    background: #f0f0f0;
-}
-.settings_panel{
-    position: fixed;
-    width: 500px;
-    height: 100vh;
-    background: #bbbbbbd7;
-    color: #131313;
-    z-index: 3;
-    transition: all .5s ease;
-}
-.settings_panel p{
-    margin-left: 30px;
-    transition: transform .5s ease;
-}
-.settings_view.open{
-    left: 0;
-}
-
-.setting_radio{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 90%;
-    width: fit-content;
-    margin-left: 25px;
-    border-radius: 5px;
-    transition: all .5s ease;
-    overflow: hidden;
-}
-.setting_item{
-    max-height: 100px;
-    opacity: 1;
-    transform: translateX(0);
-    
-    transition:
-        max-height .5s ease,
-        margin .5s ease,
-        opacity .5s ease,
-        transform .5s ease;
-}
-.setting_item.hidden{
-    max-height: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    opacity: 0;
-    transform: translateX(-200%);
-    overflow: hidden;
-}
-.radio_box{
-    width: 100px;
-    height: 30px;
-    margin: 5px;
-}
-.radio_box, .setting_stepper button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #131313;
-    color: #f0f0f0;
-
-    cursor: pointer;
-    user-select: none;
-
-    border: 1px solid #505050;
-    border-radius: 5px;
-
-    transition: all .2s ease;
-}
-.setting_radio, .radio_box{
-    background-color: #131313;
-}
-.radio_box.disable, .setting_stepper button.disable{
-    background-color: #464646;
-    cursor: default;
-    pointer-events: none;
-}
-.radio_box input{
-    display: none;
-}
-.radio_box.active{
-    background-color: #0282cc;
-}
-
-.setting_stepper{
-    display: flex;
-    align-items: center;
-
-    margin-left: 25px;
-    padding: 5px;
-    width: fit-content;
-    border-radius: 5px;
-    
-    background-color: #131313;
-}
-.setting_stepper button{
-    width: 50px;
-    height: 30px;
-    margin: 0 5px;
-    font-size: 24px;
-    background-color: #0282cc;
-}
-.stepper_label{
-    margin-top: 50px;
-}
-.setting_stepper p{
-    margin: 0 5px;
-}
-.doranum_box{
-    width: 80px;
-    font-size: 20px;
-
-    text-align: center;
-
-    background-color: #e7e7e7;
-    border: 1px solid #505050;
-    
-    user-select: none;
-}
-
-.modal{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    background-color: #0cb2e4de;
-    z-index: 3;
-    user-select: none;
-}
-.modal *{
-    text-align: center;
 }
 
 .hamburger {
@@ -444,28 +123,9 @@ body{
     transform: translateY(-9px) rotate(-45deg);
 }
 
-
-
 @media (hover: hover) {
-    .naki_btn:hover, .reset_btn:hover, .close_btn:hover{
+    .btn_item:hover{
         opacity: 0.7;
-    }
-    .naki_btn.disable:hover{
-        opacity: 0.9;
-        cursor: default;
-    }
-    .settings_tab:hover {
-        width: 45px;
-        transition: width .2s ease;
-    }
-    .radio_box:hover{
-        background-color: #292929;
-    }
-    .setting_stepper button:hover{
-        background-color: #0a9aec;
-    }
-    .radio_box.active{
-        background-color: #0282cc;
     }
 }
 
@@ -473,84 +133,15 @@ body{
     body{
         font-family: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
     }
-    .hais, .result_tehai{
-        margin-top: 75px;
-    }
-    .result_hai_image, .naki_list_result .naki_block .hai_image{
-        width: 20px;
-        height: 28px;
-    }
-    .hai .hai_image, .result_table img{
+    
+    .hai .hai_image{
         width: 25px;
         height: 35px;
     }
-    .tehai_cell .hai_image, .naki_list .naki_block .hai_image{
-        width: 32px;
-        height: 43px;
-    }
-    .naki_btn_list{
-        height: 60px;
-    }
-    .naki_btn{
-        padding: 0 20px;
-    }
+    
     .reset_btn, .close_btn{
         width: 75px;
         height: 20px;
-    }
-    .naki_list{
-        width: 95%;
-        height: 75px;
-    }
-    .naki_block{
-        margin: 0;
-    }
-
-    .settings_tab{
-        display: none;
-    }
-    .settings_panel{
-        width: 100%;
-    }
-    .settings_panel p{
-        margin: 5px 0;
-        margin-left: 30px;
-    }
-    .setting_item:first-child{
-        margin-top: 50px;
-    }
-    .stepper_label{
-        margin: 0;
-        padding: 5px 0;
-    }
-    .setting_radio{
-        max-width: 85%;
-    }
-    .radio_box{
-        width: 17vw;
-        height: 25px;
-        margin: 5px;
-        font-size: 1.3vh;
-    }
-    .setting_stepper p{
-        margin: 0 5px;
-    }
-
-    .result_view *, .result_table td p{
-        font-size: 12px;
-    }
-    .result_tensuu p{
-        font-size: 16px;
-        margin: 10px;
-    }
-    .result_table td *{
-        margin: 0;
-    }
-    .result_table{
-        width: 180px;
-    }
-    .result_hai_block{
-        margin: 0 2px;
     }
 
     .loader_text{
@@ -558,69 +149,19 @@ body{
         font-size: 12px;
     }
 
-    .result_hai_image.agari{
-        border: 1px solid rgba(8, 127, 224, 0.842);
-    }
-
-    .modal *{
-        margin: 5px 0;
-    }
-
     .hamburger{
         display: flex;
     }
 }
 
-@media screen and (min-width: 600px) and (max-width: 768px){
-    .settings_view{
-        left: -750px;
-    }
-    .result_hai_image, .naki_list_result .naki_block .hai_image{
-        width: 32px;
-        height: 43px;
-    }
-    .hai .hai_image, .result_table img{
+@media screen and (min-width: 600px) and (max-width: 768px){    
+    .hai .hai_image{
         width: 45px;
         height: 60px;
-    }
-    .tehai_cell .hai_image, .naki_list .naki_block .hai_image{
-        width: 60px;
-        height: 85px;
-    }
-    .naki_btn{
-        padding: 0 40px;
     }
     .reset_btn, .close_btn{
         width: 120px;
         height: 20px;
-    }
-
-    .naki_list{
-        width: 95%;
-        height: 120px;
-    }
-    .naki_block{
-        margin: 5px;
-    }
-
-    .radio_box{
-        width: 15vw;
-        font-size: 1.5vh;
-    }
-
-    .result_view *, .result_table td p{
-        font-size: 20px;
-    }
-    .result_tensuu p{
-        font-size: 30px;
-        margin: 10px;
-    }
-    .result_table{
-        width: 300px;
-    }
-
-    .result_hai_image.agari{
-        border: 2px solid rgba(8, 127, 224, 0.842);
     }
 
     .loader_text{

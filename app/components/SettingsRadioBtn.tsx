@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Radio } from "../modules/TypeDefs";
+import styles from './SettingsRadioBtn.module.css';
+import styles_parts from './SettingsParts.module.css';
 
 type TypeRadio = {label: string, name: string, radio: Radio[], hidden?: boolean, onChange: (name: string, value: string) => void}
 
@@ -30,14 +32,14 @@ export default function SettingRadioBtn(props : TypeRadio){
   }, [props.radio]);
 
   return (
-    <div className={`setting_item ${props.hidden ? "hidden" : ""}`}>
+    <div className={`${styles.setting_item} ${props.hidden ? styles.hidden : ""}`}>
       <p>{props.label}</p>
-      <div className={`setting_radio ${props.name}`}>
+      <div className={styles.setting_radio}>
         {props.radio.map((r, i) => {
           const isActive = r.disable ? i === 0 : r.value === selected;
           const isDisable = r.disable;
           return (
-            <label key={i} className={`radio_box ${isActive ? "active" : ""} ${isDisable ? "disable": ""}`}>
+            <label key={i} className={`${styles.radio_box} ${styles_parts.setting_parts} ${isActive ? styles.active : ""} ${isDisable ? styles_parts.disable : ""}`}>
               <input type="radio" name={props.name} value={r.value} 
                 checked={isActive} onChange={isDisable ? undefined : changeValue} readOnly={isDisable}/>
               {r.label}

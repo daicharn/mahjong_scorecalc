@@ -1,10 +1,11 @@
 import {Hai} from 'mahjong_engine';
 import {Hais} from 'mahjong_engine';
 import {TILE} from 'mahjong_engine';
+import styles from './TehaiView.module.css';
 
 export default function TehaiView({ hais, haiNum, onRemoveHai }: { hais: Hais, haiNum: number, onRemoveHai: (id: number) => void }){
   return (
-    <div className="hais">
+    <div className={styles.hais}>
       {hais.getHais().map((h, i) => (
       <div className="hai" key={i}>
         <img className='hai_image' src={"images/" + h.imageUrl} onClick={() => onRemoveHai(h.getId())}></img>

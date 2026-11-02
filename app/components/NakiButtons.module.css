@@ -1,0 +1,45 @@
+.naki_btn_list{
+    display: flex;
+    justify-content: center;
+    height: 70px;
+}
+.naki_btn.active{
+    border-color: #e6e6e6;
+    transform: scale(1.05);
+}
+.naki_btn.disable{
+    background-color: #8a8a8a;
+}
+.naki_btn_chi{
+    background-color: #01ac79;
+}
+.naki_btn_pon{
+    background-color: #0282cc;
+}
+.naki_btn_minkan, .naki_btn_ankan{
+    background-color: #730477;
+}
+
+@media (hover: hover) {
+    .naki_btn.disable:hover{
+        opacity: 0.9;
+        cursor: default;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .naki_btn_list{
+        height: 60px;
+    }
+    .naki_btn{
+        padding: 0 5vw;
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px){
+    .naki_btn{
+        padding: 0 40px;
+        font-size: 14px;
+    }
+}

@@ -1,6 +1,7 @@
 import { AgariVal, BoolVal, OtherVal, Radio, RiichiVal, Settings, WindVal } from "../modules/TypeDefs";
 import SettingRadioBtn from "./SettingsRadioBtn";
 import SettingsStepper from "./SettingsStepper";
+import styles from './SettingsView.module.css';
 
 type SettingsProps = {isMenzen: boolean, hasKantsu: boolean, settings: Settings, showSettings: boolean, setShowSettings: (isShow: boolean) => void, setSettings: (name: string, value: string | number) => void};
 
@@ -114,8 +115,8 @@ export default function SettingsView(props: SettingsProps){
   ]
 
   return (
-    <div className={`settings_view ${props.showSettings ? "open" : ""}`}>
-      <div className="settings_panel">
+    <div className={`${styles.settings_view} ${props.showSettings ? styles.open : ""}`}>
+      <div className={styles.settings_panel}>
         <SettingRadioBtn label={"アガリ"} name={"agari"} radio={agariButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"立直"} name={"riichi"} radio={riichiButtons} onChange={props.setSettings} />
         <SettingRadioBtn label={"一発"} name={"ippatsu"} radio={ippatsuButtons} hidden={props.settings.riichi === RiichiVal.None} onChange={props.setSettings} />
@@ -124,7 +125,7 @@ export default function SettingsView(props: SettingsProps){
         <SettingRadioBtn label={"特殊役"} name={"other"} radio={OtherButtons} onChange={props.setSettings} />
         <SettingsStepper label={"ドラ"} name={"dora"} start={0} min={0} max={52} onChange={props.setSettings} />
       </div>
-      <div className="settings_tab" onClick={() => props.setShowSettings(!props.showSettings)}>
+      <div className={styles.settings_tab} onClick={() => props.setShowSettings(!props.showSettings)}>
       </div>
     </div>
   );

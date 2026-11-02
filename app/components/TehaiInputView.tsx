@@ -1,6 +1,7 @@
 import { Hai, Hais, Meld } from "mahjong_engine";
 import { Mode, NakiMode } from '../modules/TypeDefs';
-import { HandState } from "../modules/HandState";
+import { HandState } from '../modules/HandState';
+import styles from './TehaiInputView.module.css';
 
 type TehaiInputProps = { 
   hais: Hais,
@@ -38,16 +39,16 @@ export default function TehaiInputView(props: TehaiInputProps){
   const machiIds = new Set(props.machiHais.map(h => h.getId()));
 
   return (
-    <div className='tehai_input'>
+    <div>
       {rows.map((row, r) => (
-        <div key={r} className='tehai_row'>
+        <div key={r} className={styles.tehai_row}>
         {row
           .filter(i => !(r === 3 && i % 9 >= 7))
           .map(i => (
-          <div key={i} className='tehai_cell'>
+          <div key={i} className={styles.tehai_cell}>
           {handState.canShowTile(i + 1, machiIds, props.hais, props.mode, props.nakiMode)
-            ?(<img className='hai_image' src={"images/" + props.allTiles[i].imageUrl} onPointerDown={() => onTileClick(i, props)}></img>)
-            :(<img className='hai_image disable' src={"images/" + props.allTiles[34].imageUrl}></img>)
+            ?(<img className={styles.tehai_cell_image} src={"images/" + props.allTiles[i].imageUrl} onPointerDown={() => onTileClick(i, props)}></img>)
+            :(<img className={`${styles.tehai_cell_image} ${styles.disable}`} src={"images/" + props.allTiles[34].imageUrl}></img>)
           }
           </div>
         ))}
