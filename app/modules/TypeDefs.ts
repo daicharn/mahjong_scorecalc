@@ -38,7 +38,8 @@ export enum Mode {
   Normal = "normal",
   Naki = "naki",
   Agari = "agari",
-  Noten = "noten"
+  Noten = "noten",
+  Ukeire = "ukeire"
 };
 
 export type resType = {blockObj: blockRes, yakuMapObj: Record<string, number>, scoreResultObj: scoreRes};
@@ -54,7 +55,8 @@ export type Settings = {
   playerwind: string,
   roundwind: string,
   other: string,
-  dora: number
+  dora: number,
+  calcmode: string
 }
 
 export enum AgariVal {
@@ -88,4 +90,9 @@ export enum OtherVal {
   chankan = "chankan",
   haitei = "haitei",
   houtei = "houtei"
+}
+
+export enum CalcModeVal {
+  Tensuu = "tensuu",
+  Ukeire = "ukeire"
 }

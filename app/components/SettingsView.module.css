@@ -56,6 +56,23 @@
     background: #f0f0f0;
 }
 
+.tablist{
+    margin: 20px;
+}
+.tablist button{
+    width: 120px;
+    height: 30px;
+    margin: 0 5px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #131313;
+    cursor: pointer;
+    font-size: 16px;
+}
+.tablist button.active{
+    border-bottom: 2px solid #131313;
+}
+
 @media (hover: hover) {
     .settings_tab:hover {
         width: 45px;
