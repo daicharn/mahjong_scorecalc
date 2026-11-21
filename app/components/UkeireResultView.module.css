@@ -1,0 +1,94 @@
+.ukeire_result_view {
+  display: block;
+  justify-content: center;
+  position: fixed;
+  top: 200px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(56, 56, 56, 0.952);
+  z-index: 11;
+
+  opacity: 0;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.2);
+  pointer-events: all;
+  z-index: 10;
+}
+
+.close_btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 34px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 11;
+}
+
+.close_btn span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 3px;
+  background: rgb(255, 255, 255);
+  border-radius: 2px;
+}
+
+.close_btn span:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close_btn span:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.hai_image {
+  width: 40px;
+  height: 55px;
+}
+
+.ukeire_result_table {
+  font-size: 16px;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.ukeire_result_table th,
+.ukeire_result_table td {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.td_yuukouhai {
+  display: flex;
+}
+
+.td_yuukouhai div {
+  margin: 5px;
+}
+
+.td_yuukouhai p {
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

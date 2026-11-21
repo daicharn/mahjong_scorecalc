@@ -13,7 +13,7 @@
     height: 100vh;
     background: #bbbbbbd7;
     color: #131313;
-    z-index: 3;
+    z-index: 4;
     transition: all .5s ease;
 }
 
@@ -31,7 +31,7 @@
     cursor: pointer;
 
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.45);
-    z-index: 3;
+    z-index: 4;
     
     transition: transform .5s ease;
 }
