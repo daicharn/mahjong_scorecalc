@@ -22,13 +22,13 @@ export default function UkeireResultView(props: TypeUkeireResult) {
                 <tbody>
                     {props.ukeireDetails.map((discardDetail, index) => (
                         <tr key={index}>
-                            <td><img className={styles.hai_image} src={"images/" + props.allTiles[discardDetail.haiId].imageUrl}></img></td>
-                            <td>{discardDetail.shanten}</td>
+                            <td><img className={styles.hai_image} src={"images/" + props.allTiles[discardDetail.haiId - 1].imageUrl}></img></td>
+                            <td>{discardDetail.shanten === 0 ? "聴牌" : discardDetail.shanten}</td>
                             <td>{discardDetail.ukeireCount}</td>
                             <td className={styles.td_yuukouhai}>
-                            {discardDetail.ukeireDetails.map((ukeireDetail) => (
-                                <div>
-                                    <img className={styles.hai_image} src={"images/" + props.allTiles[ukeireDetail.hai].imageUrl}></img>
+                            {discardDetail.ukeireDetails.map((ukeireDetail, index) => (
+                                <div key={index}>
+                                    <img className={styles.hai_image} src={"images/" + props.allTiles[ukeireDetail.hai - 1].imageUrl}></img>
                                     <p>{ukeireDetail.count}</p>
                                 </div>
                             ))}

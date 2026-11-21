@@ -62,7 +62,7 @@
 .ukeire_result_table {
   font-size: 16px;
   border-collapse: collapse;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 .ukeire_result_table th,
@@ -73,14 +73,21 @@
 
 .td_yuukouhai {
   display: flex;
+  margin: 10px 0;
 }
 
 .td_yuukouhai div {
-  margin: 5px;
+  margin: 0 5px;
+}
+
+.td_yuukouhai img {
+  display: block;
 }
 
 .td_yuukouhai p {
-  margin: 0;
+  margin: 5px 0;
+  padding: 0;
+  line-height: 1;
 }
 
 @keyframes fadeIn {
