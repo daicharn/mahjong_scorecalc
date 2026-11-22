@@ -5,38 +5,40 @@ type TypeUkeireResult = { ukeireDetails: DiscardDetail[], allTiles: Hai[], setsh
 
 export default function UkeireResultView(props: TypeUkeireResult) {
     return (
-        <div className={styles.ukeire_result_view}>
+        <>
             <div className={styles.overlay}></div>
-            <div className={styles.close_btn} onClick={() => props.setshowUkeireResult(false)}>
-                <span></span><span></span>
-            </div>
-            <table className={`${styles.ukeire_result_table}`}>
-                <thead>
-                    <tr>
-                        <th>打牌</th>
-                        <th>向聴</th>
-                        <th>受け入れ</th>
-                        <th>有効牌</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {props.ukeireDetails.map((discardDetail, index) => (
-                        <tr key={index}>
-                            <td><img className={styles.hai_image} src={"images/" + props.allTiles[discardDetail.haiId - 1].imageUrl}></img></td>
-                            <td>{discardDetail.shanten === 0 ? "聴牌" : discardDetail.shanten}</td>
-                            <td>{discardDetail.ukeireCount}</td>
-                            <td className={styles.td_yuukouhai}>
-                            {discardDetail.ukeireDetails.map((ukeireDetail, index) => (
-                                <div key={index}>
-                                    <img className={styles.hai_image} src={"images/" + props.allTiles[ukeireDetail.hai - 1].imageUrl}></img>
-                                    <p>{ukeireDetail.count}</p>
-                                </div>
-                            ))}
-                            </td>
+            <div className={styles.ukeire_result_view}>
+                <div className={styles.close_btn} onClick={() => props.setshowUkeireResult(false)}>
+                    <span></span><span></span>
+                </div>
+                <table className={`${styles.ukeire_result_table}`}>
+                    <thead>
+                        <tr>
+                            <th>打牌</th>
+                            <th>向聴</th>
+                            <th>受け入れ</th>
+                            <th>有効牌</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {props.ukeireDetails.map((discardDetail, index) => (
+                            <tr key={index}>
+                                <td><img className={styles.hai_image} src={"images/" + props.allTiles[discardDetail.haiId - 1].imageUrl}></img></td>
+                                <td>{discardDetail.shanten === 0 ? "聴牌" : discardDetail.shanten}</td>
+                                <td>{discardDetail.ukeireCount}</td>
+                                <td className={styles.td_yuukouhai}>
+                                {discardDetail.ukeireDetails.map((ukeireDetail, index) => (
+                                    <div key={index}>
+                                        <img className={styles.hai_image} src={"images/" + props.allTiles[ukeireDetail.hai - 1].imageUrl}></img>
+                                        <p>{ukeireDetail.count}</p>
+                                    </div>
+                                ))}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }

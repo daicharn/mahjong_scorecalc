@@ -5,7 +5,9 @@
   top: 200px;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 200px);
+
+  overflow-y: scroll;
 
   background: rgba(56, 56, 56, 0.952);
   z-index: 11;
@@ -63,16 +65,30 @@
   font-size: 16px;
   border-collapse: collapse;
   margin: 10px auto;
+  width: 70%;
 }
 
 .ukeire_result_table th,
 .ukeire_result_table td {
   text-align: center;
+}
+
+.ukeire_result_table th {
+  padding-bottom: 15px;
+}
+
+.ukeire_result_table td {
   padding: 0 15px;
+}
+
+.ukeire_result_table tbody tr {
+  border-top: 1px solid rgb(230, 230, 230);
+  border-bottom: 1px solid rgb(230, 230, 230);
 }
 
 .td_yuukouhai {
   display: flex;
+  flex-wrap: wrap;
   margin: 10px 0;
 }
 
@@ -97,5 +113,30 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ukeire_result_view {
+    top: 130px;
+    height: calc(100dvh - 130px);
+  }
+
+  .ukeire_result_table {
+    width: 100%;
+  }
+
+  .ukeire_result_table th {
+    writing-mode: vertical-rl;
+    white-space: nowrap;
+  }
+
+  .ukeire_result_table th:nth-child(4) {
+    writing-mode: horizontal-tb;
+  }
+
+  .hai_image {
+    width: 30px;
+    height: 40px;
   }
 }
