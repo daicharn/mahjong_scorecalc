@@ -1,12 +1,13 @@
-import style from './Modal.module.css'
+import styles from './Modal.module.css'
 
-type TypeModal = {className: string, h2: string, p: string};
+type TypeModal = {className: string, h2: string, p: string, children?: React.ReactNode};
 
 export default function Modal(props: TypeModal){
     return (
-      <div className={`${style.modal} ${props.className}`}>
+      <div className={`${styles.modal} ${props.className}`}>
         <h2>{props.h2}</h2>
         <p>{props.p}</p>
+        {props.children}
       </div>
     )
 }

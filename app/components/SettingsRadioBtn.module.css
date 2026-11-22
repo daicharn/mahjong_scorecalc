@@ -30,8 +30,6 @@
     border-radius: 5px;
     transition: all .5s ease;
     overflow: hidden;
-}
-.setting_radio{
     background-color: #131313;
 }
 .radio_box{

@@ -3,7 +3,7 @@ import { Radio } from "../modules/TypeDefs";
 import styles from './SettingsRadioBtn.module.css';
 import styles_parts from './SettingsParts.module.css';
 
-type TypeRadio = {label: string, name: string, radio: Radio[], hidden?: boolean, onChange: (name: string, value: string) => void}
+type TypeRadio = {label: string, name: string, radio: Radio[], hidden?: boolean, isLocked?: boolean, onChange: (name: string, value: string) => void}
 
 export default function SettingRadioBtn(props : TypeRadio){
   const [selected, setSelected] = useState<string>(props.radio[0].value);
@@ -39,8 +39,8 @@ export default function SettingRadioBtn(props : TypeRadio){
           const isActive = r.disable ? i === 0 : r.value === selected;
           const isDisable = r.disable;
           return (
-            <label key={i} className={`${styles.radio_box} ${styles_parts.setting_parts} ${isActive ? styles.active : ""} ${isDisable ? styles_parts.disable : ""}`}>
-              <input type="radio" name={props.name} value={r.value} 
+            <label key={i} className={`${styles.radio_box} ${styles_parts.setting_parts} ${isActive ? styles.active : ""} ${isDisable || props.isLocked ? styles_parts.disable : ""}`}>
+              <input type="radio" name={props.name} value={r.value} disabled={props.isLocked}
                 checked={isActive} onChange={isDisable ? undefined : changeValue} readOnly={isDisable}/>
               {r.label}
             </label>

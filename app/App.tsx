@@ -1,10 +1,10 @@
 "use client";
 
-import {Hai, Meld, PlayerHand, ShantenCalculator, TILE} from 'mahjong_engine';
-import {Hais} from 'mahjong_engine';
-import {MachiCalculator} from 'mahjong_engine';
-import {JSX, useState} from 'react';
-import {useMemo} from 'react';
+import { Hai, Meld, PlayerHand, ShantenCalculator, TILE, DiscardEvaluator, DiscardDetail } from 'mahjong_engine';
+import { Hais } from 'mahjong_engine';
+import { MachiCalculator } from 'mahjong_engine';
+import { useState } from 'react';
+import { useMemo } from 'react';
 
 import './App.css';
 import NakiButtons from './components/NakiButtons';
@@ -14,13 +14,14 @@ import ResultView from './components/ResultView';
 import NakiView from './components/NakiView';
 import SettingsView from './components/SettingsView';
 
-import { AgariVal, BoolVal, Mode, OtherVal, resType, RiichiVal, Settings, WindVal } from './modules/TypeDefs';
+import { AgariVal, BoolVal, Mode, CalcModeVal, OtherVal, resType, RiichiVal, Settings, WindVal } from './modules/TypeDefs';
 import { MahjongAPIGetter } from './modules/MahjongAPIGetter';
 import { MeldUtils } from './modules/MeldUtils';
 import { MapSettingsToContext } from './modules/MapSettingsToContext';
-import Modal from './components/Modal';
 import NoYakuModal from './components/NoYakuModal';
 import NotenModal from './components/NotenModal';
+import UkeireModal from './components/UkeireModal';
+import UkeireResultView from './components/UkeireResultView';
 
 function App() {
   const [hais, setHais] = useState<Hais>(new Hais());
@@ -29,6 +30,8 @@ function App() {
   const [result, setResult] = useState<resType>();
   const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState<boolean>(false);
+  const [showUkeireResult, setshowUkeireResult] = useState<boolean>(false);
+  const [ukeireDetails, setukeireDetails] = useState<DiscardDetail[]>([]);
   const [mode, setMode] = useState<Mode>(Mode.Normal);
   const [showSettings, setShowSettings] = useState(false);
   const [isMenzen, setIsMenzen] = useState<boolean>(true);
@@ -48,7 +51,8 @@ function App() {
     playerwind: WindVal.EAST,
     roundwind: WindVal.EAST,
     other: OtherVal.None,
-    dora: 0
+    dora: 0,
+    calcmode: CalcModeVal.Tensuu
   });
 
   const HaiNum = 14 - (melds.length * 3);
@@ -58,32 +62,43 @@ function App() {
     return Array.from({ length: 35 }, (_, i) => new Hai(i + 1));
   }, []);
 
-  const updateMode = (newHais: Hais) => {
-    if(newHais.length === HaiNum){
+  const updateTensuuMode = (newHais: Hais) => {
+    if (newHais.length === HaiNum) {
       setMode(Mode.Agari);
       return;
     }
 
-    if(mode === Mode.Agari || mode === Mode.Noten){
+    if (mode === Mode.Agari || mode === Mode.Noten) {
       setMode(Mode.Normal);
       setResult(undefined);
     }
   };
 
+  const updateUkeireMode = (newHais: Hais) => {
+    if (newHais.length === HaiNum) {
+      setMode(Mode.Ukeire);
+      return;
+    }
+
+    if (mode === Mode.Ukeire) {
+      setMode(Mode.Normal);
+    }
+  }
+
   const updateMachiAndShanten = (newHais: Hais) => {
-    if(newHais.length === HaiNum - 1){
+    if (newHais.length === HaiNum - 1) {
       const machiHais = new MachiCalculator(newHais.getHais())
         .calculate()
         .map(m => new Hai(m));
 
       setmachiHais(machiHais);
 
-      if(machiHais.length === 0){
+      if (machiHais.length === 0) {
         const shanten = new ShantenCalculator(newHais.getHais()).calculate();
-        if(shanten >= 1) setMode(Mode.Noten);
+        if (shanten >= 1) setMode(Mode.Noten);
       }
     }
-    else{
+    else {
       setmachiHais([]);
     }
   }
@@ -93,24 +108,29 @@ function App() {
     fn(newHais);
     newHais.sort();
 
-    updateMode(newHais);
-    updateMachiAndShanten(newHais);
+    if (settings.calcmode == CalcModeVal.Tensuu) {
+      updateTensuuMode(newHais);
+      updateMachiAndShanten(newHais);
+    }
+    else if (settings.calcmode == CalcModeVal.Ukeire) {
+      updateUkeireMode(newHais);
+    }
     setHais(newHais);
   };
 
   const showResultView = async (agariHaiId: number) => {
-      setLoading(true);
-      try{
-        const agariHai = new Hai(agariHaiId);
-        const ctx = new MapSettingsToContext(agariHai, settings).toContext();
-        const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", hais.ids, melds, ctx).get();
-        setResult(data);
-        setShowResult(true);
-        setAgariHai(agariHai);
-      }
-      finally{
-        setLoading(false);
-      }
+    setLoading(true);
+    try {
+      const agariHai = new Hai(agariHaiId);
+      const ctx = new MapSettingsToContext(agariHai, settings).toContext();
+      const data = await new MahjongAPIGetter("https://mahjong-api.daicharn.deno.net/calc", hais.ids, melds, ctx).get();
+      setResult(data);
+      setShowResult(true);
+      setAgariHai(agariHai);
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   const addMelds = (id: number) => {
@@ -143,11 +163,11 @@ function App() {
   const removeHai = (id: number) => updateHais(h => h.remove(id));
 
   const resetNakiMode = () => setNakiMode({
-      none: true,
-      chi: false,
-      pon: false,
-      minkan: false,
-      ankan: false,
+    none: true,
+    chi: false,
+    pon: false,
+    minkan: false,
+    ankan: false,
   });
 
   const resetAll = () => {
@@ -165,20 +185,28 @@ function App() {
     setSettings(prev => ({ ...prev, [name]: value }));
   };
 
+  const setAndShowUkeire = (includeSpecial: boolean) => {
+    const ukeire = new DiscardEvaluator(hais.getHais(), includeSpecial).evaluate();
+    setukeireDetails(ukeire);
+    setshowUkeireResult(true);
+  }
+
   return (
     <div className="App">
       <TehaiView hais={hais} haiNum={HaiNum} onRemoveHai={removeHai} />
-      <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} showResultView={showResultView}/>
+      <TehaiInputView hais={hais} melds={melds} allTiles={allTiles} machiHais={machiHais} nakiMode={nakiMode} mode={mode} onAddHai={addHai} addMelds={addMelds} showResultView={showResultView} />
       <NakiButtons canNaki={canNaki} haiLength={hais.length} nakiMode={nakiMode} setMode={setMode} setNakiMode={setNakiMode} />
       <NakiView melds={melds} allTiles={allTiles} removeMelds={removeMelds} />
-      <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting}/>
-      <NotenModal shanten={new ShantenCalculator(hais.getHais()).calculate()} mode={mode} />
+      <SettingsView isMenzen={isMenzen} hasKantsu={hasKantsu} haiLength={hais.length} haiNum={HaiNum} settings={settings} showSettings={showSettings} setShowSettings={setShowSettings} setSettings={updateSetting} />
+      <NotenModal hais={hais} mode={mode} />
       <NoYakuModal result={result} />
+      <UkeireModal hais={hais} mode={mode} setAndShowUkeire={setAndShowUkeire} />
       <div className='reset_btn btn_item' onClick={() => resetAll()}><p>リセット</p></div>
       {showResult && <ResultView result={result} melds={melds} agariHai={agariHai} allTiles={allTiles} settings={settings} setShowResult={setShowResult} setMode={setMode} />}
       {(loading || showSettings) && <div className="overlay" onClick={() => setShowSettings(false)}></div>}
       {loading && <div className='loader'><div className="loader_icon"></div><p className='loader_text'>表示までしばらくお待ちください...</p></div>}
-      <div className={`hamburger ${showSettings && "open" }`} onClick={() => setShowSettings(!showSettings)}>
+      {showUkeireResult && <UkeireResultView ukeireDetails={ukeireDetails} allTiles={allTiles} setshowUkeireResult={setshowUkeireResult} />}
+      <div className={`hamburger ${showSettings && "open"}`} onClick={() => setShowSettings(!showSettings)}>
         <span></span><span></span><span></span>
       </div>
     </div>
